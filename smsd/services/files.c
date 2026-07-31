@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
+#include <limits.h>
 #include <time.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -14,6 +15,8 @@
 
 #ifdef WIN32
 #include <io.h>
+#else
+#include <unistd.h>
 #endif
 #if defined HAVE_DIRENT_H && defined HAVE_SCANDIR && defined HAVE_ALPHASORT
 #define HAVE_DIRBROWSING
@@ -281,6 +284,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	_findclose(hFile);
 #elif defined(HAVE_DIRBROWSING)
 	struct dirent **namelist = NULL;
+	struct stat entryStatus;
+	int outboxFd;
 	int cur_file, num_files;
 	char *pos;
 
@@ -290,6 +295,10 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	}
 
 	FullName[strlen(Config->outboxpath) - 1] = '\0';
+	outboxFd = open(FullName, O_RDONLY | O_DIRECTORY);
+	if (outboxFd < 0) {
+		return ERR_CANTOPENFILE;
+	}
 
 	num_files = scandir(FullName, &namelist, 0, alphasort);
 
@@ -308,16 +317,27 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 			continue;
 		}
 		if (strncasecmp(pos, ".txt", 4) == 0) {
+			if (fstatat(outboxFd, namelist[cur_file]->d_name,
+				    &entryStatus, AT_SYMLINK_NOFOLLOW) != 0 ||
+			    !S_ISREG(entryStatus.st_mode)) {
+				continue;
+			}
 			/* We have found text file */
 			backup = FALSE;
 			break;
 		}
 		if (strncasecmp(pos, ".smsbackup", 10) == 0) {
+			if (fstatat(outboxFd, namelist[cur_file]->d_name,
+				    &entryStatus, AT_SYMLINK_NOFOLLOW) != 0 ||
+			    !S_ISREG(entryStatus.st_mode)) {
+				continue;
+			}
 			/* We have found a SMS backup file */
 			backup = TRUE;
 			break;
 		}
 	}
+	close(outboxFd);
 	/* Remember file name */
 	if (cur_file < num_files) {
 		if (strlen(namelist[cur_file]->d_name) >= sizeof(FileName)) {
@@ -752,15 +772,98 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID UNUSED, int Part, GSM_SMSDSendingError err, int TPMR)
+static GSM_Error SMSDFiles_WriteSentSMSInfo(FILE *file, GSM_File *GSMFile,
+					    unsigned char *lineStart,
+					    unsigned char *suffix,
+					    size_t suffixLength, int TPMR)
 {
-	FILE *file;
-	GSM_File GSMFile;
-	GSM_Error error;
-	unsigned char FullPath[PATH_MAX];
-	unsigned char *lineStart, *lineEnd;
 	/* MessageReference TPMR maximum is "255" */
 	char MessageReferenceBuffer[sizeof("MessageReference = \n") + 4];
+
+	if (fwrite(GSMFile->Buffer, 1, lineStart - GSMFile->Buffer, file) !=
+	    (size_t)(lineStart - GSMFile->Buffer)) {
+		return ERR_WRITING_FILE;
+	}
+
+	snprintf(MessageReferenceBuffer, sizeof(MessageReferenceBuffer),
+		 "MessageReference = %d\n", TPMR);
+
+	if (fwrite(MessageReferenceBuffer, 1, strlen(MessageReferenceBuffer), file) !=
+	    strlen(MessageReferenceBuffer)) {
+		return ERR_WRITING_FILE;
+	}
+	if (suffixLength > 0 && fwrite(suffix, 1, suffixLength, file) != suffixLength) {
+		return ERR_WRITING_FILE;
+	}
+	return ERR_NONE;
+}
+
+#ifndef WIN32
+static GSM_Error SMSDFiles_ReadSentSMSInfo(int fd, GSM_File *GSMFile)
+{
+	ssize_t length;
+	unsigned char *buffer;
+
+	free(GSMFile->Buffer);
+	GSMFile->Buffer = NULL;
+	GSMFile->Used = 0;
+	for (;;) {
+		if (GSMFile->Used > (size_t)-1 - 1001) {
+			free(GSMFile->Buffer);
+			GSMFile->Buffer = NULL;
+			GSMFile->Used = 0;
+			return ERR_MOREMEMORY;
+		}
+		buffer = realloc(GSMFile->Buffer, GSMFile->Used + 1001);
+		if (buffer == NULL) {
+			free(GSMFile->Buffer);
+			GSMFile->Buffer = NULL;
+			GSMFile->Used = 0;
+			return ERR_MOREMEMORY;
+		}
+		GSMFile->Buffer = buffer;
+		do {
+			length = read(fd, GSMFile->Buffer + GSMFile->Used, 1000);
+		} while (length < 0 && errno == EINTR);
+		if (length < 0) {
+			free(GSMFile->Buffer);
+			GSMFile->Buffer = NULL;
+			GSMFile->Used = 0;
+			return ERR_CANTOPENFILE;
+		}
+		if (length == 0) {
+			break;
+		}
+		GSMFile->Used += (size_t)length;
+	}
+	GSMFile->Buffer[GSMFile->Used] = '\0';
+	return ERR_NONE;
+}
+#endif
+
+static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDConfig * Config, char *ID UNUSED, int Part, GSM_SMSDSendingError err, int TPMR)
+{
+	FILE *file = NULL;
+	GSM_File GSMFile;
+	GSM_Error error;
+	int i;
+	int fd = -1;
+	unsigned char FullPath[PATH_MAX];
+	unsigned char *lineStart, *lineEnd, *suffix;
+	size_t suffixLength;
+	char TempPath[PATH_MAX];
+#ifdef WIN32
+	DWORD fileAttributes;
+	gboolean readOnlyCleared = FALSE;
+#else
+	int originalFd = -1;
+	int tempDirFd = -1;
+	struct stat fileStatus;
+	struct stat currentStatus;
+	struct stat tempDirStatus;
+#endif
+
+	TempPath[0] = '\0';
 
 	if (err == SMSD_SEND_OK) {
 		SMSD_Log(DEBUG_INFO, Config, "Transmitted %s (%s: %i) to %s, message reference 0x%02x",
@@ -775,10 +878,26 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	// Read file content
 	GSMFile.Buffer = NULL;
 	GSMFile.Used = 0;
+#ifdef WIN32
 	error = GSM_ReadFile(FullPath, &GSMFile);
+#else
+	originalFd = open((char *)FullPath, O_RDONLY | O_NOFOLLOW);
+	if (originalFd < 0 || fstat(originalFd, &fileStatus) != 0 ||
+	    !S_ISREG(fileStatus.st_mode)) {
+		SMSD_LogErrno(Config, "AddSentSMSInfo: Failed to open original file");
+		if (originalFd >= 0) {
+			close(originalFd);
+		}
+		return ERR_CANTOPENFILE;
+	}
+	error = SMSDFiles_ReadSentSMSInfo(originalFd, &GSMFile);
+#endif
 
 	if (error != ERR_NONE) {
 		SMSD_Log(DEBUG_ERROR, Config, "AddSentSMSInfo: Failed to read file!");
+#ifndef WIN32
+		close(originalFd);
+#endif
 		free(GSMFile.Buffer);
 		return error;
 	}
@@ -787,53 +906,334 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 	GSMFile.Buffer = realloc(GSMFile.Buffer, GSMFile.Used + 1);
 
 	if (GSMFile.Buffer == NULL) {
+#ifndef WIN32
+		close(originalFd);
+#endif
 		return ERR_MOREMEMORY;
 	}
 
 	GSMFile.Buffer[GSMFile.Used] = '\0';
 
-	lineStart = strstr(GSMFile.Buffer, "\nMessageReference = ");
+	lineStart = GSMFile.Buffer;
+	for (i = 0; i < Part; i++) {
+		lineStart = strstr(lineStart, "\nMessageReference = ");
+		if (lineStart == NULL) {
+#ifndef WIN32
+			close(originalFd);
+#endif
+			free(GSMFile.Buffer);
+			return ERR_NONE;
+		}
+		lineStart++;
+	}
 
-	/* Message reference not found */
-	if (lineStart == NULL) {
+	lineEnd = strchr(lineStart, '\n');
+	if (lineEnd == NULL) {
+		suffix = GSMFile.Buffer + GSMFile.Used;
+		suffixLength = 0;
+	} else {
+		suffix = lineEnd + 1;
+		suffixLength = GSMFile.Used - (suffix - GSMFile.Buffer);
+	}
+
+	/* Keep writable files on their original inode, as the files backend did
+	 * historically. Besides avoiding the need for another inode, this preserves
+	 * all metadata associated with the file. */
+	/* Open only the file that was read above. Using fopen("wb") here could
+	 * recreate it with default permissions if it disappeared in between. */
+#ifdef WIN32
+	fd = _open((char *)FullPath, _O_WRONLY | _O_BINARY);
+#else
+	fd = open((char *)FullPath, O_WRONLY);
+	if (fd >= 0) {
+		if (fstat(fd, &currentStatus) != 0 ||
+		    currentStatus.st_dev != fileStatus.st_dev ||
+		    currentStatus.st_ino != fileStatus.st_ino) {
+			SMSD_Log(DEBUG_ERROR, Config,
+				 "AddSentSMSInfo: Outbox entry changed while being processed");
+			close(fd);
+			fd = -1;
+			errno = EAGAIN;
+			goto fail;
+		}
+	}
+#endif
+	if (fd >= 0) {
+		file = fdopen(fd, "wb");
+		if (file == NULL) {
+			goto fail;
+		}
+		fd = -1;
+#ifdef WIN32
+		if (_chsize(fileno(file), 0) != 0) {
+#else
+		/* fdopen does not truncate an existing descriptor. Do this only after
+		 * the stream has been allocated so allocation failure leaves the
+		 * successfully sent outbox entry intact. */
+		if (ftruncate(fileno(file), 0) != 0) {
+#endif
+			goto fail;
+		}
+		error = SMSDFiles_WriteSentSMSInfo(file, &GSMFile, lineStart, suffix,
+						       suffixLength, TPMR);
+		if (error != ERR_NONE) {
+			goto fail;
+		}
+		if (fclose(file) != 0) {
+			file = NULL;
+			goto close_failure;
+		}
+		file = NULL;
+#ifndef WIN32
+		close(originalFd);
+		originalFd = -1;
+#endif
 		free(GSMFile.Buffer);
 		return ERR_NONE;
 	}
-	lineStart++;
-	lineEnd = strchr(GSMFile.Buffer, '\n');
-	/* End of buffer? */
-	if (lineEnd == NULL) {
-		lineEnd = GSMFile.Buffer + GSMFile.Used;
-	}
 
-	file = fopen(FullPath, "w");
-	if (file == NULL) {
-		SMSD_LogErrno(Config,  "AddSentSMSInfo: Failed to open file for writing");
+#ifdef WIN32
+	fileAttributes = GetFileAttributesA((char *)FullPath);
+	if (fileAttributes == INVALID_FILE_ATTRIBUTES) {
+		SMSD_LogErrno(Config, "AddSentSMSInfo: Failed to get file attributes");
 		free(GSMFile.Buffer);
 		return ERR_CANTOPENFILE;
 	}
+#endif
 
-	chk_fwrite(GSMFile.Buffer, lineStart - GSMFile.Buffer, 1, file);
+	/* This basename is no longer than the shortest valid outbox filename
+	 * (OUT.txt), and cannot be picked up by an OUT* scanner after a crash. */
+	error = SMSDFiles_BuildPath(TempPath, sizeof(TempPath), Config->outboxpath,
+				    ".XXXXXX", Config);
+	if (error != ERR_NONE) {
+#ifndef WIN32
+		close(originalFd);
+#endif
+		free(GSMFile.Buffer);
+		return error;
+	}
+#ifdef WIN32
+	if (_mktemp_s(TempPath, sizeof(TempPath)) != 0) {
+		SMSD_Log(DEBUG_ERROR, Config, "AddSentSMSInfo: Failed to create temporary filename");
+		free(GSMFile.Buffer);
+		return ERR_CANTOPENFILE;
+	}
+	fd = _open(TempPath, _O_WRONLY | _O_CREAT | _O_EXCL | _O_BINARY,
+		   _S_IREAD | _S_IWRITE);
+#else
+	/* Keep the replacement in a private directory and address it through the
+	 * directory descriptor. Submitters with access to the outbox parent can
+	 * rename that directory, but cannot swap the entry used by linkat. */
+	if (mkdtemp(TempPath) == NULL) {
+		SMSD_Log(DEBUG_ERROR, Config,
+			 "AddSentSMSInfo: Failed to create temporary directory: %s",
+			 strerror(errno));
+		close(originalFd);
+		free(GSMFile.Buffer);
+		return ERR_CANTOPENFILE;
+	}
+	tempDirFd = open(TempPath, O_RDONLY | O_DIRECTORY | O_NOFOLLOW);
+	if (tempDirFd < 0 || fstat(tempDirFd, &tempDirStatus) != 0 ||
+	    !S_ISDIR(tempDirStatus.st_mode) ||
+	    tempDirStatus.st_uid != geteuid() ||
+	    (tempDirStatus.st_mode & 077) != 0) {
+		SMSD_Log(DEBUG_ERROR, Config,
+			 "AddSentSMSInfo: Failed to open the created temporary directory");
+		errno = EAGAIN;
+		goto fail;
+	}
+	fd = openat(tempDirFd, "message", O_WRONLY | O_CREAT | O_EXCL, 0600);
+#endif
+	if (fd < 0) {
+		SMSD_Log(DEBUG_ERROR, Config,
+			 "AddSentSMSInfo: Failed to create temporary file: %s", strerror(errno));
+#ifndef WIN32
+		if (tempDirFd >= 0) {
+			close(tempDirFd);
+			tempDirFd = -1;
+			if (rmdir(TempPath) == 0) {
+				TempPath[0] = '\0';
+			} else {
+				SMSD_Log(DEBUG_INFO, Config,
+					 "AddSentSMSInfo: Leaving temporary directory after create failure: %s",
+					 TempPath);
+			}
+		}
+		close(originalFd);
+#endif
+		free(GSMFile.Buffer);
+		return ERR_CANTOPENFILE;
+	}
+#ifndef WIN32
+	/* Replacing a non-writable inode only attempts to preserve its basic
+	 * ownership and mode metadata. */
+	if (fchown(fd, fileStatus.st_uid, fileStatus.st_gid) != 0) {
+		SMSD_Log(DEBUG_INFO, Config,
+			 "AddSentSMSInfo: Could not preserve file ownership: %s", strerror(errno));
+	}
+	if (fchmod(fd, fileStatus.st_mode & 07777) != 0) {
+		SMSD_Log(DEBUG_INFO, Config,
+			 "AddSentSMSInfo: Could not preserve file permissions: %s", strerror(errno));
+	}
+#endif
+	file = fdopen(fd, "wb");
+	if (file == NULL) {
+		SMSD_Log(DEBUG_ERROR, Config,
+			 "AddSentSMSInfo: Failed to open temporary file: %s", strerror(errno));
+		goto fail;
+	}
+	fd = -1;
 
-	snprintf(MessageReferenceBuffer, sizeof(MessageReferenceBuffer),
-		 "MessageReference = %d\n", TPMR);
+	error = SMSDFiles_WriteSentSMSInfo(file, &GSMFile, lineStart, suffix,
+					       suffixLength, TPMR);
+	if (error != ERR_NONE) {
+		goto fail;
+	}
+	if (fclose(file) != 0) {
+		file = NULL;
+		goto close_failure;
+	}
+	file = NULL;
 
+#ifdef WIN32
+	if ((fileAttributes & FILE_ATTRIBUTE_READONLY) != 0) {
+		DWORD writableAttributes = fileAttributes & ~FILE_ATTRIBUTE_READONLY;
 
-	chk_fwrite(MessageReferenceBuffer, strlen(MessageReferenceBuffer), 1, file);
+		if (writableAttributes == 0) {
+			writableAttributes = FILE_ATTRIBUTE_NORMAL;
+		}
+		if (!SetFileAttributesA((char *)FullPath,
+					writableAttributes)) {
+			SMSD_LogErrno(Config, "AddSentSMSInfo: Failed to clear read-only attribute");
+			goto fail;
+		}
+		readOnlyCleared = TRUE;
+	}
+	if (!ReplaceFileA((char *)FullPath, TempPath, NULL, 0, NULL, NULL)) {
+		DWORD replaceError = GetLastError();
 
-	chk_fwrite(lineEnd + 1, (GSMFile.Buffer - lineEnd) + GSMFile.Used - 1, 1, file);
+		if (readOnlyCleared) {
+			DWORD currentAttributes = GetFileAttributesA((char *)FullPath);
 
-	fclose(file);
+			if (currentAttributes != INVALID_FILE_ATTRIBUTES) {
+				SetFileAttributesA((char *)FullPath,
+						   currentAttributes | FILE_ATTRIBUTE_READONLY);
+			}
+		}
+		SetLastError(replaceError);
+		SMSD_LogErrno(Config, "AddSentSMSInfo: Failed to replace file");
+		goto fail;
+	}
+	TempPath[0] = '\0';
+#else
+	/* Atomically claim the current directory entry in the protected directory,
+	 * then verify that it is the inode read above. This avoids a check/use gap
+	 * at FullPath: a replacement submitted before this rename is preserved in
+	 * the private directory rather than overwritten. */
+	if (renameat(AT_FDCWD, (char *)FullPath, tempDirFd, "original") != 0) {
+		SMSD_LogErrno(Config, "AddSentSMSInfo: Failed to claim original file");
+		goto fail;
+	}
+	if (fstatat(tempDirFd, "original", &currentStatus,
+		    AT_SYMLINK_NOFOLLOW) != 0 ||
+	    currentStatus.st_dev != fileStatus.st_dev ||
+	    currentStatus.st_ino != fileStatus.st_ino) {
+		SMSD_Log(DEBUG_ERROR, Config,
+			 "AddSentSMSInfo: Outbox entry changed before replacement");
+		/* Restore the claimed entry only if no newer producer has reused the
+		 * pathname. Otherwise leave it protected for manual recovery. */
+		if (linkat(tempDirFd, "original", AT_FDCWD,
+			   (char *)FullPath, 0) == 0) {
+			unlinkat(tempDirFd, "original", 0);
+		}
+		errno = EAGAIN;
+		goto fail;
+	}
+	/* linkat fails rather than overwriting a message submitted after the claim.
+	 * Both source names are protected by tempDirFd. */
+	if (linkat(tempDirFd, "message", AT_FDCWD, (char *)FullPath, 0) != 0) {
+		int replaceError = errno;
+
+		SMSD_LogErrno(Config, "AddSentSMSInfo: Failed to replace file");
+		/* The claim removed FullPath. Put the original entry back whenever no
+		 * producer has occupied that pathname in the meantime. */
+		if (linkat(tempDirFd, "original", AT_FDCWD,
+			   (char *)FullPath, 0) == 0) {
+			unlinkat(tempDirFd, "original", 0);
+		}
+		errno = replaceError;
+		goto fail;
+	}
+	if (unlinkat(tempDirFd, "message", 0) != 0) {
+		SMSD_LogErrno(Config,
+				 "AddSentSMSInfo: Failed to unlink temporary replacement");
+	}
+	if (unlinkat(tempDirFd, "original", 0) != 0) {
+		SMSD_LogErrno(Config,
+				 "AddSentSMSInfo: Failed to unlink replaced original");
+	}
+	close(tempDirFd);
+	tempDirFd = -1;
+	if (rmdir(TempPath) != 0) {
+		SMSD_Log(DEBUG_INFO, Config,
+			 "AddSentSMSInfo: Could not remove temporary directory: %s",
+			 strerror(errno));
+	}
+	TempPath[0] = '\0';
+	close(originalFd);
+	originalFd = -1;
+#endif
 
 	free(GSMFile.Buffer);
 	return ERR_NONE;
 fail:
-	SMSD_LogErrno(Config,  "AddSentSMSInfo: Failed to write");
+	SMSD_LogErrno(Config, "AddSentSMSInfo: Failed to write");
 	if (file) {
 		fclose(file);
 	}
+	if (fd >= 0) {
+#ifdef WIN32
+		_close(fd);
+#else
+		close(fd);
+#endif
+	}
+#ifndef WIN32
+	if (tempDirFd >= 0) {
+		close(tempDirFd);
+	}
+	if (originalFd >= 0) {
+		close(originalFd);
+	}
+#endif
+	if (TempPath[0] != '\0') {
+		/* The outbox directory can be writable by message submitters. Leave the
+		 * hidden temporary entry for safe manual cleanup rather than deleting a
+		 * pathname that might have been swapped. */
+		SMSD_Log(DEBUG_INFO, Config,
+			 "AddSentSMSInfo: Leaving temporary file after failure: %s",
+			 TempPath);
+	}
 	free(GSMFile.Buffer);
 	return ERR_WRITING_FILE;
+close_failure:
+	SMSD_LogErrno(Config,
+			 "AddSentSMSInfo: Could not flush sent-info update; treating message as sent");
+#ifndef WIN32
+	if (tempDirFd >= 0) {
+		close(tempDirFd);
+	}
+	if (originalFd >= 0) {
+		close(originalFd);
+	}
+#endif
+	if (TempPath[0] != '\0') {
+		SMSD_Log(DEBUG_INFO, Config,
+			 "AddSentSMSInfo: Leaving temporary file after close failure: %s",
+			 TempPath);
+	}
+	free(GSMFile.Buffer);
+	return ERR_NONE;
 }
 
 GSM_Error SMSD_Check_Dir(GSM_SMSDConfig *Config, const char *path, const char *name)
