@@ -6,6 +6,7 @@
 #include <time.h>
 #include <assert.h>
 #include <math.h>
+#include <stdint.h>
 #ifndef WIN32
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -60,6 +61,7 @@
 #endif
 
 #include "../libgammu/misc/string.h"
+#include "../libgammu/misc/coding/md5.h"
 #include "../libgammu/protocol/protocol.h"
 #include "../libgammu/gsmstate.h"
 
@@ -72,10 +74,253 @@
 #endif
 
 GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config);
+static GSM_Error SMSD_ProcessSMSInfoCacheInternal(GSM_SMSDConfig *Config, gboolean consume_tokens);
 
 const char smsd_name[] = "gammu-smsd";
 
 time_t lastRing=0;
+
+typedef struct {
+	unsigned char data[sizeof(((GSM_SMSMessage *)0)->Number) +
+			   sizeof(((GSM_SMSMessage *)0)->UDH.Text) +
+			   sizeof(((GSM_SMSMessage *)0)->Text) + 256];
+	size_t used;
+} SMSD_SMSFingerprint;
+
+static gboolean SMSD_FingerprintAppend(SMSD_SMSFingerprint *fingerprint, const void *data, size_t length)
+{
+	if (length > sizeof(fingerprint->data) - fingerprint->used) {
+		return FALSE;
+	}
+
+	memcpy(fingerprint->data + fingerprint->used, data, length);
+	fingerprint->used += length;
+	return TRUE;
+}
+
+static gboolean SMSD_FingerprintAppendUInt32(SMSD_SMSFingerprint *fingerprint, uint32_t value)
+{
+	unsigned char encoded[4];
+
+	encoded[0] = (value >> 24) & 0xff;
+	encoded[1] = (value >> 16) & 0xff;
+	encoded[2] = (value >> 8) & 0xff;
+	encoded[3] = value & 0xff;
+	return SMSD_FingerprintAppend(fingerprint, encoded, sizeof(encoded));
+}
+
+static gboolean SMSD_FingerprintAppendBytes(SMSD_SMSFingerprint *fingerprint, const unsigned char *data, size_t length)
+{
+	return SMSD_FingerprintAppendUInt32(fingerprint, length) &&
+	       SMSD_FingerprintAppend(fingerprint, data, length);
+}
+
+static size_t SMSD_UnicodeBytes(const unsigned char *text, size_t size)
+{
+	size_t length;
+
+	for (length = 0; length + 1 < size; length += 2) {
+		if (text[length] == 0 && text[length + 1] == 0) {
+			return length;
+		}
+	}
+	return size;
+}
+
+static gboolean SMSD_FingerprintAppendDateTime(SMSD_SMSFingerprint *fingerprint, const GSM_DateTime *date)
+{
+	return SMSD_FingerprintAppendUInt32(fingerprint, date->Timezone) &&
+	       SMSD_FingerprintAppendUInt32(fingerprint, date->Second) &&
+	       SMSD_FingerprintAppendUInt32(fingerprint, date->Minute) &&
+	       SMSD_FingerprintAppendUInt32(fingerprint, date->Hour) &&
+	       SMSD_FingerprintAppendUInt32(fingerprint, date->Day) &&
+	       SMSD_FingerprintAppendUInt32(fingerprint, date->Month) &&
+	       SMSD_FingerprintAppendUInt32(fingerprint, date->Year);
+}
+
+static gboolean SMSD_ComputeSMSChecksum(const GSM_SMSMessage *sms,
+					char checksum[SMSD_SMS_CHECKSUM_LENGTH])
+{
+	SMSD_SMSFingerprint fingerprint;
+	size_t text_length;
+	size_t udh_length;
+
+	memset(&fingerprint, 0, sizeof(fingerprint));
+
+	if (sms->UDH.Length < 0 || sms->UDH.Length > (int)sizeof(sms->UDH.Text)) {
+		return FALSE;
+	}
+	udh_length = sms->UDH.Length;
+	if (sms->Coding == SMS_Coding_8bit) {
+		if (sms->Length < 0 || sms->Length > (int)sizeof(sms->Text)) {
+			return FALSE;
+		}
+		text_length = sms->Length;
+	} else {
+		text_length = SMSD_UnicodeBytes(sms->Text, sizeof(sms->Text));
+	}
+
+	/* RejectDuplicates is submit-only. Class, SMSC number,
+	 * ReplyViaSameSMSC, parsed UDH fields, and Length differ between equivalent
+	 * decoder paths. The raw UDH and length-prefixed decoded text are canonical. */
+	if (!SMSD_FingerprintAppendUInt32(&fingerprint, sms->PDU) ||
+	    !SMSD_FingerprintAppendUInt32(&fingerprint, sms->Coding) ||
+	    !SMSD_FingerprintAppendUInt32(&fingerprint, sms->ReplaceMessage) ||
+	    !SMSD_FingerprintAppendUInt32(&fingerprint, sms->MessageReference) ||
+	    !SMSD_FingerprintAppendUInt32(&fingerprint, sms->DeliveryStatus) ||
+	    !SMSD_FingerprintAppendDateTime(&fingerprint, &sms->DateTime) ||
+	    !SMSD_FingerprintAppendBytes(&fingerprint, sms->Number,
+		SMSD_UnicodeBytes(sms->Number, sizeof(sms->Number))) ||
+	    !SMSD_FingerprintAppendBytes(&fingerprint, sms->UDH.Text, udh_length) ||
+	    !SMSD_FingerprintAppendBytes(&fingerprint, sms->Text, text_length)) {
+		return FALSE;
+	}
+	/* SMSCTime is only initialized and meaningful for status reports. */
+	if (sms->PDU == SMS_Status_Report &&
+	    !SMSD_FingerprintAppendDateTime(&fingerprint, &sms->SMSCTime)) {
+		return FALSE;
+	}
+
+	CalculateMD5(fingerprint.data, (int)fingerprint.used, checksum);
+	return TRUE;
+}
+
+static gboolean SMSD_SMSHasStableIdentity(const GSM_SMSMessage *sms)
+{
+	return SMSD_UnicodeBytes(sms->Number, sizeof(sms->Number)) > 0 &&
+	       sms->DateTime.Year != 0;
+}
+
+static uint64_t SMSD_CurrentReceivePoll(const GSM_SMSDConfig *Config)
+{
+	return Config->ReceivePollCount + (Config->ReceivePollInProgress ? 1 : 0);
+}
+
+static void SMSD_PruneProcessedSMS(GSM_SMSDConfig *Config)
+{
+	uint64_t current_poll = SMSD_CurrentReceivePoll(Config);
+	size_t source, target = 0;
+
+	for (source = 0; source < Config->ProcessedSMSUsed; source++) {
+		if (current_poll >= Config->ProcessedSMSPoll[source] &&
+		    current_poll - Config->ProcessedSMSPoll[source] > SMSD_PROCESSED_SMS_POLL_CYCLES) {
+			continue;
+		}
+		if (source != target) {
+			memcpy(Config->ProcessedSMS[target], Config->ProcessedSMS[source],
+				sizeof(Config->ProcessedSMS[target]));
+			Config->ProcessedSMSPoll[target] = Config->ProcessedSMSPoll[source];
+		}
+		target++;
+	}
+	Config->ProcessedSMSUsed = target;
+}
+
+static gboolean SMSD_CacheProcessedSMS(GSM_SMSDConfig *Config, const GSM_SMSMessage *sms)
+{
+	char checksum[SMSD_SMS_CHECKSUM_LENGTH];
+
+	if (!SMSD_SMSHasStableIdentity(sms)) {
+		SMSD_Log(DEBUG_INFO, Config,
+			 "Incoming SMS lacks sender or timestamp details, not caching an unsafe duplicate identity.");
+		return FALSE;
+	}
+	if (!SMSD_ComputeSMSChecksum(sms, checksum)) {
+		SMSD_Log(DEBUG_ERROR, Config, "Could not checksum incoming SMS, duplicate processing is possible.");
+		return FALSE;
+	}
+	SMSD_PruneProcessedSMS(Config);
+	if (Config->ProcessedSMSUsed == SMSD_PROCESSED_SMS_CACHE_SIZE) {
+		memmove(Config->ProcessedSMS, Config->ProcessedSMS + 1,
+			(SMSD_PROCESSED_SMS_CACHE_SIZE - 1) * sizeof(Config->ProcessedSMS[0]));
+		memmove(Config->ProcessedSMSPoll, Config->ProcessedSMSPoll + 1,
+			(SMSD_PROCESSED_SMS_CACHE_SIZE - 1) * sizeof(Config->ProcessedSMSPoll[0]));
+		Config->ProcessedSMSUsed--;
+		SMSD_Log(DEBUG_INFO, Config, "Processed SMS cache is full, forgetting its oldest entry.");
+	}
+	memcpy(Config->ProcessedSMS[Config->ProcessedSMSUsed], checksum, sizeof(checksum));
+	Config->ProcessedSMSPoll[Config->ProcessedSMSUsed] = SMSD_CurrentReceivePoll(Config);
+	Config->ProcessedSMSUsed++;
+	return TRUE;
+}
+
+static int SMSD_FindProcessedSMS(const GSM_SMSDConfig *Config, const char *checksum,
+				 const gboolean *reserved)
+{
+	size_t i;
+
+	for (i = 0; i < Config->ProcessedSMSUsed; i++) {
+		if ((reserved == NULL || !reserved[i]) && strcmp(Config->ProcessedSMS[i], checksum) == 0) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+static int SMSD_MarkProcessedSMS(GSM_SMSDConfig *Config, const GSM_MultiSMSMessage *sms,
+				 gboolean processed[GSM_MAX_MULTI_SMS])
+{
+	gboolean reserved[SMSD_PROCESSED_SMS_CACHE_SIZE] = {FALSE};
+	char checksum[SMSD_SMS_CHECKSUM_LENGTH];
+	int positions[GSM_MAX_MULTI_SMS];
+	int i, matched = 0, position;
+
+	SMSD_PruneProcessedSMS(Config);
+	memset(processed, FALSE, GSM_MAX_MULTI_SMS * sizeof(processed[0]));
+	if (sms->Number < 1 || sms->Number > GSM_MAX_MULTI_SMS) {
+		return 0;
+	}
+	for (i = 0; i < sms->Number; i++) {
+		if (!SMSD_SMSHasStableIdentity(&sms->SMS[i]) ||
+		    !SMSD_ComputeSMSChecksum(&sms->SMS[i], checksum)) {
+			continue;
+		}
+		position = SMSD_FindProcessedSMS(Config, checksum, reserved);
+		if (position < 0) {
+			continue;
+		}
+		reserved[position] = TRUE;
+		processed[i] = TRUE;
+		positions[matched++] = position;
+	}
+	/* Keep matched stored-copy tokens alive while processing and deletion are retried. */
+	for (i = 0; i < matched; i++) {
+		Config->ProcessedSMSPoll[positions[i]] = SMSD_CurrentReceivePoll(Config);
+	}
+	return matched;
+}
+
+gboolean SMSD_AllSMSProcessed(GSM_SMSDConfig *Config, const GSM_MultiSMSMessage *sms)
+{
+	gboolean processed[GSM_MAX_MULTI_SMS];
+
+	if (sms->Number < 1 || sms->Number > GSM_MAX_MULTI_SMS) {
+		return FALSE;
+	}
+	return SMSD_MarkProcessedSMS(Config, sms, processed) == sms->Number;
+}
+
+static void SMSD_ConsumeProcessedSMS(GSM_SMSDConfig *Config, const GSM_SMSMessage *sms)
+{
+	char checksum[SMSD_SMS_CHECKSUM_LENGTH];
+	int position;
+
+	SMSD_PruneProcessedSMS(Config);
+	if (!SMSD_SMSHasStableIdentity(sms) || !SMSD_ComputeSMSChecksum(sms, checksum)) {
+		return;
+	}
+	position = SMSD_FindProcessedSMS(Config, checksum, NULL);
+	if (position < 0) {
+		return;
+	}
+	if ((size_t)position + 1 < Config->ProcessedSMSUsed) {
+		memmove(Config->ProcessedSMS[position], Config->ProcessedSMS[position + 1],
+			(Config->ProcessedSMSUsed - position - 1) * sizeof(Config->ProcessedSMS[0]));
+		memmove(Config->ProcessedSMSPoll + position, Config->ProcessedSMSPoll + position + 1,
+			(Config->ProcessedSMSUsed - position - 1) * sizeof(Config->ProcessedSMSPoll[0]));
+	}
+	Config->ProcessedSMSUsed--;
+}
 
 /**
  * Checks whether database schema version matches current one.
@@ -424,6 +669,9 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->ServiceName = NULL;
 	Config->Service = NULL;
 	Config->IgnoredMessages = 0;
+	Config->ProcessedSMSUsed = 0;
+	Config->ReceivePollCount = 0;
+	Config->ReceivePollInProgress = FALSE;
 	Config->PhoneID = NULL;
 
 #if defined(HAVE_MYSQL_MYSQL_H)
@@ -1666,6 +1914,26 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms)
 	return error;
 }
 
+static GSM_Error SMSD_DeleteSMSParts(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms,
+				     gboolean consume_tokens)
+{
+	GSM_Error error;
+	int i;
+
+	for (i = 0; i < sms->Number; i++) {
+		sms->SMS[i].Folder = 0;
+		error = GSM_DeleteSMS(Config->gsm, &sms->SMS[i]);
+		/* Empty can happen if the device already removed the message. */
+		if (error != ERR_NONE && error != ERR_EMPTY) {
+			return error;
+		}
+		if (consume_tokens) {
+			SMSD_ConsumeProcessedSMS(Config, &sms->SMS[i]);
+		}
+	}
+	return ERR_NONE;
+}
+
 /**
  * Checks whether to process current (possibly) multipart message.
  */
@@ -1748,12 +2016,13 @@ success:
 gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 {
 	gboolean start;
+	gboolean processed[GSM_MAX_MULTI_SMS];
 	GSM_MultiSMSMessage sms;
 	GSM_MultiSMSMessage **GetSMSData = NULL, **SortedSMS;
 	int allocated = 0;
 	GSM_Error error = ERR_NONE;
 	int GetSMSNumber = 0;
-	int i, j;
+	int i, j, processed_count;
 
 	/* Read messages from phone */
 	Config->IgnoredMessages = 0;
@@ -1810,7 +2079,7 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 
     /* process any incoming SMS information records to help prevent memory exhaustion, ignore any
      * errors so as not to interfere with this function, they'll be handle in main-loop processing */
-    SMSD_ProcessSMSInfoCache(Config);
+    SMSD_ProcessSMSInfoCacheInternal(Config, FALSE);
   }
 
 	/* Log how many messages were read */
@@ -1842,27 +2111,48 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config)
 
 	/* Process messages */
 	for (i = 0; SortedSMS[i] != NULL; i++) {
-		/* Check multipart message parts */
-		if (!SMSD_CheckMultipart(Config, SortedSMS[i])) {
-			goto cleanup;
-		}
-
-		/* Actually process the message */
-		error = SMSD_ProcessSMS(Config, SortedSMS[i]);
-		if (error != ERR_NONE) {
-			SMSD_LogError(DEBUG_INFO, Config, "Error processing SMS", error);
-			return FALSE;
+		processed_count = SMSD_MarkProcessedSMS(Config, SortedSMS[i], processed);
+		if (processed_count == SortedSMS[i]->Number) {
+			SMSD_Log(DEBUG_INFO, Config, "SMS was already processed from a callback, deleting stored copy.");
+		} else {
+			if (processed_count == 0) {
+				/* Unprocessed multipart messages still need all parts. */
+				if (!SMSD_CheckMultipart(Config, SortedSMS[i])) {
+					goto cleanup;
+				}
+				sms = *SortedSMS[i];
+			} else {
+				/* Cached parts were already saved by their direct callbacks. Process
+				 * only the remaining parts, even though that subset is incomplete. */
+				sms.Number = 0;
+				for (j = 0; j < SortedSMS[i]->Number; j++) {
+					if (!processed[j]) {
+						sms.SMS[sms.Number++] = SortedSMS[i]->SMS[j];
+					}
+				}
+				SMSD_Log(DEBUG_INFO, Config,
+					 "SMS has %d previously processed parts, processing %d remaining parts.",
+					 processed_count, sms.Number);
+			}
+			/* Actually process the message */
+			error = SMSD_ProcessSMS(Config, &sms);
+			if (error != ERR_NONE) {
+				SMSD_LogError(DEBUG_INFO, Config, "Error processing SMS", error);
+				return FALSE;
+			}
+			/* Preserve successful mixed-message parts if deletion has to be retried. */
+			if (processed_count > 0) {
+				for (j = 0; j < sms.Number; j++) {
+					SMSD_CacheProcessedSMS(Config, &sms.SMS[j]);
+				}
+			}
 		}
 
 		/* Delete processed messages */
-		for (j = 0; j < SortedSMS[i]->Number; j++) {
-			SortedSMS[i]->SMS[j].Folder = 0;
-			error = GSM_DeleteSMS(Config->gsm, &SortedSMS[i]->SMS[j]);
-			// Empty error can happen if deleting message several times
-			if (error != ERR_NONE && error != ERR_EMPTY) {
-				SMSD_LogError(DEBUG_INFO, Config, "Error deleting SMS", error);
-				return FALSE;
-			}
+		error = SMSD_DeleteSMSParts(Config, SortedSMS[i], TRUE);
+		if (error != ERR_NONE) {
+			SMSD_LogError(DEBUG_INFO, Config, "Error deleting SMS", error);
+			return FALSE;
 		}
 
 cleanup:
@@ -1882,7 +2172,10 @@ gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config)
 	GSM_SMSMemoryStatus	SMSStatus;
 	GSM_Error		error;
 	gboolean new_message = FALSE;
+	gboolean result = FALSE;
 	GSM_MultiSMSMessage sms;
+
+	Config->ReceivePollInProgress = TRUE;
 
 	/* Do we have any SMS in phone ? */
 
@@ -1899,15 +2192,22 @@ gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config)
 		new_message = (error == ERR_NONE);
 	} else {
 		SMSD_LogError(DEBUG_INFO, Config, "Error getting SMS status", error);
-		return FALSE;
+		goto done;
 	}
 
 	/* Yes. We have SMS in phone */
 	if (new_message) {
-		return SMSD_ReadDeleteSMS(Config);
+		result = SMSD_ReadDeleteSMS(Config);
+	} else {
+		result = TRUE;
 	}
 
-	return TRUE;
+done:
+	if (result) {
+		Config->ReceivePollCount++;
+	}
+	Config->ReceivePollInProgress = FALSE;
+	return result;
 }
 
 /**
@@ -2395,7 +2695,7 @@ void SMSD_IncomingSMSInfoCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, voi
 }
 
 /**
- * Handles incoming SMS messages.
+ * Handles incoming SMS notifications and directly delivered messages.
  *
  */
 void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *user_data)
@@ -2417,11 +2717,14 @@ void SMSD_IncomingSMSCallback(GSM_StateMachine *s,  GSM_SMSMessage *sms, void *u
 	msms.SMS[0] = *sms;
 
 	error = SMSD_ProcessSMS(Config, &msms);
-	if(error != ERR_NONE)
+	if(error != ERR_NONE) {
 		SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
+		return;
+	}
+	SMSD_CacheProcessedSMS(Config, sms);
 }
 
-GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
+static GSM_Error SMSD_ProcessSMSInfoCacheInternal(GSM_SMSDConfig *Config, gboolean consume_tokens)
 {
 	GSM_StateMachine *s = Config->gsm;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
@@ -2438,6 +2741,7 @@ GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
 		sms = Cache->smsInfo_records + i;
 		if(sms->Memory == MEM_INVALID) continue;
 
+		msms.Number = 1;
 		msms.SMS[0] = *sms;
 
 		error = GSM_GetSMS(s, &msms);
@@ -2448,13 +2752,17 @@ GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
 			break;
 		}
 
-		error = SMSD_ProcessSMS(Config, &msms);
-		if(error != ERR_NONE) {
-			SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
-			break;
+		if (SMSD_AllSMSProcessed(Config, &msms)) {
+			SMSD_Log(DEBUG_INFO, Config, "SMS was already processed from a callback, deleting stored copy.");
+		} else {
+			error = SMSD_ProcessSMS(Config, &msms);
+			if(error != ERR_NONE) {
+				SMSD_LogError(DEBUG_ERROR, Config, "Error processing SMS", error);
+				break;
+			}
 		}
 
-		error = GSM_DeleteSMS(s, sms);
+		error = SMSD_DeleteSMSParts(Config, &msms, consume_tokens);
 		if (error != ERR_NONE) {
 			SMSD_LogError(DEBUG_ERROR, Config, "Error deleting SMS", error);
 			break;
@@ -2470,6 +2778,11 @@ GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
 		Cache->cache_used = 0;
 
 	return error;
+}
+
+GSM_Error SMSD_ProcessSMSInfoCache(GSM_SMSDConfig *Config)
+{
+	return SMSD_ProcessSMSInfoCacheInternal(Config, TRUE);
 }
 
 /**
