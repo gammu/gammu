@@ -1,0 +1,13 @@
+[SMSBackup000]
+PDU = Status_Report
+State = Read
+Number = "+420123456"
+Text00 = 004600610069006C006500640000
+Coding = 8bit
+Folder = 1
+Length = 14
+Class = -1
+ReplySMSC = False
+RejectDuplicates = False
+ReplaceMessage = 0
+MessageReference = 1

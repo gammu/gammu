@@ -28,6 +28,7 @@ option (PSQL_TESTING "Enable testing of PostgreSQL SMSD backend" OFF)
 option (MYSQL_TESTING "Enable testing of MySQL SMSD backend" OFF)
 option (ODBC_TESTING "Enable testing of ODBC MySQL SMSD backend" OFF)
 option (MSSQL_TESTING "Enable testing of ODBC Microsoft SQL Server SMSD backend" OFF)
+option (ORACLE_TESTING "Enable testing of ODBC Oracle SMSD backend" OFF)
 option (BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 option (LARGE_FILES "Support for large files" ON)
@@ -187,6 +188,7 @@ find_program(MYSQL_BIN mysql)
 find_program(PSQL_BIN psql)
 endif()
 find_program(SQLCMD_BIN sqlcmd HINTS /opt/mssql-tools18/bin /opt/mssql-tools/bin)
+find_program(SQLPLUS_BIN sqlplus)
 
 find_package (Threads)
 

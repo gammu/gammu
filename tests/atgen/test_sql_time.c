@@ -300,7 +300,7 @@ void oracle_timestamp(void)
 #endif
   get_sql_string(actual, "oracle", Fill_Time_T(dt));
 
-  test_result(strcmp("TIMESTAMP '2019-05-08 15:48:44'", actual) == 0);
+  test_result(strcmp("2019-05-08 15:48:44", actual) == 0);
 }
 
 void odbc_timestamp(void)

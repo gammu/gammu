@@ -124,6 +124,16 @@ password = @MSSQL_PASSWORD@
 sql = mssql
 EOT
         ;;
+    odbc-oracle)
+        cat >> .smsdrc <<EOT
+service = sql
+driver = odbc
+pc = @ORACLE_ODBC_DSN@
+user = @ORACLE_USER@
+password = @ORACLE_PASSWORD@
+sql = oracle
+EOT
+        ;;
     null)
         TEST_MATCH=";999999999999999;994299429942994;0;9;0;100;42"
         INCOMING_USSD=0
@@ -156,6 +166,9 @@ case $SERVICE in
         ;;
     odbc-mssql)
         "@SQLCMD_BIN@" -C -b -S "@MSSQL_HOST@" -U "@MSSQL_USER@" -P "@MSSQL_PASSWORD@" -d "@MSSQL_DATABASE@" -i "@CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/mssql.sql"
+        ;;
+    odbc-oracle)
+        "@SQLPLUS_BIN@" -L -S "@ORACLE_CONNECT@" < "@CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/oracle.sql"
         ;;
     *mysql|odbc)
         echo "DROP TABLE IF EXISTS gammu, inbox, outbox, outbox_multipart, phones, sentitems;" | "@MYSQL_BIN@" "-u@MYSQL_USER@" "-h@MYSQL_HOST@" "-p@MYSQL_PASSWORD@" "@MYSQL_DATABASE@"
@@ -202,6 +215,14 @@ case $SERVICE in
         ;;
     odbc-mssql)
         "@SQLCMD_BIN@" -C -b -S "@MSSQL_HOST@" -U "@MSSQL_USER@" -P "@MSSQL_PASSWORD@" -d "@MSSQL_DATABASE@" -Q "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');"
+        ;;
+    odbc-oracle)
+        "@SQLPLUS_BIN@" -L -S "@ORACLE_CONNECT@" <<'EOSQL'
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding)
+VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');
+COMMIT;
+EOSQL
         ;;
     *mysql|odbc)
         echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | "@MYSQL_BIN@" "-u@MYSQL_USER@" "-h@MYSQL_HOST@" "-p@MYSQL_PASSWORD@" "@MYSQL_DATABASE@"

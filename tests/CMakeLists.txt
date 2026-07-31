@@ -169,6 +169,15 @@ if (WITH_BACKUP)
     target_link_libraries(smsbackup messagedisplay)
     target_link_libraries(smsbackup libGammu ${LIBINTL_LIBRARIES})
 
+    add_executable(smsbackup-status smsbackup-status.c)
+    add_coverage(smsbackup-status)
+    target_link_libraries(smsbackup-status libGammu ${LIBINTL_LIBRARIES})
+    add_test(smsbackup-status
+        "${GAMMU_TEST_PATH}/smsbackup-status${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_CURRENT_BINARY_DIR}/smsbackup-status.smsbackup"
+        "${Gammu_SOURCE_DIR}/tests/smsbackups/status-report-legacy.smsbackup"
+        "${Gammu_SOURCE_DIR}/tests/smsbackups/status-report-8bit.smsbackup")
+
     # List test cases
     file(GLOB SMSBACKUPS
         RELATIVE "${Gammu_SOURCE_DIR}/tests/smsbackups"

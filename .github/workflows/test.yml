@@ -122,6 +122,83 @@ jobs:
         cmake --build _build-mssql --parallel 2 --target gammu-smsd gammu-smsd-inject gammu-smsd-monitor
     - name: Test ODBC with Microsoft SQL Server
       run: ctest --test-dir _build-mssql --output-on-failure -R '^smsd-odbc-mssql$'
+  oracle-odbc:
+    runs-on: ubuntu-24.04
+    container:
+      image: container-registry.oracle.com/os/oraclelinux:9@sha256:52e88efdb3f5bc7204e56ded4f6b9a9bf0cc4971e12717c634595f41578a1b29
+    env:
+      CTEST_OUTPUT_ON_FAILURE: 1
+      ORACLE_PASSWORD: GammuOracle2026
+    services:
+      oracle:
+        image: container-registry.oracle.com/database/free:latest-lite@sha256:b97a43b16688df49582698cc5d2e81c50e6d4f663141366ee101af54413e8758
+        env:
+          ORACLE_PWD: GammuOracle2026
+        options: >-
+          --shm-size=1g
+          --health-cmd="/opt/oracle/checkDBStatus.sh"
+          --health-interval=10s
+          --health-timeout=10s
+          --health-start-period=60s
+          --health-retries=30
+    steps:
+    - name: Install build and Oracle ODBC tools
+      run: |
+        cat > /etc/yum.repos.d/oracle-instantclient.repo <<'EOF'
+        [ol9_oracle_instantclient]
+        name=Oracle Instant Client for Oracle Linux 9 ($basearch)
+        baseurl=https://yum.oracle.com/repo/OracleLinux/OL9/oracle/instantclient/$basearch/
+        gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle
+        gpgcheck=1
+        enabled=1
+        EOF
+        dnf install -y --enablerepo=ol9_codeready_builder \
+          cmake gcc git glib2-devel make unixODBC-devel \
+          oracle-instantclient19.31-basic \
+          oracle-instantclient19.31-odbc \
+          oracle-instantclient19.31-sqlplus
+        dnf clean all
+        client_bin=$(dirname "$(rpm -ql oracle-instantclient19.31-sqlplus | grep '/sqlplus$')")
+        client_lib=$(dirname "$(rpm -ql oracle-instantclient19.31-odbc | grep '/libsqora.so')")
+        echo "$client_bin" >> "$GITHUB_PATH"
+        echo "LD_LIBRARY_PATH=$client_lib" >> "$GITHUB_ENV"
+        echo "NLS_LANG=.AL32UTF8" >> "$GITHUB_ENV"
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+    - name: Configure Oracle ODBC
+      run: |
+        oracle_driver=$(rpm -ql oracle-instantclient19.31-odbc | grep '/libsqora.so')
+        cat > /etc/odbcinst.ini <<EOF
+        [Oracle]
+        Description = Oracle Instant Client ODBC
+        Driver = $oracle_driver
+        EOF
+        cat > /etc/odbc.ini <<'EOF'
+        [smsd-oracle]
+        Driver = Oracle
+        ServerName = //oracle:1521/FREEPDB1
+        EOF
+    - name: Create database user
+      run: |
+        sqlplus -L -S "system/$ORACLE_PASSWORD@//oracle:1521/FREEPDB1" <<'EOF'
+        WHENEVER SQLERROR EXIT SQL.SQLCODE
+        CREATE USER smsd IDENTIFIED BY "GammuOracle2026";
+        GRANT CREATE SESSION, CREATE TABLE, CREATE SEQUENCE, CREATE TRIGGER,
+          UNLIMITED TABLESPACE TO smsd;
+        EOF
+    - name: Configure and build
+      run: |
+        cmake -S . -B _build-oracle \
+          -DORACLE_TESTING=ON \
+          -DORACLE_HOST=oracle:1521 \
+          -DORACLE_SERVICE=FREEPDB1 \
+          -DORACLE_USER=smsd \
+          -DORACLE_PASSWORD="$ORACLE_PASSWORD" \
+          -DORACLE_ODBC_DSN=smsd-oracle \
+          -DWITH_BLUETOOTH=OFF \
+          -DWITH_USB=OFF
+        cmake --build _build-oracle --parallel 2 --target gammu-smsd gammu-smsd-inject gammu-smsd-monitor
+    - name: Test ODBC with Oracle
+      run: ctest --test-dir _build-oracle --output-on-failure --no-tests=error -R '^smsd-odbc-oracle$'
   windows:
     runs-on: windows-latest
     env:
