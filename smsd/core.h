@@ -4,6 +4,8 @@
 #ifndef __core_h_
 #define __core_h_
 
+#include <stdint.h>
+
 #include <gammu.h>
 #include <gammu-smsd.h>
 
@@ -17,6 +19,9 @@
 
 #define SMSD_SHM_VERSION (2)
 #define SMSD_DB_VERSION (18)
+#define SMSD_PROCESSED_SMS_CACHE_SIZE 100
+#define SMSD_PROCESSED_SMS_POLL_CYCLES 2
+#define SMSD_SMS_CHECKSUM_LENGTH 33
 
 #include "log.h"
 
@@ -106,6 +111,11 @@ struct _GSM_SMSDConfig {
 	const char	*skipsmscnumber;
 	int		IgnoredMessages;
 	gboolean 	SkipMessage[GSM_MAX_MULTI_SMS];
+	char		ProcessedSMS[SMSD_PROCESSED_SMS_CACHE_SIZE][SMSD_SMS_CHECKSUM_LENGTH];
+	uint64_t	ProcessedSMSPoll[SMSD_PROCESSED_SMS_CACHE_SIZE];
+	size_t		ProcessedSMSUsed;
+	uint64_t	ReceivePollCount;
+	gboolean	ReceivePollInProgress;
 
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND) || defined(ODBC_FOUND)
 	/* options for SQL database */
@@ -230,6 +240,11 @@ extern GSM_Error SMSD_NotSupportedFunction	(void);
  * Checks whether database version is up to date.
  */
 GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version);
+
+/**
+ * Checks whether every PDU in a message was processed from a callback.
+ */
+gboolean SMSD_AllSMSProcessed(GSM_SMSDConfig *Config, const GSM_MultiSMSMessage *sms);
 
 /**
  * Terminates SMSD with logging error messages to log. This does not
