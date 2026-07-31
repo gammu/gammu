@@ -51,12 +51,17 @@ accepted on some platforms):
 
     .. code-block:: text
 
-        client;phone ID;IMEI;sent;received;failed;battery;signal
+        client;phone ID;IMEI;IMSI;sent;received;failed;battery;signal
+
+    CSV status records are always written to standard output and are not given
+    logging prefixes, including when :option:`--use-log` is specified.
 
 .. option:: -l, --use-log
 
-    Use logging as configured in config file.
+    Write human-readable status updates using the logging configuration from
+    the config file.
 
 .. option:: -L, --no-use-log
 
-    Do not use logging as configured in config file (default).
+    Write human-readable status updates to standard output (default). Output is
+    flushed after every polling cycle so it can be consumed by a pipeline.

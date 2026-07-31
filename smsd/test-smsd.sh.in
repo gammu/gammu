@@ -243,7 +243,25 @@ done
 
 sleep 5
 
-$SMSD_MONITOR_CMD -C -c "$CONFIG_PATH" -n 1 -d 0
+MONITOR_CSV=`$SMSD_MONITOR_CMD -C -c "$CONFIG_PATH" -n 1 -d 0`
+echo "$MONITOR_CSV"
+
+MONITOR_SENT=`echo "$MONITOR_CSV" | cut -d ';' -f 5`
+MONITOR_RECEIVED=`echo "$MONITOR_CSV" | cut -d ';' -f 6`
+MONITOR_FAILED=`echo "$MONITOR_CSV" | cut -d ';' -f 7`
+
+MONITOR_OUTPUT=`$SMSD_MONITOR_CMD -c "$CONFIG_PATH" -n 1 -d 0`
+echo "$MONITOR_OUTPUT"
+echo "$MONITOR_OUTPUT" | grep -q "^Sent: $MONITOR_SENT\$"
+echo "$MONITOR_OUTPUT" | grep -q "^Received: $MONITOR_RECEIVED\$"
+echo "$MONITOR_OUTPUT" | grep -q "^Failed: $MONITOR_FAILED\$"
+
+cp "$CONFIG_PATH" "$CONFIG_PATH.monitor-backup"
+sed 's/^logfile = stderr$/logfile = monitor.log/' "$CONFIG_PATH.monitor-backup" > "$CONFIG_PATH"
+rm -f monitor.log
+$SMSD_MONITOR_CMD -l -c "$CONFIG_PATH" -n 1 -d 0
+grep -q "Sent=$MONITOR_SENT, Received=$MONITOR_RECEIVED, Failed=$MONITOR_FAILED" monitor.log
+cp "$CONFIG_PATH.monitor-backup" "$CONFIG_PATH"
 
 if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne $((8 + $INCOMING_USSD)) ] ; then
     echo "ERROR: Wrong number of messages received!"
