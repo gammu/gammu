@@ -16,7 +16,7 @@ jobs:
     name: Build source packages
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1   # v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
     - name: Install dependencies
       run: |
@@ -51,7 +51,7 @@ jobs:
     name: Build Windows installer
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1   # v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
     - name: Build Windows installer
       uses: ./.github/actions/windows-installer
@@ -75,7 +75,7 @@ jobs:
     name: Build Windows minimal installer
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1   # v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
     - name: Build Windows minimal installer
       uses: ./.github/actions/windows-installer
@@ -103,6 +103,10 @@ jobs:
     permissions:
       contents: write
     steps:
+    - name: Check out release tag
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
     - name: Download all artifacts
       uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
       with:
@@ -112,14 +116,48 @@ jobs:
       run: |
         ls artifacts/source/* artifacts/windows-installer/* artifacts/windows-installer-minimal/*
 
+    - name: Prepare release notes
+      if: startsWith(github.ref, 'refs/tags/')
+      env:
+        RELEASE_VERSION: ${{ github.ref_name }}
+      run: |
+        awk -v version="$RELEASE_VERSION" '
+          /^[0-9]{8} - / {
+            if (found) {
+              exit
+            }
+            if (substr($0, 12) == version) {
+              found = 1
+            }
+            next
+          }
+          found {
+            line = $0
+            if (sub(/^\[[^]]\] /, "", line)) {
+              entries++
+            }
+            print line
+          }
+          END {
+            if (!found) {
+              print "No ChangeLog section found for " version > "/dev/stderr"
+              exit 1
+            }
+            if (!entries) {
+              print "No ChangeLog entries found for " version > "/dev/stderr"
+              exit 1
+            }
+          }
+        ' ChangeLog > release-notes.md
+
     - name: Create Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
       with:
+        body_path: release-notes.md
         files: |
           artifacts/source/*
           artifacts/windows-installer/*
           artifacts/windows-installer-minimal/*
         draft: false
         prerelease: false
-        generate_release_notes: true
