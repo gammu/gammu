@@ -4,6 +4,11 @@
 
 cmake_minimum_required (VERSION 3.10)
 
+# Allow special characters in test names on CMake versions which support them.
+if (POLICY CMP0110)
+    cmake_policy (SET CMP0110 NEW)
+endif ()
+
 # Let modern linkers discard duplicate static libraries from transitive
 # dependencies.  Among other things, this avoids duplicate-library warnings
 # from recent Apple linkers.
