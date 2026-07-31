@@ -1239,6 +1239,20 @@ GSM_Error SMSDSQL_RestoreInboxGroups(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
+static const char *SMSDSQL_DeliveryStatus(unsigned char delivery_status)
+{
+	if (delivery_status < 0x03) {
+		return "DeliveryOK";
+	}
+	if (delivery_status & 0x40) {
+		return "DeliveryFailed";
+	}
+	if (delivery_status & 0x20) {
+		return "DeliveryPending";
+	}
+	return "DeliveryUnknown";
+}
+
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, GSM_StringArray *Locations, GSM_StringArray *SentIDs)
 {
@@ -1319,22 +1333,11 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 			}
 
 			if (found) {
-				if (!strcmp(smstext, "Delivered")) {
+				status = SMSDSQL_DeliveryStatus(sms->SMS[i].DeliveryStatus);
+				if (!strcmp(status, "DeliveryOK")) {
 					q = Config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED];
 				} else {
 					q = Config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE];
-				}
-
-				if (!strcmp(smstext, "Delivered")) {
-					status = "DeliveryOK";
-				} else if (!strcmp(smstext, "Failed")) {
-					status = "DeliveryFailed";
-				} else if (!strcmp(smstext, "Pending")) {
-					status = "DeliveryPending";
-				} else if (!strcmp(smstext, "Unknown")) {
-					status = "DeliveryUnknown";
-				} else {
-					status = "";
 				}
 
 				vars[0].type = SQL_TYPE_STRING;

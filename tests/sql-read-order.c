@@ -81,6 +81,9 @@ static int multipart_queries;
 static time_t delivery_time;
 static time_t outbox_insert_time;
 static gboolean delivery_update_seen;
+static gboolean delivery_update_is_delivered;
+static char delivery_status[32];
+static int delivery_status_error;
 static gboolean delivery_select_present;
 static gboolean outbox_is_multipart;
 static gboolean sent_item_present;
@@ -106,8 +109,8 @@ static char query_outbox_body[] = "outbox-body";
 static char query_outbox_multipart[] = "outbox-multipart";
 static char query_sent_item[] = "sent-item";
 static char query_delivery_select[] = "delivery-select";
-static char query_delivery_update[] = "delivery-update";
-static char query_delivery_update_other[] = "delivery-update-other";
+static char query_delivery_update[] = "delivery-update-%1-%e";
+static char query_delivery_update_other[] = "delivery-update-other-%1-%e";
 static char query_inbox_insert[] = "inbox-insert-%1-%2-%3-%4";
 static char query_inbox_metadata[] = "inbox-metadata-%1-%2-%3-%4-%5";
 static char query_restore_inbox_groups[] = "restore-inbox-groups";
@@ -169,6 +172,8 @@ static GSM_Error mock_query(GSM_SMSDConfig *config UNUSED, const char *query, SQ
 {
 	ResultKind kind;
 	int find_limit;
+	char parsed_status[sizeof(delivery_status)];
+	int parsed_status_error;
 
 	if (sscanf(query, "find-id-%d-%d", &find_limit, &find_day_mask) == 2) {
 		test_result(find_limit == 1);
@@ -187,9 +192,20 @@ static GSM_Error mock_query(GSM_SMSDConfig *config UNUSED, const char *query, SQ
 		kind = RESULT_SENT_ITEM;
 	} else if (strcmp(query, "delivery-select") == 0) {
 		kind = RESULT_DELIVERY_SELECT;
-	} else if (strcmp(query, "delivery-update") == 0 || strcmp(query, "delivery-update-other") == 0) {
+	} else if (sscanf(query, "delivery-update-%31[^-]-%d",
+			  parsed_status, &parsed_status_error) == 2) {
 		kind = RESULT_DELIVERY_UPDATE;
 		delivery_update_seen = TRUE;
+		delivery_update_is_delivered = TRUE;
+		strcpy(delivery_status, parsed_status);
+		delivery_status_error = parsed_status_error;
+	} else if (sscanf(query, "delivery-update-other-%31[^-]-%d",
+			  parsed_status, &parsed_status_error) == 2) {
+		kind = RESULT_DELIVERY_UPDATE;
+		delivery_update_seen = TRUE;
+		delivery_update_is_delivered = FALSE;
+		strcpy(delivery_status, parsed_status);
+		delivery_status_error = parsed_status_error;
 	} else if (sscanf(query, "inbox-insert-%lld-%d-%d-%5s",
 			  &inbox_insert[inbox_insert_count].message_id,
 			  &inbox_insert[inbox_insert_count].sequence_position,
@@ -506,6 +522,9 @@ static void reset_mock(void)
 	delivery_fields = 0;
 	multipart_queries = 0;
 	delivery_update_seen = FALSE;
+	delivery_update_is_delivered = FALSE;
+	delivery_status[0] = 0;
+	delivery_status_error = -1;
 	delivery_select_present = TRUE;
 	outbox_insert_time = 1700000000;
 	outbox_is_multipart = TRUE;
@@ -773,7 +792,10 @@ static void test_reconciliation_query_error_is_retryable(void)
 	test_result(sent_item_fields == 0);
 }
 
-static void test_delivery_report_order(void)
+static void check_delivery_report_status(
+	unsigned char tp_status,
+	const char *expected_status,
+	gboolean expected_delivered)
 {
 	GSM_SMSDConfig config;
 	GSM_MultiSMSMessage sms;
@@ -789,17 +811,35 @@ static void test_delivery_report_order(void)
 	sms.SMS[0].PDU = SMS_Status_Report;
 	EncodeUnicode(sms.SMS[0].Number, "+420123456", strlen("+420123456"));
 	EncodeUnicode(sms.SMS[0].SMSC.Number, "+420987654", strlen("+420987654"));
-	EncodeUnicode(sms.SMS[0].Text, "Delivered", strlen("Delivered"));
+	EncodeUnicode(
+		sms.SMS[0].Text,
+		"id:0118463604 sub:001 dlvrd:001 stat:DELIVRD err:0",
+		strlen("id:0118463604 sub:001 dlvrd:001 stat:DELIVRD err:0"));
+	sms.SMS[0].DeliveryStatus = tp_status;
 	delivery_time = Fill_Time_T(sms.SMS[0].DateTime);
 
 	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, &sent_ids);
 
 	test_result(error == ERR_NONE);
 	test_result(delivery_update_seen == TRUE);
+	test_result(delivery_update_is_delivered == expected_delivered);
+	test_result(strcmp(delivery_status, expected_status) == 0);
+	test_result(delivery_status_error == tp_status);
 	test_result(delivery_fields == ((1ULL << 0) | (1ULL << 1) | (1ULL << 2) | (1ULL << 4)));
 	test_result(sent_ids.used == 1);
 	test_result(strcmp(sent_ids.data[0], "123") == 0);
 	GSM_StringArray_Free(&sent_ids);
+}
+
+static void test_delivery_report_statuses(void)
+{
+	check_delivery_report_status(0x00, "DeliveryOK", TRUE);
+	check_delivery_report_status(0x02, "DeliveryOK", TRUE);
+	check_delivery_report_status(0x03, "DeliveryUnknown", FALSE);
+	check_delivery_report_status(0x20, "DeliveryPending", FALSE);
+	check_delivery_report_status(0x40, "DeliveryFailed", FALSE);
+	check_delivery_report_status(0x60, "DeliveryFailed", FALSE);
+	check_delivery_report_status(0x80, "DeliveryUnknown", FALSE);
 }
 
 static void test_unmatched_delivery_report_id(void)
@@ -1466,7 +1506,7 @@ int main(void)
 	test_matching_sending_error_is_skipped();
 	test_reused_sent_item_id_is_rejected();
 	test_reconciliation_query_error_is_retryable();
-	test_delivery_report_order();
+	test_delivery_report_statuses();
 	test_unmatched_delivery_report_id();
 	test_inbox_message_metadata();
 	test_inbox_group_zero_timeout();
