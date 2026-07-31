@@ -31,6 +31,7 @@ typedef enum {
 	RESULT_SENT_ITEM,
 	RESULT_DELIVERY_SELECT,
 	RESULT_DELIVERY_UPDATE,
+	RESULT_CREATE_OUTBOX,
 	RESULT_INBOX_INSERT,
 	RESULT_INBOX_METADATA,
 	RESULT_RESTORE_INBOX_GROUPS,
@@ -86,9 +87,13 @@ static char delivery_status[32];
 static int delivery_status_error;
 static gboolean delivery_select_present;
 static gboolean outbox_is_multipart;
+static gboolean outbox_is_ussd;
+static long long outbox_id;
 static gboolean sent_item_present;
 static gboolean sent_item_mismatch;
 static GSM_Error sent_item_query_error;
+static const char *sent_item_udh;
+static const char *delivery_smsc;
 static int outbox_relative_validity;
 static int sent_item_relative_validity;
 static int outbox_retries;
@@ -99,6 +104,10 @@ static int inbox_insert_count;
 static int inbox_metadata_count;
 static int update_received_count;
 static GSM_Error update_received_error;
+static gboolean quote_date_strings;
+static gboolean oracle_date_literal_seen;
+static char outbox_create_multipart[4][6];
+static int outbox_create_count;
 static int restore_inbox_group_count;
 static InboxInsert inbox_insert[128];
 static InboxMetadata inbox_metadata[128];
@@ -111,7 +120,9 @@ static char query_sent_item[] = "sent-item";
 static char query_delivery_select[] = "delivery-select";
 static char query_delivery_update[] = "delivery-update-%1-%e";
 static char query_delivery_update_other[] = "delivery-update-other-%1-%e";
-static char query_inbox_insert[] = "inbox-insert-%1-%2-%3-%4";
+static char query_create_outbox[] = "create-outbox-%3";
+static char query_create_outbox_multipart[] = "create-outbox-multipart-%3";
+static char query_inbox_insert[] = "inbox-insert-%1-%2-%3-%4-%d";
 static char query_inbox_metadata[] = "inbox-metadata-%1-%2-%3-%4-%5";
 static char query_restore_inbox_groups[] = "restore-inbox-groups";
 static char query_update_received[] = "update-received";
@@ -175,6 +186,10 @@ static GSM_Error mock_query(GSM_SMSDConfig *config UNUSED, const char *query, SQ
 	char parsed_status[sizeof(delivery_status)];
 	int parsed_status_error;
 
+	if (strstr(query, "TIMESTAMP '") != NULL) {
+		oracle_date_literal_seen = TRUE;
+	}
+
 	if (sscanf(query, "find-id-%d-%d", &find_limit, &find_day_mask) == 2) {
 		test_result(find_limit == 1);
 		kind = RESULT_FIND_ID;
@@ -206,7 +221,13 @@ static GSM_Error mock_query(GSM_SMSDConfig *config UNUSED, const char *query, SQ
 		delivery_update_is_delivered = FALSE;
 		strcpy(delivery_status, parsed_status);
 		delivery_status_error = parsed_status_error;
-	} else if (sscanf(query, "inbox-insert-%lld-%d-%d-%5s",
+	} else if (sscanf(query, "create-outbox-multipart-%5s",
+			  outbox_create_multipart[outbox_create_count]) == 1 ||
+		   sscanf(query, "create-outbox-%5s",
+			  outbox_create_multipart[outbox_create_count]) == 1) {
+		kind = RESULT_CREATE_OUTBOX;
+		outbox_create_count++;
+	} else if (sscanf(query, "inbox-insert-%lld-%d-%d-%5[^-]",
 			  &inbox_insert[inbox_insert_count].message_id,
 			  &inbox_insert[inbox_insert_count].sequence_position,
 			  &inbox_insert[inbox_insert_count].part_count,
@@ -319,11 +340,11 @@ static const char *mock_get_string(GSM_SMSDConfig *config UNUSED, SQL_result *re
 			case 2:
 				return NULL;
 			case 1:
-				return "Default_No_Compression";
+				return outbox_is_ussd ? "8bit" : "Default_No_Compression";
 			case 4:
-				return "test message";
+				return outbox_is_ussd ? NULL : "test message";
 			case 6:
-				return "+420123456";
+				return outbox_is_ussd ? "*127*1#" : "+420123456";
 			case 10:
 				return "sql-read-order";
 			case 12:
@@ -352,7 +373,7 @@ static const char *mock_get_string(GSM_SMSDConfig *config UNUSED, SQL_result *re
 			case 1:
 				return "Default_No_Compression";
 			case 2:
-				return "";
+				return sent_item_udh;
 			case 4:
 				return "test message";
 			case 5:
@@ -369,7 +390,7 @@ static const char *mock_get_string(GSM_SMSDConfig *config UNUSED, SQL_result *re
 			return "SendingOK";
 		}
 		if (field == 4) {
-			return "+420987654";
+			return delivery_smsc;
 		}
 	} else if (state->kind == RESULT_RESTORE_INBOX_GROUPS) {
 		RestoreInboxGroup *group = &restore_inbox_groups[state->row - 1];
@@ -395,14 +416,14 @@ static long long mock_get_number(GSM_SMSDConfig *config UNUSED, SQL_result *resu
 	ResultState *state = record_field(result, field);
 
 	if (state->kind == RESULT_FIND_ID && field == 0) {
-		return 42;
+		return outbox_id;
 	}
 	if (state->kind == RESULT_OUTBOX_BODY) {
 		switch (field) {
 			case 3:
-				return -1;
+				return outbox_is_ussd ? GSM_SMS_USSD : -1;
 			case 5:
-				return 42;
+				return outbox_id;
 			case 8:
 				return outbox_relative_validity;
 			case 11:
@@ -489,10 +510,14 @@ static gboolean mock_get_bool(GSM_SMSDConfig *config UNUSED, SQL_result *result,
 
 static char *mock_quote_string(GSM_SMSDConfig *config UNUSED, const char *value)
 {
-	char *result = malloc(strlen(value) + 1);
+	char *result = malloc(strlen(value) + (quote_date_strings ? 3 : 1));
 
 	test_result(result != NULL);
-	strcpy(result, value);
+	if (quote_date_strings) {
+		sprintf(result, "'%s'", value);
+	} else {
+		strcpy(result, value);
+	}
 	return result;
 }
 
@@ -528,9 +553,13 @@ static void reset_mock(void)
 	delivery_select_present = TRUE;
 	outbox_insert_time = 1700000000;
 	outbox_is_multipart = TRUE;
+	outbox_is_ussd = FALSE;
+	outbox_id = 5000000000LL;
 	sent_item_present = FALSE;
 	sent_item_mismatch = FALSE;
 	sent_item_query_error = ERR_NONE;
+	sent_item_udh = "";
+	delivery_smsc = "+420987654";
 	outbox_relative_validity = SMS_VALID_Max_Time;
 	sent_item_relative_validity = SMS_VALID_Max_Time;
 	outbox_retries = 0;
@@ -541,9 +570,13 @@ static void reset_mock(void)
 	inbox_metadata_count = 0;
 	update_received_count = 0;
 	update_received_error = ERR_NONE;
+	quote_date_strings = FALSE;
+	oracle_date_literal_seen = FALSE;
+	outbox_create_count = 0;
 	restore_inbox_group_count = 0;
 	memset(inbox_insert, 0, sizeof(inbox_insert));
 	memset(inbox_metadata, 0, sizeof(inbox_metadata));
+	memset(outbox_create_multipart, 0, sizeof(outbox_create_multipart));
 	memset(restore_inbox_groups, 0, sizeof(restore_inbox_groups));
 }
 
@@ -566,6 +599,8 @@ static void setup_config(GSM_SMSDConfig *config)
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_SELECT] = query_delivery_select;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_DELIVERED] = query_delivery_update;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE] = query_delivery_update_other;
+	config->SMSDSQL_queries[SQL_QUERY_CREATE_OUTBOX] = query_create_outbox;
+	config->SMSDSQL_queries[SQL_QUERY_CREATE_OUTBOX_MULTIPART] = query_create_outbox_multipart;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT] = query_inbox_insert;
 	config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_METADATA] = query_inbox_metadata;
 	config->SMSDSQL_queries[SQL_QUERY_RESTORE_INBOX_GROUPS] = query_restore_inbox_groups;
@@ -575,6 +610,7 @@ static void setup_config(GSM_SMSDConfig *config)
 static void test_phone_status_timeout(void)
 {
 	GSM_SMSDConfig config;
+	char predicate[256];
 
 	setup_config(&config);
 
@@ -597,6 +633,19 @@ static void test_phone_status_timeout(void)
 	config.sql = "mssql";
 	test_result(strcmp(SMSDSQL_NowPlus(&config, 70),
 			"DATEADD(second, 70, CURRENT_TIMESTAMP)") == 0);
+	config.sql = "oracle";
+	SMSDSQL_StringEqualsPredicate(&config, "SenderID", "%P",
+		predicate, sizeof(predicate));
+	test_result(strcmp(predicate,
+			"(SenderID = %P OR (SenderID IS NULL AND %P IS NULL))") == 0);
+	test_result(strcmp(SMSDSQL_NowPlus(&config, 70),
+			"CURRENT_TIMESTAMP + NUMTODSINTERVAL(70, 'SECOND')") == 0);
+	test_result(strcmp(SMSDSQL_CurrentTime(&config),
+			"TO_CHAR(CURRENT_TIMESTAMP, 'HH24:MI:SS')") == 0);
+	config.sql = "mysql";
+	SMSDSQL_StringEqualsPredicate(&config, "RecipientID", "%P",
+		predicate, sizeof(predicate));
+	test_result(strcmp(predicate, "`RecipientID` = %P") == 0);
 }
 
 static void test_find_outbox_order(void)
@@ -613,7 +662,7 @@ static void test_find_outbox_order(void)
 	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
 
 	test_result(error == ERR_NONE);
-	test_result(strcmp(id, "42") == 0);
+	test_result(strcmp(id, "5000000000") == 0);
 	test_result(sms.Number == 2);
 	test_result(config.SkipMessage[0] == TRUE);
 	test_result(config.SkipMessage[1] == TRUE);
@@ -656,6 +705,30 @@ static void test_find_outbox_order(void)
 	test_result(outbox_multipart_fields == (((1ULL << 6) - 1) | (1ULL << 7)));
 }
 
+static void test_find_textless_ussd(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	char id[32];
+	char destination[32];
+
+	reset_mock();
+	setup_config(&config);
+	memset(&sms, 0, sizeof(sms));
+	outbox_is_multipart = FALSE;
+	outbox_is_ussd = TRUE;
+	outbox_status = "Reserved";
+
+	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_NONE);
+	test_result(sms.Number == 1);
+	test_result(sms.SMS[0].Class == GSM_SMS_USSD);
+	EncodeUTF8(destination, sms.SMS[0].Number);
+	test_result(strcmp(destination, "*127*1#") == 0);
+}
+
 static void test_find_outbox_without_sent_item(void)
 {
 	GSM_SMSDConfig config;
@@ -690,6 +763,29 @@ static void test_matching_sent_item_is_skipped(void)
 	outbox_is_multipart = FALSE;
 	outbox_status = "Reserved";
 	sent_item_present = TRUE;
+
+	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_NONE);
+	test_result(sms.Number == 1);
+	test_result(config.SkipMessage[0] == TRUE);
+	test_result(sent_item_fields == ((1ULL << 10) - 1));
+}
+
+static void test_null_sent_item_udh_matches_empty(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	char id[32];
+
+	reset_mock();
+	setup_config(&config);
+	memset(&sms, 0, sizeof(sms));
+	outbox_is_multipart = FALSE;
+	outbox_status = "Reserved";
+	sent_item_present = TRUE;
+	sent_item_udh = NULL;
 
 	error = SMSDSQL.FindOutboxSMS(&sms, &config, id);
 
@@ -840,6 +936,36 @@ static void test_delivery_report_statuses(void)
 	check_delivery_report_status(0x40, "DeliveryFailed", FALSE);
 	check_delivery_report_status(0x60, "DeliveryFailed", FALSE);
 	check_delivery_report_status(0x80, "DeliveryUnknown", FALSE);
+}
+
+static void test_delivery_report_with_null_smsc(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_StringArray sent_ids;
+	GSM_Error error;
+
+	reset_mock();
+	setup_config(&config);
+	delivery_smsc = NULL;
+	memset(&sms, 0, sizeof(sms));
+	GSM_StringArray_New(&sent_ids);
+	sms.Number = 1;
+	GSM_SetDefaultSMSData(&sms.SMS[0]);
+	sms.SMS[0].PDU = SMS_Status_Report;
+	EncodeUnicode(sms.SMS[0].Number, "+420123456", strlen("+420123456"));
+	EncodeUnicode(sms.SMS[0].Text, "Failed", strlen("Failed"));
+	sms.SMS[0].DeliveryStatus = 0x40;
+	delivery_time = Fill_Time_T(sms.SMS[0].DateTime);
+
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, NULL, &sent_ids);
+
+	test_result(error == ERR_NONE);
+	test_result(delivery_update_seen == TRUE);
+	test_result(strcmp(delivery_status, "DeliveryFailed") == 0);
+	test_result(sent_ids.used == 1);
+	test_result(strcmp(sent_ids.data[0], "123") == 0);
+	GSM_StringArray_Free(&sent_ids);
 }
 
 static void test_unmatched_delivery_report_id(void)
@@ -1050,6 +1176,73 @@ static void test_inbox_message_metadata(void)
 	test_result(inbox_metadata[5].part_count == 3);
 	test_result(inbox_metadata[5].row_id == 106);
 	free_inbox_groups(&config);
+}
+
+static void test_oracle_inbox_boolean_literals(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_StringArray locations;
+	GSM_Error error;
+
+	reset_mock();
+	setup_config(&config);
+	config.sql = "oracle";
+	quote_date_strings = TRUE;
+	memset(&sms, 0, sizeof(sms));
+	sms.Number = 1;
+	GSM_SetDefaultSMSData(&sms.SMS[0]);
+	sms.SMS[0].PDU = SMS_Deliver;
+	GSM_StringArray_New(&locations);
+
+	error = SMSDSQL.SaveInboxSMS(&sms, &config, &locations, NULL);
+
+	test_result(error == ERR_NONE);
+	test_result(inbox_insert_count == 1);
+	test_result(inbox_metadata_count == 1);
+	test_result(strcmp(inbox_insert[0].processed, "1") == 0);
+	test_result(strcmp(inbox_metadata[0].processed, "0") == 0);
+	test_result(oracle_date_literal_seen == TRUE);
+	GSM_StringArray_Free(&locations);
+	free_inbox_groups(&config);
+}
+
+static void test_oracle_outbox_boolean_literals(void)
+{
+	GSM_SMSDConfig config;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error;
+	char id[32];
+	int i;
+
+	reset_mock();
+	setup_config(&config);
+	config.sql = "oracle";
+	memset(&sms, 0, sizeof(sms));
+	sms.Number = 1;
+	GSM_SetDefaultSMSData(&sms.SMS[0]);
+
+	error = SMSDSQL.CreateOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_NONE);
+	test_result(outbox_create_count == 1);
+	test_result(strcmp(outbox_create_multipart[0], "0") == 0);
+
+	reset_mock();
+	setup_config(&config);
+	config.sql = "oracle";
+	memset(&sms, 0, sizeof(sms));
+	sms.Number = 2;
+	for (i = 0; i < sms.Number; i++) {
+		GSM_SetDefaultSMSData(&sms.SMS[i]);
+	}
+
+	error = SMSDSQL.CreateOutboxSMS(&sms, &config, id);
+
+	test_result(error == ERR_NONE);
+	test_result(outbox_create_count == 2);
+	test_result(strcmp(outbox_create_multipart[0], "1") == 0);
+	test_result(strcmp(outbox_create_multipart[1], "1") == 0);
 }
 
 static void test_inbox_group_zero_timeout(void)
@@ -1500,15 +1693,20 @@ int main(void)
 {
 	test_phone_status_timeout();
 	test_find_outbox_order();
+	test_find_textless_ussd();
 	test_find_outbox_without_sent_item();
 	test_matching_sent_item_is_skipped();
+	test_null_sent_item_udh_matches_empty();
 	test_inherited_sent_item_validity_is_skipped();
 	test_matching_sending_error_is_skipped();
 	test_reused_sent_item_id_is_rejected();
 	test_reconciliation_query_error_is_retryable();
 	test_delivery_report_statuses();
+	test_delivery_report_with_null_smsc();
 	test_unmatched_delivery_report_id();
 	test_inbox_message_metadata();
+	test_oracle_inbox_boolean_literals();
+	test_oracle_outbox_boolean_literals();
 	test_inbox_group_zero_timeout();
 	test_inbox_group_fixed_timeout();
 	test_inbox_group_cleanup_on_single_message();

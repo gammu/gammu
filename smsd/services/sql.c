@@ -154,6 +154,27 @@ static const char *SMSDSQL_EscapeChar(GSM_SMSDConfig * Config)
 	}
 }
 
+void SMSDSQL_StringEqualsPredicate(
+	GSM_SMSDConfig *Config,
+	const char *field,
+	const char *value,
+	char *result,
+	size_t size)
+{
+	const char *driver_name = SMSDSQL_SQLName(Config);
+	const char *escape_char = SMSDSQL_EscapeChar(Config);
+
+	if (strcasecmp(driver_name, "oracle") == 0) {
+		snprintf(result, size,
+			"(%s%s%s = %s OR (%s%s%s IS NULL AND %s IS NULL))",
+			escape_char, field, escape_char, value,
+			escape_char, field, escape_char, value);
+	} else {
+		snprintf(result, size, "%s%s%s = %s",
+			escape_char, field, escape_char, value);
+	}
+}
+
 const char *SMSDSQL_TimeDiff(GSM_SMSDConfig *Config, const char *field)
 {
 	const char *driver_name;
@@ -263,7 +284,7 @@ static const char *SMSDSQL_RownumClause(GSM_SMSDConfig * Config, const char *cou
 
 	driver_name = SMSDSQL_SQLName(Config);
 
-	if (strcasecmp(driver_name, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0) {
+	if (strcasecmp(driver_name, "freetds") == 0) {
 		const char *prefix = in_where ? " AND " : " WHERE ";
 
 		snprintf(result, sizeof(result), "%sROWNUM <= %s ", prefix, count);
@@ -295,6 +316,7 @@ static const char *SMSDSQL_TopClause(GSM_SMSDConfig * Config, const char *count)
 
 const char limit_clause_access[] = "";
 const char limit_clause_fallback[] = "LIMIT";
+const char limit_clause_oracle[] = "FETCH FIRST";
 
 static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config, const char *count)
 {
@@ -303,7 +325,11 @@ static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config, const char *coun
 
 	driver_name = SMSDSQL_SQLName(Config);
 
-	if (strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "access") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "oracle") == 0) {
+	if (strcasecmp(driver_name, "oracle") == 0) {
+		snprintf(result, sizeof(result), "%s %s ROWS ONLY",
+			limit_clause_oracle, count);
+		return result;
+	} else if (strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "access") == 0 || strcasecmp(driver_name, "freetds") == 0) {
 		return limit_clause_access;
 	} else {
 		strcpy(result, limit_clause_fallback);
@@ -327,9 +353,10 @@ const char currtime_pgsql[] = "localtime";
 const char currtime_sqlite[] = "time('now', 'localtime')";
 const char currtime_freetds[] = "CURRENT_TIME";
 const char currtime_mssql[] = "CAST(CURRENT_TIMESTAMP AS time)";
+const char currtime_oracle[] = "TO_CHAR(CURRENT_TIMESTAMP, 'HH24:MI:SS')";
 const char currtime_fallback[] = "CURTIME()";
 
-static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
+const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
 {
 	const char *driver_name;
 
@@ -343,7 +370,9 @@ static const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config)
 		return currtime_sqlite;
 	} else if (strcasecmp(driver_name, "mssql") == 0) {
 		return currtime_mssql;
-	} else if (strcasecmp(Config->driver, "oracle") == 0 || strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "sybase") == 0) {
+	} else if (strcasecmp(driver_name, "oracle") == 0) {
+		return currtime_oracle;
+	} else if (strcasecmp(driver_name, "freetds") == 0 || strcasecmp(driver_name, "sybase") == 0) {
 		return currtime_freetds;
 	} else if (strcasecmp(Config->driver, "odbc") == 0) {
 		return currtime_odbc;
@@ -458,7 +487,7 @@ void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static
     strcpy(static_buff, "0000-00-00 00:00:00");
   }
   else if (strcasecmp(driver_name, "oracle") == 0) {
-    strftime(static_buff, size, "TIMESTAMP '%Y-%m-%d %H:%M:%S'", tm);
+    strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", tm);
   }
   else if (strcasecmp(driver_name, "mssql") == 0) {
     strftime(static_buff, size, "%Y-%m-%dT%H:%M:%S", tm);
@@ -488,6 +517,47 @@ static void SMSDSQL_EncodeCanonicalNumber(
 	}
 }
 
+static void SMSDSQL_SetBooleanVar(
+	GSM_SMSDConfig *Config,
+	SQL_Var *variable,
+	gboolean value,
+	gboolean uppercase)
+{
+	if (strcasecmp(SMSDSQL_SQLName(Config), "oracle") == 0) {
+		variable->type = SQL_TYPE_INT;
+		variable->v.i = value ? 1 : 0;
+	} else {
+		variable->type = SQL_TYPE_STRING;
+		if (uppercase) {
+			variable->v.s = value ? "TRUE" : "FALSE";
+		} else {
+			variable->v.s = value ? "true" : "false";
+		}
+	}
+}
+
+static char *SMSDSQL_QuoteDate(GSM_SMSDConfig *Config, const char *value)
+{
+	char *quoted = Config->db->QuoteString(Config, value);
+	char *result;
+
+	if (quoted == NULL) {
+		return NULL;
+	}
+	if (strcasecmp(SMSDSQL_SQLName(Config), "oracle") != 0) {
+		return quoted;
+	}
+
+	result = malloc(strlen(quoted) + strlen("TIMESTAMP ") + 1);
+	if (result == NULL) {
+		free(quoted);
+		return NULL;
+	}
+	sprintf(result, "TIMESTAMP %s", quoted);
+	free(quoted);
+	return result;
+}
+
 static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_query, GSM_SMSMessage *sms,
 	GSM_MultiSMSMessage * smsmulti, const SQL_Var *params, SQL_result * res, gboolean retry)
 {
@@ -496,6 +566,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 	const char *to_print, *q = sql_query;
 	int int_to_print;
 	int numeric;
+	int date;
 	int n, argc = 0, i;
 	struct GSM_SMSDdbobj *db = Config->db;
 	GSM_MultiPartSMSInfo SMSInfo;
@@ -525,6 +596,15 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 						ptr += strlen(buffer2);
 						free(buffer2);
 						break;
+					case SQL_TYPE_SMSD_DATE:
+						buffer2 = SMSDSQL_QuoteDate(Config, params[n].v.s);
+						if (buffer2 == NULL) {
+							return ERR_MOREMEMORY;
+						}
+						memcpy(ptr, buffer2, strlen(buffer2));
+						ptr += strlen(buffer2);
+						free(buffer2);
+						break;
 					default:
 						SMSD_Log(DEBUG_ERROR, Config, "SQL: unknown type: %i (application bug) in query: `%s`", params[n].type, sql_query);
 						return ERR_BUG;
@@ -538,6 +618,7 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 			continue;
 		}
 		numeric = 0;
+		date = 0;
 		to_print = NULL;
 		switch (c) {
 			case 'I':
@@ -670,10 +751,12 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 						case 'C':
 							SMSDSQL_Time2String(Config, Fill_Time_T(sms->SMSCTime), static_buff, sizeof(static_buff));
 							to_print = static_buff;
+							date = 1;
 							break;
 						case 'd':
 							SMSDSQL_Time2String(Config, Fill_Time_T(sms->DateTime), static_buff, sizeof(static_buff));
 							to_print = static_buff;
+							date = 1;
 							break;
 						case 'e':
 							int_to_print = sms->DeliveryStatus;
@@ -693,7 +776,14 @@ static GSM_Error SMSDSQL_NamedQuery(GSM_SMSDConfig * Config, const char *sql_que
 		if (numeric) {
 			ptr += sprintf(ptr, "%i", int_to_print);
 		} else if (to_print != NULL) {
-			buffer2 = db->QuoteString(Config, to_print);
+			if (date) {
+				buffer2 = SMSDSQL_QuoteDate(Config, to_print);
+			} else {
+				buffer2 = db->QuoteString(Config, to_print);
+			}
+			if (buffer2 == NULL) {
+				return ERR_MOREMEMORY;
+			}
 			memcpy(ptr, buffer2, strlen(buffer2));
 			ptr += strlen(buffer2);
 			free(buffer2);
@@ -1305,6 +1395,12 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				state = db->GetString(Config, &res, 1);
 				t_time1 = db->GetDate(Config, &res, 2);
 				smsc = db->GetString(Config, &res, 4);
+				if (state == NULL) {
+					state = "";
+				}
+				if (smsc == NULL) {
+					smsc = "";
+				}
 				SMSD_Log(DEBUG_NOTICE, Config, "Checking for delivery report, SMSC=%s, state=%s", smsc, state);
 
 				if (strcmp(smsc, smsc_message) != 0) {
@@ -1343,7 +1439,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 				vars[0].type = SQL_TYPE_STRING;
 				vars[0].v.s = status;			/* Status */
 				vars[1].type = SQL_TYPE_INT;
-				vars[1].v.i = (long)sent_id; /* ID */
+				vars[1].v.i = (long long)sent_id; /* ID */
 				vars[2].type = SQL_TYPE_NONE;
 
 				error = SMSDSQL_NamedQuery(Config, q, &sms->SMS[i], sms, vars, &res2, FALSE);
@@ -1404,8 +1500,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		vars[1].v.i = sequence_position;           /* SequencePosition */
 		vars[2].type = SQL_TYPE_INT;
 		vars[2].v.i = part_count;                  /* PartCount */
-		vars[3].type = SQL_TYPE_STRING;
-		vars[3].v.s = "true";                      /* Processed */
+		SMSDSQL_SetBooleanVar(Config, &vars[3], TRUE, FALSE); /* Processed */
 		vars[4].type = SQL_TYPE_NONE;
 
 		error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_INSERT], &sms->SMS[i], sms, vars, &res, FALSE);
@@ -1449,8 +1544,7 @@ static GSM_Error SMSDSQL_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig 
 		vars[2].v.i = part_count;                  /* PartCount */
 		vars[3].type = SQL_TYPE_INT;
 		vars[3].v.i = (long long)new_id;           /* ID */
-		vars[4].type = SQL_TYPE_STRING;
-		vars[4].v.s = "false";                     /* Processed */
+		SMSDSQL_SetBooleanVar(Config, &vars[4], FALSE, FALSE); /* Processed */
 		vars[5].type = SQL_TYPE_NONE;
 
 		error = SMSDSQL_NamedQuery(Config, Config->SMSDSQL_queries[SQL_QUERY_SAVE_INBOX_SMS_UPDATE_METADATA], &sms->SMS[i], sms, vars, &res2, FALSE);
@@ -1559,7 +1653,13 @@ static GSM_Error SMSDSQL_UpdateRetries(GSM_SMSDConfig * Config, char *ID)
 
 static gboolean SMSDSQL_StringEquals(const char *actual, const char *expected)
 {
-	return actual != NULL && strcmp(actual, expected) == 0;
+	if (actual == NULL) {
+		actual = "";
+	}
+	if (expected == NULL) {
+		expected = "";
+	}
+	return strcmp(actual, expected) == 0;
 }
 
 static gboolean SMSDSQL_StatusWasSent(const char *status)
@@ -1776,7 +1876,7 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 			return ERR_EMPTY;
 		}
 
-		sprintf(ID, "%ld", (long)db->GetNumber(Config, &res, 0));
+		sprintf(ID, "%lld", db->GetNumber(Config, &res, 0));
 		timestamp = db->GetDate(Config, &res, 1);
 
 		db->FreeResult(Config, &res);
@@ -1852,10 +1952,10 @@ static GSM_Error SMSDSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig
 		}
 
 		if (text == NULL || text_len == 0) {
-			if (text_decoded == NULL) {
+			if (text_decoded == NULL && sms->SMS[sms->Number].Class != GSM_SMS_USSD) {
 				SMSD_Log(DEBUG_ERROR, Config, "Message without text!");
 				return ERR_UNKNOWN;
-			} else {
+			} else if (text_decoded != NULL) {
 				SMSD_Log(DEBUG_NOTICE, Config, "Message: %s", text_decoded);
 				DecodeUTF8(sms->SMS[sms->Number].Text, text_decoded, strlen(text_decoded));
 			}
@@ -1988,11 +2088,10 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	SQL_result res;
 	SQL_Var vars[6];
 	struct GSM_SMSDdbobj *db = Config->db;
-	const char *report, *multipart, *q;
+	const char *report, *q;
 	GSM_Error error;
 
 	sprintf(creator, "Gammu %s",GAMMU_VERSION); /* %1 */
-	multipart = (sms->Number == 1) ? "FALSE" : "TRUE"; /* %3 */
 
 	for (i = 0; i < sms->Number; i++) {
 		report = (sms->SMS[i].PDU == SMS_Status_Report) ? "yes": "default"; /* %2 */
@@ -2006,8 +2105,7 @@ static GSM_Error SMSDSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 		vars[0].v.s = creator;
 		vars[1].type = SQL_TYPE_STRING;
 		vars[1].v.s = report;
-		vars[2].type = SQL_TYPE_STRING;
-		vars[2].v.s = multipart;
+		SMSDSQL_SetBooleanVar(Config, &vars[2], sms->Number != 1, TRUE);
 		vars[3].type = SQL_TYPE_INT;
 		vars[3].v.i = i+1;
 		vars[4].type = SQL_TYPE_INT;
@@ -2076,7 +2174,7 @@ static GSM_Error SMSDSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 	vars[2].v.s = message_state;
 	vars[3].type = SQL_TYPE_INT;
 	vars[3].v.i = TPMR;
-	vars[4].type = SQL_TYPE_STRING;
+	vars[4].type = SQL_TYPE_SMSD_DATE;
 	vars[4].v.s = Config->DT;
 	vars[5].type = SQL_TYPE_NONE;
 
@@ -2207,6 +2305,8 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 {
 	int locktime, phone_timeout;
 	const char *escape_char;
+	char sender_id_predicate[256];
+	char recipient_id_predicate[256];
 
 	Config->inbox_groups = NULL;
 
@@ -2308,6 +2408,10 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 	}
 
 	escape_char = SMSDSQL_EscapeChar(Config);
+	SMSDSQL_StringEqualsPredicate(Config, "SenderID", "%P",
+		sender_id_predicate, sizeof(sender_id_predicate));
+	SMSDSQL_StringEqualsPredicate(Config, "RecipientID", "%P",
+		recipient_id_predicate, sizeof(recipient_id_predicate));
 #define ESCAPE_FIELD(x) escape_char, x, escape_char
 
 	locktime = Config->loopsleep * 8; /* reserve 8 sec per message */
@@ -2350,7 +2454,7 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", ESCAPE_FIELD("SMSCNumber"), " "
 			"FROM ", Config->table_sentitems, " WHERE ",
 			ESCAPE_FIELD("DeliveryDateTime"), " IS NULL AND ",
-			ESCAPE_FIELD("SenderID"), " = %P AND ",
+			sender_id_predicate, " AND ",
 			ESCAPE_FIELD("TPMR"), " = %t AND ",
 			ESCAPE_FIELD("DestinationNumber"), " = %R", NULL) != ERR_NONE) {
 		return ERR_UNKNOWN;
@@ -2418,12 +2522,12 @@ GSM_Error SMSDSQL_ReadConfiguration(GSM_SMSDConfig *Config)
 			", ", SMSDSQL_TimeDiff(Config, "InsertIntoDB"),
 			" FROM ", Config->table_inbox,
 			" WHERE ", ESCAPE_FIELD("PartCount"), " > 1"
-			" AND ", ESCAPE_FIELD("RecipientID"), " = %P"
+			" AND ", recipient_id_predicate,
 			" AND ", ESCAPE_FIELD("MessageID"), " IN (SELECT ",
 				ESCAPE_FIELD("MessageID"),
 				" FROM ", Config->table_inbox,
 				" WHERE ", ESCAPE_FIELD("PartCount"), " > 1"
-				" AND ", ESCAPE_FIELD("RecipientID"), " = %P"
+				" AND ", recipient_id_predicate,
 				" AND ", ESCAPE_FIELD("InsertIntoDB"), " >= ",
 					SMSDSQL_NowMinus(Config, Config->multiparttimeout),
 			") ORDER BY ", ESCAPE_FIELD("InsertIntoDB"), " ASC, ",

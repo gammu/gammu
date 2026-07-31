@@ -13,6 +13,21 @@ extern GSM_SMSDService SMSDSQL;
 const char *SMSDSQL_NowPlus(GSM_SMSDConfig * Config, int seconds);
 
 /**
+ * Returns a database-specific expression for the current local time.
+ */
+const char *SMSDSQL_CurrentTime(GSM_SMSDConfig * Config);
+
+/**
+ * Formats a string equality predicate, including NULL values where needed.
+ */
+void SMSDSQL_StringEqualsPredicate(
+	GSM_SMSDConfig *Config,
+	const char *field,
+	const char *value,
+	char *result,
+	size_t size);
+
+/**
  * Returns phone status expiry interval including the heartbeat grace period.
  */
 int SMSDSQL_PhoneStatusTimeout(unsigned int status_frequency);

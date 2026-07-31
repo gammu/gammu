@@ -70,6 +70,30 @@ scripts for several databases to do that:
 * :ref:`mysql-create`
 * :ref:`pgsql-create`
 * :ref:`sqlite-create`
+* :ref:`oracle-create`
+
+.. _oracle-create:
+
+Oracle
+^^^^^^
+
+Use the Oracle schema shipped with Gammu:
+
+.. literalinclude:: ../../sql/oracle.sql
+    :language: sql
+
+The same script is installed with the other SQL examples as
+:file:`docs/sql/oracle.sql`.
+
+Gammu passes UTF-8 through the ANSI ODBC interface, so configure the Oracle
+client used by SMSD for the ``AL32UTF8`` character set:
+
+.. code-block:: sh
+
+    export NLS_LANG=.AL32UTF8
+
+Set this in the environment of the SMSD service, not only in an interactive
+shell.
 
 
 Example

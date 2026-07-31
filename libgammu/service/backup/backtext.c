@@ -3847,9 +3847,26 @@ fail_error:
 
 /* ---------------------- backup files for SMS ----------------------------- */
 
+static unsigned char SMSBackupDeliveryStatusFromText(const unsigned char *text)
+{
+	const char *decoded = DecodeUnicodeString(text);
+
+	if (strcasecmp(decoded, "Failed") == 0) {
+		return 0x40;
+	}
+	if (strcasecmp(decoded, "Pending") == 0) {
+		return 0x20;
+	}
+	if (strcasecmp(decoded, "Unknown") == 0) {
+		return 0x80;
+	}
+	return 0x00;
+}
+
 static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMessage *SMS)
 {
 	unsigned char *readvalue=NULL, *readbuffer=NULL;
+	int delivery_status;
 
 	GSM_SetDefaultSMSData(SMS);
 
@@ -3927,6 +3944,16 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	}
 	free(readbuffer);
 	readbuffer=NULL;
+	delivery_status = INI_GetInt(file_info, section, "DeliveryStatus", -1);
+	if (delivery_status >= 0 && delivery_status <= 0xff) {
+		SMS->DeliveryStatus = delivery_status;
+	} else if (SMS->PDU == SMS_Status_Report &&
+		   (SMS->Coding == SMS_Coding_Unicode_No_Compression ||
+		    SMS->Coding == SMS_Coding_Default_No_Compression)) {
+		/* Older text backups stored only the human-readable report status.
+		 * Binary payloads are not necessarily Unicode terminated. */
+		SMS->DeliveryStatus = SMSBackupDeliveryStatusFromText(SMS->Text);
+	}
 	SMS->Folder = INI_GetInt(file_info, section, "Folder", SMS->Folder);
 	SMS->UDH.Type		= UDH_NoUDH;
 	SMS->UDH.Length 	= 0;
@@ -4082,6 +4109,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			fprintf(file,"PDU = Submit\n");
 		} else if (backup->SMS[i]->PDU == SMS_Status_Report) {
 			fprintf(file,"PDU = Status_Report\n");
+			fprintf(file,"DeliveryStatus = %u\n", backup->SMS[i]->DeliveryStatus);
 		}
 		if (backup->SMS[i]->DateTime.Year != 0) {
 			fprintf(file,"DateTime");

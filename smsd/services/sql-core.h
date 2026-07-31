@@ -86,7 +86,8 @@ typedef union __sql_conn {
 typedef enum {
 	SQL_TYPE_NONE, /* used at end of array */
 	SQL_TYPE_INT, /* argument is type int */
-	SQL_TYPE_STRING /* argument is pointer to char */
+	SQL_TYPE_STRING, /* argument is pointer to char */
+	SQL_TYPE_SMSD_DATE /* argument is pointer to formatted date */
 } SQL_Type;
 
 /* NamedQuery SQL parameter value as part of SQL_Var */
@@ -186,6 +187,9 @@ extern struct GSM_SMSDdbobj SMSDDBI;
 
 #ifdef ODBC_FOUND
 extern struct GSM_SMSDdbobj SMSDODBC;
+const char *SMSDODBC_SeqIDQuery(GSM_SMSDConfig *Config, const char *id);
+gboolean SMSDODBC_ParseSignedInteger(const char *text, long long *value);
+gboolean SMSDODBC_ParseUnsignedInteger(const char *text, unsigned long long *value);
 #endif
 #endif
 

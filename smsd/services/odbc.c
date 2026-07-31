@@ -10,6 +10,9 @@
 
 #include <gammu.h>
 
+#include <ctype.h>
+#include <errno.h>
+
 #ifdef WIN32
 #include <windows.h>
 #ifndef __GNUC__
@@ -18,6 +21,7 @@
 #endif
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <sql.h>
 #include <sqlext.h>
 
@@ -45,14 +49,75 @@ static void SMSDODBC_LogError(GSM_SMSDConfig * Config, SQLRETURN origret, SQLSMA
 	} while (ret == SQL_SUCCESS);
 }
 
+gboolean SMSDODBC_ParseSignedInteger(const char *text, long long *value)
+{
+	char *end;
+	long long parsed;
+
+	if (text == NULL || text[0] == '\0' || isspace((unsigned char)text[0]) || value == NULL) {
+		return FALSE;
+	}
+	errno = 0;
+	parsed = strtoll(text, &end, 10);
+	if (errno == ERANGE || end == text || end[0] != '\0') {
+		return FALSE;
+	}
+	*value = parsed;
+	return TRUE;
+}
+
+gboolean SMSDODBC_ParseUnsignedInteger(const char *text, unsigned long long *value)
+{
+	char *end;
+	unsigned long long parsed;
+
+	if (text == NULL || text[0] == '\0' || isspace((unsigned char)text[0]) ||
+		text[0] == '-' || value == NULL) {
+		return FALSE;
+	}
+	errno = 0;
+	parsed = strtoull(text, &end, 10);
+	if (errno == ERANGE || end == text || end[0] != '\0') {
+		return FALSE;
+	}
+	*value = parsed;
+	return TRUE;
+}
+
+static gboolean SMSDODBC_GetIntegerText(GSM_SMSDConfig *Config, SQLHSTMT stmt,
+	SQLUSMALLINT field, char *buffer, size_t buffer_size)
+{
+	SQLLEN length;
+	SQLRETURN ret;
+
+	/* Oracle ODBC does not support SQL_C_SBIGINT or SQL_C_UBIGINT. */
+	buffer[0] = '\0';
+	ret = SQLGetData(stmt, field, SQL_C_CHAR, buffer, (SQLLEN)buffer_size, &length);
+	if (!SQL_SUCCEEDED(ret)) {
+		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, stmt, "SQLGetData(integer) failed");
+		return FALSE;
+	}
+	if (length == SQL_NULL_DATA) {
+		SMSD_Log(DEBUG_ERROR, Config, "Can not convert NULL to integer");
+		return FALSE;
+	}
+	if (length == SQL_NO_TOTAL || length < 0 || (size_t)length >= buffer_size) {
+		SMSD_Log(DEBUG_ERROR, Config, "ODBC integer value was truncated");
+		return FALSE;
+	}
+	return TRUE;
+}
+
 long long SMSDODBC_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
-	SQLRETURN ret;
-	SQLINTEGER value = -1;
+	char text[32];
+	long long value;
 
-	ret = SQLGetData(res->odbc, field + 1, SQL_C_SLONG, &value, 0, NULL);
-	if (!SQL_SUCCEEDED(ret)) {
-		SMSDODBC_LogError(Config, ret, SQL_HANDLE_STMT, res->odbc, "SQLGetData(long) failed");
+	if (!SMSDODBC_GetIntegerText(Config, res->odbc, field + 1, text, sizeof(text))) {
+		return -1;
+	}
+	if (!SMSDODBC_ParseSignedInteger(text, &value)) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to parse ODBC integer value: %s", text);
 		return -1;
 	}
 	return value;
@@ -264,6 +329,88 @@ int SMSDODBC_NextRow(GSM_SMSDConfig * Config, SQL_result *res)
 	return 1;
 }
 
+static size_t SMSDODBC_OracleEscapedSize(const char *string)
+{
+	size_t escaped_size = 0;
+
+	while (*string != '\0') {
+		escaped_size += (*string == '\'') ? 2 : 1;
+		string++;
+	}
+	return escaped_size;
+}
+
+static size_t SMSDODBC_UTF8CharacterLength(const char *string, size_t remaining)
+{
+	const unsigned char first = (unsigned char)string[0];
+	size_t length;
+
+	if ((first & 0x80) == 0) {
+		length = 1;
+	} else if ((first & 0xe0) == 0xc0) {
+		length = 2;
+	} else if ((first & 0xf0) == 0xe0) {
+		length = 3;
+	} else if ((first & 0xf8) == 0xf0) {
+		length = 4;
+	} else {
+		length = 1;
+	}
+	return length <= remaining ? length : 1;
+}
+
+static char *SMSDODBC_QuoteOracleCLOB(const char *string)
+{
+	const size_t chunk_limit = 3900;
+	const size_t length = strlen(string);
+	const size_t escaped_size = SMSDODBC_OracleEscapedSize(string);
+	const size_t max_chunks = (escaped_size / chunk_limit) + 1;
+	char *quoted, *output;
+	size_t position = 0;
+
+	quoted = malloc((length * 2) + (max_chunks * 24) + 4);
+	if (quoted == NULL) {
+		return NULL;
+	}
+	output = quoted;
+	memcpy(output, "(TO_CLOB('", 10);
+	output += 10;
+
+	while (position < length) {
+		size_t chunk_size = 0;
+
+		while (position < length) {
+			size_t character_length = SMSDODBC_UTF8CharacterLength(
+				string + position, length - position);
+			size_t character_size = character_length;
+
+			if (character_length == 1 && string[position] == '\'') {
+				character_size++;
+			}
+			if (chunk_size != 0 && chunk_size + character_size > chunk_limit) {
+				break;
+			}
+			if (character_length == 1 && string[position] == '\'') {
+				*output++ = '\'';
+			}
+			memcpy(output, string + position, character_length);
+			output += character_length;
+			position += character_length;
+			chunk_size += character_size;
+		}
+
+		memcpy(output, "')", 2);
+		output += 2;
+		if (position < length) {
+			memcpy(output, " || TO_CLOB('", 13);
+			output += 13;
+		}
+	}
+	*output++ = ')';
+	*output = '\0';
+	return quoted;
+}
+
 /* quote strings */
 char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 {
@@ -280,7 +427,8 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 		driver_name = Config->driver;
 	}
 
-	if (strcasecmp(driver_name, "mssql") == 0) {
+	if (strcasecmp(driver_name, "mssql") == 0 ||
+			strcasecmp(driver_name, "oracle") == 0) {
 		quote = '\'';
 		sql_standard_escaping = TRUE;
 	} else if (strcasecmp(driver_name, "mysql") == 0 ||
@@ -288,10 +436,13 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 			strcasecmp(driver_name, "pgsql") == 0 ||
 			strcasecmp(driver_name, "native_pgsql") == 0 ||
 			strncasecmp(driver_name, "sqlite", 6) == 0 ||
-			strncasecmp(driver_name, "oracle", 6) == 0 ||
 			strncasecmp(driver_name, "freetds", 6) == 0 ||
 			strcasecmp(Config->driver, "access") == 0) {
 		quote = '\'';
+	}
+	if (strcasecmp(driver_name, "oracle") == 0 &&
+			SMSDODBC_OracleEscapedSize(string) > 4000) {
+		return SMSDODBC_QuoteOracleCLOB(string);
 	}
 
 	len = strlen(string);
@@ -311,19 +462,50 @@ char * SMSDODBC_QuoteString(GSM_SMSDConfig * Config, const char *string)
 	return encoded_text;
 }
 
+const char *SMSDODBC_SeqIDQuery(GSM_SMSDConfig * Config, const char *id)
+{
+	const char *driver_name;
+	const unsigned char *position;
+	static char query[256];
+
+	driver_name = Config->sql == NULL ? Config->driver : Config->sql;
+	if (strcasecmp(driver_name, "oracle") != 0) {
+		return "SELECT @@IDENTITY";
+	}
+
+	if (id == NULL || id[0] == '\0') {
+		return NULL;
+	}
+	for (position = (const unsigned char *)id; *position != '\0'; position++) {
+		if (!isalnum(*position) && *position != '_') {
+			return NULL;
+		}
+	}
+
+	snprintf(query, sizeof(query), "SELECT %s.CURRVAL FROM dual", id);
+	return query;
+}
+
 /* LAST_INSERT_ID */
 unsigned long long SMSDODBC_SeqID(GSM_SMSDConfig * Config, const char *id)
 {
 	SQLRETURN ret;
 	SQLHSTMT stmt;
-	SQLINTEGER value;
+	char text[32];
+	unsigned long long value;
+	const char *query;
+
+	query = SMSDODBC_SeqIDQuery(Config, id);
+	if (query == NULL) {
+		return 0;
+	}
 
 	ret = SQLAllocHandle(SQL_HANDLE_STMT, Config->conn.odbc.dbc, &stmt);
 	if (!SQL_SUCCEEDED(ret)) {
 		return 0;
 	}
 
-	ret = SQLExecDirect (stmt, (SQLCHAR*)"SELECT @@IDENTITY", SQL_NTS);
+	ret = SQLExecDirect (stmt, (SQLCHAR*)query, SQL_NTS);
 	if (!SQL_SUCCEEDED(ret)) {
 		SQLFreeHandle (SQL_HANDLE_STMT, stmt);
 		return 0;
@@ -335,8 +517,12 @@ unsigned long long SMSDODBC_SeqID(GSM_SMSDConfig * Config, const char *id)
 		return 0;
 	}
 
-	ret = SQLGetData(stmt, 1, SQL_C_SLONG, &value, 0, NULL);
-	if (!SQL_SUCCEEDED(ret)) {
+	if (!SMSDODBC_GetIntegerText(Config, stmt, 1, text, sizeof(text))) {
+		SQLFreeHandle (SQL_HANDLE_STMT, stmt);
+		return 0;
+	}
+	if (!SMSDODBC_ParseUnsignedInteger(text, &value)) {
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to parse ODBC sequence value: %s", text);
 		SQLFreeHandle (SQL_HANDLE_STMT, stmt);
 		return 0;
 	}
