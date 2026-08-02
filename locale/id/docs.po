@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.43.0\n"
 "Report-Msgid-Bugs-To: gammu-users@lists.sourceforge.net\n"
 "POT-Creation-Date: 2026-02-09 11:33+0100\n"
-"PO-Revision-Date: 2017-10-21 08:46+0000\n"
-"Last-Translator: eisenhaus335 <greenzone332@outlook.com>\n"
+"PO-Revision-Date: 2026-08-03 08:01+0000\n"
+"Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/gammu/gammu-"
 "docs/id/>\n"
 "Language: id\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.17\n"
+"X-Generator: Weblate 2026.8.dev0\n"
 
 #. type: Title =
 #: README.rst:2
@@ -36,12 +36,6 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:11
-#, fuzzy
-#| msgid ""
-#| "It has been initiated by Marcin Wiacek and other people. Originally the "
-#| "code was based on Gnokii <https://www.gnokii.org/> and later MyGnokii "
-#| "<http://www.mwiacek.com/> projects. Gammu was former (up to version 0.58) "
-#| "called MyGnokii2."
 msgid ""
 "It has been initiated by Marcin Wiacek and other people. Originally the code "
 "was based on Gnokii <https://www.gnokii.org/> and later MyGnokii <http://"
@@ -55,10 +49,6 @@ msgstr ""
 
 #. type: Plain text
 #: README.rst:14
-#, fuzzy
-#| msgid ""
-#| "Currently the project is lead by Michal Cihar <michal@cihar.com> with "
-#| "help of many contributors."
 msgid ""
 "Currently the project is led by Michal Cihar <michal@cihar.com> with help of "
 "many contributors."
@@ -74,25 +64,22 @@ msgstr ".. image"
 
 #. type: Plain text
 #: README.rst:18
-#, fuzzy
-#| msgid ""
-#| ":alt: Translation status :target: https://hosted.weblate.org/engage/"
-#| "gammu/?utm_source=widget"
 msgid ""
 "https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: Translation "
 "status :target: https://hosted.weblate.org/engage/gammu/?utm_source=widget"
 msgstr ""
-":alt: Translasi status :target: https://hosted.weblate.org/engage/gammu/?"
-"utm_source=widget"
+"https://hosted.weblate.org/widgets/gammu/-/svg-badge.svg :alt: Status "
+"penerjemahan :target: https://hosted.weblate.org/engage/gammu/"
+"?utm_source=widget"
 
 #. type: Plain text
 #: README.rst:22
-#, fuzzy
-#| msgid ":alt: Gratipay :target: https://gratipay.com/Gammu/"
 msgid ""
 "https://img.shields.io/liberapay/receives/Gammu.svg :alt: Liberapay :target: "
 "https://liberapay.com/Gammu/donate"
-msgstr ":alt: Gratipay :target: https://gratipay.com/Gammu/"
+msgstr ""
+"https://img.shields.io/liberapay/receives/Gammu.svg :alt: Liberapay :target: "
+"https://liberapay.com/Gammu/donate"
 
 #. type: Title =
 #: README.rst:24
