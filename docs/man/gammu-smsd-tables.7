@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-TABLES" "7" "Jul 30, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSD-TABLES" "7" "Aug 04, 2026" "1.44.0" "Gammu"
 .SH NAME
 gammu-smsd-tables \- description of tables for database backends of gammu-smsd(1)
 .sp
@@ -377,7 +377,10 @@ when this record has been updated
 when this record has been created (when phone has been connected)
 .TP
 .B \fBTimeOut\fP (timestamp)
-when this record expires
+when this record expires. With the default SQL queries, this is ten seconds
+after the next \fBStatusFrequency\fP \%<#\:option-StatusFrequency> refresh is due. A record
+with a value older than the database server\(aqs current time indicates a
+stale SMSD phone heartbeat.
 .TP
 .B \fBSend\fP (boolean)
 indicates whether SMSD is sending messages, depends on configuration directive \fBSend\fP \%<#\:option-Send>
@@ -391,6 +394,12 @@ IMEI of phone
 .B \fBIMSI\fP (text)
 SIM IMSI
 .TP
+.B \fBNetCode\fP (text)
+code of the network the phone is registered to
+.TP
+.B \fBNetName\fP (text)
+name of the network the phone is registered to
+.TP
 .B \fBClient\fP (text)
 client name, usually string Gammu with version
 .TP
@@ -401,12 +410,12 @@ battery level in percent (or \-1 if unknown)
 signal level in percent (or \-1 if unknown)
 .TP
 .B \fBSent\fP (integer)
-Number of sent SMS messages (SMSD does not reset this counter, so it might
-overflow).
+Number of sent SMS messages since the SQL service created this phone
+record. The default SQL queries recreate the record when SMSD starts.
 .TP
 .B \fBReceived\fP (integer)
-Number of received SMS messages (SMSD does not reset this counter, so it might
-overflow).
+Number of received SMS messages since the SQL service created this phone
+record. The default SQL queries recreate the record when SMSD starts.
 .UNINDENT
 .SS sentitems
 .sp
