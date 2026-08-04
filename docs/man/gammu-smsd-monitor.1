@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-MONITOR" "1" "Jul 25, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSD-MONITOR" "1" "Aug 04, 2026" "1.44.0" "Gammu"
 .SH NAME
 gammu-smsd-monitor \- Monitor state of SMS daemon for Gammu
 .SH SYNOPSIS
@@ -84,20 +84,25 @@ Print output in comma separated values format:
 .INDENT 3.5
 .sp
 .EX
-client;phone ID;IMEI;sent;received;failed;battery;signal
+client;phone ID;IMEI;IMSI;sent;received;failed;battery;signal
 .EE
 .UNINDENT
 .UNINDENT
+.sp
+CSV status records are always written to standard output and are not given
+logging prefixes, including when \fB\-\-use\-log\fP is specified.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-l, \-\-use\-log
-Use logging as configured in config file.
+Write human\-readable status updates using the logging configuration from
+the config file.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-L, \-\-no\-use\-log
-Do not use logging as configured in config file (default).
+Write human\-readable status updates to standard output (default). Output is
+flushed after every polling cycle so it can be consumed by a pipeline.
 .UNINDENT
 .SH Author
 Michal Čihař <michal@cihar.com>

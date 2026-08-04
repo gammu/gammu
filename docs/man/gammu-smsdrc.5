@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSDRC" "5" "Jul 25, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSDRC" "5" "Aug 04, 2026" "1.44.0" "Gammu"
 .SH NAME
 gammu-smsdrc \- gammu-smsd(1) configuration file
 .SH DESCRIPTION
@@ -183,7 +183,7 @@ Default is to provide no logging.
 .INDENT 7.0
 .INDENT 3.5
 For logging to Windows Event Log, it is recommended to install Event Log
-source by invoking \fBgammu\-smsd \-e\fP (this is automatically done during
+source by invoking \fBgammu\-smsd \-e\fP \%<#\:cmdoption-gammu-smsd-e> (this is automatically done during
 installation of Gammu).
 .UNINDENT
 .UNINDENT
@@ -288,6 +288,9 @@ Default is 15.
 .B StatusFrequency
 The number of seconds between refreshing phone status (battery, signal) stored
 in shared memory and possibly in service backends. Use 0 to disable.
+.sp
+With the default SQL queries, the phone record expires ten seconds after
+the next refresh is due.
 .sp
 You might want to increase this for higher throughput.
 .sp
@@ -448,7 +451,7 @@ SMSC number to use for sending messages if not specified in the message
 (see options of gammu\-smsd\-inject \%<#\:gammu-smsd-inject>).
 .sp
 In most cases you don\(aqt need this settings as Gammu tries to read correct
-SMSC from phone, but sometimes this fails (try \fBgammu getsmsc\fP).
+SMSC from phone, but sometimes this fails (try \fBgammu getsmsc\fP \%<#\:cmdoption-gammu-arg-getsmsc>).
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-SQL" "7" "Jul 30, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSD-SQL" "7" "Aug 04, 2026" "1.44.0" "Gammu"
 .SH NAME
 gammu-smsd-sql \- gammu-smsd(1) backend using SQL abstraction layer to use any supported database as a message storage
 .SH DESCRIPTION
@@ -247,11 +247,18 @@ Default value:
 .INDENT 3.5
 .sp
 .EX
-INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal)
-VALUES (%I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, \-1, \-1)
+INSERT INTO phones (IMEI, IMSI, ID, NetCode, NetName, Send, Receive,
+                    InsertIntoDB, TimeOut, Client, Battery, Signal)
+VALUES (%I, %S, %P, %O, %M, %1, %2, NOW(),
+        (NOW() + INTERVAL 70 SECOND) + 0, %N, \-1, \-1)
 .EE
 .UNINDENT
 .UNINDENT
+.sp
+The shown 70\-second expiry uses the default 60\-second
+\fBStatusFrequency\fP \%<#\:option-StatusFrequency> plus a ten\-second grace period. The
+generated default query follows the configured frequency. Custom queries
+should provide an equivalent expiry interval.
 .sp
 Query specific parameters:
 .INDENT 7.0
@@ -761,18 +768,23 @@ UPDATE phones SET Sent= Sent + 1 WHERE IMEI = %I
 .INDENT 0.0
 .TP
 .B refresh_phone_status
-Update phone status (battery, signal).
+Update phone status (battery, signal, and network).
 .sp
 Default value:
 .INDENT 7.0
 .INDENT 3.5
 .sp
 .EX
-UPDATE phones SET TimeOut= (NOW() + INTERVAL 10 SECOND) + 0,
-Battery = %1, Signal = %2 WHERE IMEI = %I
+UPDATE phones SET TimeOut = (NOW() + INTERVAL 70 SECOND) + 0,
+Battery = %1, Signal = %2, NetCode = %O, NetName = %M
+WHERE IMEI = %I
 .EE
 .UNINDENT
 .UNINDENT
+.sp
+The expiry interval is generated from \fBStatusFrequency\fP \%<#\:option-StatusFrequency>
+plus a ten\-second grace period, as described for \fBinsert_phone\fP\&.
+Custom queries should keep \fBTimeOut\fP valid through the next refresh.
 .sp
 Query specific parameters:
 .INDENT 7.0

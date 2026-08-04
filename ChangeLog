@@ -19,6 +19,25 @@ the issue.
 ChangeLog
 =========
 
+20260804 - 1.44.0
+
+[!] * Update SMSD SQL schema to version 18. Existing databases need the new
+      inbox grouping columns and outbox SendDays column before upgrading.
+[+] * Add inbox multipart message grouping metadata and persist grouping state
+      across SMSD restarts.
+[+] * Add weekday scheduling for the SMSD SQL outbox.
+[*] * Expose message IDs and timestamps to SMSD RunOn hooks.
+[-] * Prevent duplicate SMSD message processing and sending.
+[-] * Improve FILES backend validation, Unicode handling, and support for long
+      and read-only outbox files.
+[-] * Improve SQL Server and Oracle support through ODBC.
+[-] * Improve SMS location enumeration for AT modems.
+[-] * Fix delivery report handling and multipart message recovery in SMSD.
+[-] * Fix configuration slot handling, monitor logging, Unicode conversion,
+      Nokia network notifications, Huawei network time, and gnapgen contacts.
+[-] * Fix cross-platform build warnings and update documentation and
+      localizations.
+
 20260725 - 1.43.3
 
 [-] * Prevent command injection through SMSD RunOn hook arguments on POSIX

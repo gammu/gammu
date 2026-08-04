@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-ODBC" "7" "Jul 25, 2026" "1.43.3" "Gammu"
+.TH "GAMMU-SMSD-ODBC" "7" "Aug 04, 2026" "1.44.0" "Gammu"
 .SH NAME
 gammu-smsd-odbc \- gammu-smsd(1) backend using ODBC abstraction layer to use any supported database as a message storage
 .SH DESCRIPTION
@@ -93,7 +93,266 @@ Creating tables for MySQL \%<#\:mysql-create>
 Creating tables for PostgreSQL \%<#\:pgsql-create>
 .IP \(bu 2
 Creating tables for SQLite \%<#\:sqlite-create>
+.IP \(bu 2
+Oracle
 .UNINDENT
+.SS Oracle
+.sp
+Use the Oracle schema shipped with Gammu:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+\-\-
+\-\- Database tables for Gammu SMSD on Oracle Database
+\-\-
+\-\- Oracle treats empty strings as NULL, so text columns which can contain an
+\-\- empty SMSD value are nullable even where other database schemas use NOT NULL.
+\-\-
+
+WHENEVER SQLERROR EXIT SQL.SQLCODE
+
+BEGIN
+  FOR object_to_drop IN (
+    SELECT object_name
+      FROM user_objects
+     WHERE object_type = \(aqTABLE\(aq
+       AND object_name IN (
+         \(aqGAMMU\(aq, \(aqINBOX\(aq, \(aqOUTBOX\(aq, \(aqOUTBOX_MULTIPART\(aq, \(aqPHONES\(aq, \(aqSENTITEMS\(aq
+       )
+  ) LOOP
+    EXECUTE IMMEDIATE
+      \(aqDROP TABLE \(aq || DBMS_ASSERT.SIMPLE_SQL_NAME(object_to_drop.object_name) ||
+      \(aq CASCADE CONSTRAINTS PURGE\(aq;
+  END LOOP;
+
+  FOR object_to_drop IN (
+    SELECT object_name
+      FROM user_objects
+     WHERE object_type = \(aqSEQUENCE\(aq
+       AND object_name IN (\(aqINBOX_ID_SEQ\(aq, \(aqOUTBOX_ID_SEQ\(aq)
+  ) LOOP
+    EXECUTE IMMEDIATE
+      \(aqDROP SEQUENCE \(aq || DBMS_ASSERT.SIMPLE_SQL_NAME(object_to_drop.object_name);
+  END LOOP;
+END;
+/
+
+CREATE TABLE gammu (
+  Version NUMBER(5) DEFAULT 0 NOT NULL PRIMARY KEY
+);
+
+INSERT INTO gammu (Version) VALUES (18);
+
+CREATE SEQUENCE inbox_ID_seq START WITH 1 INCREMENT BY 1
+  MAXVALUE 9223372036854775807 NOCACHE;
+
+CREATE TABLE inbox (
+  UpdatedInDB TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  ReceivingDateTime TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  InsertIntoDB TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  Text CLOB,
+  SenderNumber VARCHAR2(20 CHAR),
+  Coding VARCHAR2(255 CHAR) DEFAULT \(aqDefault_No_Compression\(aq NOT NULL,
+  UDH CLOB,
+  SMSCNumber VARCHAR2(20 CHAR),
+  Class NUMBER(10) DEFAULT \-1 NOT NULL,
+  TextDecoded CLOB,
+  ID NUMBER(19) NOT NULL PRIMARY KEY,
+  MessageID NUMBER(19) DEFAULT 0 NOT NULL,
+  SequencePosition NUMBER(10) DEFAULT 1 NOT NULL,
+  PartCount NUMBER(10) DEFAULT 1 NOT NULL,
+  RecipientID VARCHAR2(255 CHAR),
+  Processed NUMBER(1) DEFAULT 0 NOT NULL,
+  Status NUMBER(10) DEFAULT \-1 NOT NULL,
+  CONSTRAINT inbox_coding_check CHECK (Coding IN
+    (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
+  CONSTRAINT inbox_id_check CHECK (ID BETWEEN 0 AND 9223372036854775807),
+  CONSTRAINT inbox_message_id_check CHECK (MessageID BETWEEN 0 AND 9223372036854775807),
+  CONSTRAINT inbox_processed_check CHECK (Processed IN (0, 1))
+);
+
+CREATE INDEX inbox_message ON inbox(MessageID, SequencePosition);
+CREATE INDEX inbox_insert ON inbox(InsertIntoDB);
+
+CREATE OR REPLACE TRIGGER inbox_biu
+BEFORE INSERT OR UPDATE ON inbox
+FOR EACH ROW
+BEGIN
+  IF INSERTING AND :NEW.ID IS NULL THEN
+    SELECT inbox_ID_seq.NEXTVAL INTO :NEW.ID FROM dual;
+  END IF;
+  IF UPDATING THEN
+    :NEW.UpdatedInDB := CURRENT_TIMESTAMP;
+  END IF;
+END;
+/
+
+CREATE SEQUENCE outbox_ID_seq START WITH 1 INCREMENT BY 1
+  MAXVALUE 9223372036854775807 NOCACHE;
+
+CREATE TABLE outbox (
+  UpdatedInDB TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  InsertIntoDB TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  SendingDateTime TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  SendBefore VARCHAR2(8 CHAR) DEFAULT \(aq23:59:59\(aq NOT NULL,
+  SendAfter VARCHAR2(8 CHAR) DEFAULT \(aq00:00:00\(aq NOT NULL,
+  SendDays NUMBER(3) DEFAULT 127 NOT NULL,
+  Text CLOB,
+  DestinationNumber VARCHAR2(20 CHAR),
+  Coding VARCHAR2(255 CHAR) DEFAULT \(aqDefault_No_Compression\(aq NOT NULL,
+  UDH CLOB,
+  Class NUMBER(10) DEFAULT \-1,
+  TextDecoded CLOB,
+  ID NUMBER(19) NOT NULL PRIMARY KEY,
+  MultiPart NUMBER(1) DEFAULT 0 NOT NULL,
+  RelativeValidity NUMBER(10) DEFAULT \-1,
+  SenderID VARCHAR2(255 CHAR),
+  SendingTimeOut TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+  DeliveryReport VARCHAR2(10 CHAR) DEFAULT \(aqdefault\(aq,
+  CreatorID VARCHAR2(255 CHAR),
+  Retries NUMBER(10) DEFAULT 0,
+  Priority NUMBER(10) DEFAULT 0,
+  Status VARCHAR2(255 CHAR) DEFAULT \(aqReserved\(aq NOT NULL,
+  StatusCode NUMBER(10) DEFAULT \-1 NOT NULL,
+  CONSTRAINT outbox_coding_check CHECK (Coding IN
+    (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
+  CONSTRAINT outbox_delivery_check CHECK (DeliveryReport IN (\(aqdefault\(aq,\(aqyes\(aq,\(aqno\(aq)),
+  CONSTRAINT outbox_id_check CHECK (ID BETWEEN 0 AND 9223372036854775807),
+  CONSTRAINT outbox_multipart_check CHECK (MultiPart IN (0, 1)),
+  CONSTRAINT outbox_status_check CHECK (Status IN
+    (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
+     \(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq))
+);
+
+CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
+CREATE INDEX outbox_sender ON outbox(SenderID);
+
+CREATE OR REPLACE TRIGGER outbox_biu
+BEFORE INSERT OR UPDATE ON outbox
+FOR EACH ROW
+BEGIN
+  IF INSERTING AND :NEW.ID IS NULL THEN
+    SELECT outbox_ID_seq.NEXTVAL INTO :NEW.ID FROM dual;
+  END IF;
+  IF UPDATING THEN
+    :NEW.UpdatedInDB := CURRENT_TIMESTAMP;
+  END IF;
+END;
+/
+
+CREATE TABLE outbox_multipart (
+  Text CLOB,
+  Coding VARCHAR2(255 CHAR) DEFAULT \(aqDefault_No_Compression\(aq NOT NULL,
+  UDH CLOB,
+  Class NUMBER(10) DEFAULT \-1,
+  TextDecoded CLOB,
+  ID NUMBER(19) DEFAULT 0 NOT NULL,
+  SequencePosition NUMBER(10) DEFAULT 1 NOT NULL,
+  Status VARCHAR2(255 CHAR) DEFAULT \(aqReserved\(aq NOT NULL,
+  StatusCode NUMBER(10) DEFAULT \-1 NOT NULL,
+  PRIMARY KEY (ID, SequencePosition),
+  CONSTRAINT outbox_mp_coding_check CHECK (Coding IN
+    (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq)),
+  CONSTRAINT outbox_mp_id_check CHECK (ID BETWEEN 0 AND 9223372036854775807),
+  CONSTRAINT outbox_mp_status_check CHECK (Status IN
+    (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
+     \(aqDeliveryUnknown\(aq,\(aqError\(aq,\(aqReserved\(aq))
+);
+
+CREATE TABLE phones (
+  ID VARCHAR2(255 CHAR),
+  UpdatedInDB TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  InsertIntoDB TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  TimeOut TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  Send VARCHAR2(3 CHAR) DEFAULT \(aqno\(aq NOT NULL,
+  Receive VARCHAR2(3 CHAR) DEFAULT \(aqno\(aq NOT NULL,
+  IMEI VARCHAR2(35 CHAR) NOT NULL PRIMARY KEY,
+  IMSI VARCHAR2(35 CHAR),
+  NetCode VARCHAR2(10 CHAR) DEFAULT \(aqERROR\(aq,
+  NetName VARCHAR2(35 CHAR) DEFAULT \(aqERROR\(aq,
+  Client VARCHAR2(255 CHAR),
+  Battery NUMBER(10) DEFAULT \-1 NOT NULL,
+  Signal NUMBER(10) DEFAULT \-1 NOT NULL,
+  Sent NUMBER(10) DEFAULT 0 NOT NULL,
+  Received NUMBER(10) DEFAULT 0 NOT NULL,
+  CONSTRAINT phones_send_check CHECK (Send IN (\(aqyes\(aq,\(aqno\(aq)),
+  CONSTRAINT phones_receive_check CHECK (Receive IN (\(aqyes\(aq,\(aqno\(aq))
+);
+
+CREATE OR REPLACE TRIGGER phones_bu
+BEFORE UPDATE ON phones
+FOR EACH ROW
+BEGIN
+  :NEW.UpdatedInDB := CURRENT_TIMESTAMP;
+END;
+/
+
+CREATE TABLE sentitems (
+  UpdatedInDB TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  InsertIntoDB TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  SendingDateTime TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  DeliveryDateTime TIMESTAMP(0),
+  Text CLOB,
+  DestinationNumber VARCHAR2(20 CHAR),
+  Coding VARCHAR2(255 CHAR) DEFAULT \(aqDefault_No_Compression\(aq NOT NULL,
+  UDH CLOB,
+  SMSCNumber VARCHAR2(20 CHAR),
+  Class NUMBER(10) DEFAULT \-1 NOT NULL,
+  TextDecoded CLOB,
+  ID NUMBER(19) DEFAULT 0 NOT NULL,
+  SenderID VARCHAR2(255 CHAR),
+  SequencePosition NUMBER(10) DEFAULT 1 NOT NULL,
+  Status VARCHAR2(255 CHAR) DEFAULT \(aqSendingOK\(aq NOT NULL,
+  StatusError NUMBER(10) DEFAULT \-1 NOT NULL,
+  TPMR NUMBER(10) DEFAULT \-1 NOT NULL,
+  RelativeValidity NUMBER(10) DEFAULT \-1 NOT NULL,
+  CreatorID VARCHAR2(255 CHAR),
+  StatusCode NUMBER(10) DEFAULT \-1 NOT NULL,
+  PRIMARY KEY (ID, SequencePosition),
+  CONSTRAINT sentitems_id_check CHECK (ID BETWEEN 0 AND 9223372036854775807),
+  CONSTRAINT sentitems_status_check CHECK (Status IN
+    (\(aqSendingOK\(aq,\(aqSendingOKNoReport\(aq,\(aqSendingError\(aq,\(aqDeliveryOK\(aq,\(aqDeliveryFailed\(aq,\(aqDeliveryPending\(aq,
+     \(aqDeliveryUnknown\(aq,\(aqError\(aq)),
+  CONSTRAINT sentitems_coding_check CHECK (Coding IN
+    (\(aqDefault_No_Compression\(aq,\(aqUnicode_No_Compression\(aq,\(aq8bit\(aq,\(aqDefault_Compression\(aq,\(aqUnicode_Compression\(aq))
+);
+
+CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
+CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
+CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
+CREATE INDEX sentitems_sender ON sentitems(SenderID);
+
+CREATE OR REPLACE TRIGGER sentitems_bu
+BEFORE UPDATE ON sentitems
+FOR EACH ROW
+BEGIN
+  :NEW.UpdatedInDB := CURRENT_TIMESTAMP;
+END;
+/
+
+COMMIT;
+
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+The same script is installed with the other SQL examples as
+\fBdocs/sql/oracle.sql\fP\&.
+.sp
+Gammu passes UTF\-8 through the ANSI ODBC interface, so configure the Oracle
+client used by SMSD for the \fBAL32UTF8\fP character set:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+export NLS_LANG=.AL32UTF8
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Set this in the environment of the SMSD service, not only in an interactive
+shell.
 .SH EXAMPLE
 .sp
 Example configuration:

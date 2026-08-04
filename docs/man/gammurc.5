@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMURC" "5" "Jul 25, 2026" "1.43.3" "Gammu"
+.TH "GAMMURC" "5" "Aug 04, 2026" "1.44.0" "Gammu"
 .SH NAME
 gammurc \- gammu(1) configuration file
 .SH SYNOPSIS
@@ -350,7 +350,7 @@ force using of file browsing service (file system support)
 force using of IrMC service (contacts, calendar and notes support)
 .TP
 .B \fBobexnone\fP
-none service chosen, this has only limited use for sending file (\fBgammu sendfile\fP command)
+none service chosen, this has only limited use for sending file (\fBgammu sendfile\fP \%<#\:cmdoption-gammu-arg-sendfile> command)
 .TP
 .B \fBmobex\fP
 m\-obex service for Samsung phones
@@ -478,7 +478,7 @@ respectively.
 Additional path where to search for data files. The default path is
 configured on build time (and defaults to \fB/usr/share/data/gammu\fP on Unix
 systems). Currently it is used only for searching files to upload to phone
-using \fBgammu install\fP\&.
+using \fBgammu install\fP \%<#\:cmdoption-gammu-arg-install>\&.
 .UNINDENT
 .SH EXAMPLES
 .sp
@@ -537,7 +537,7 @@ connection = blueat
 .SS Working with multiple phones
 .sp
 Gammu can be configured for multiple phones (however only one connection
-is used at one time, you can choose which one to use with \fBgammu \-s\fP \%<https://\:docs\:.python\:.org/\:3\:.9/\:using/\:cmdline\:.html#\:cmdoption-s>
+is used at one time, you can choose which one to use with \fBgammu \-s\fP \%<#\:cmdoption-gammu-s>
 parameter). Configuration for phones on three serial ports would look
 like following:
 .INDENT 0.0

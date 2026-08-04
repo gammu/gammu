@@ -135,6 +135,8 @@ jobs:
             line = $0
             if (sub(/^\[[^]]\] /, "", line)) {
               entries++
+            } else if (line ~ /^      /) {
+              sub(/^    /, "", line)
             }
             print line
           }
