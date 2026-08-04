@@ -886,7 +886,7 @@ This module wraps all python-gammu functionality.
       Sets state machine debug file.
 
       :param File: File where to write debug stuff (as configured by :meth:`SetDebugLevel`). Can be either None for no file, Python file object or filename.
-      :type File: mixed
+      :type File: object
       :param Global: Whether to use global debug structure (overrides File)
       :type Global: bool
       :return: None
@@ -956,7 +956,7 @@ This module wraps all python-gammu functionality.
       The callback function needs to accept three parameters: StateMachine object, event type and it's data in dictionary.
 
       :param Callback: callback function or None for disabling
-      :type Callback: function
+      :type Callback: collections.abc.Callable
       :return: None
       :rtype: None
 
@@ -1118,7 +1118,7 @@ Debugging configuration
     Sets global debug file.
 
     :param File: File where to write debug stuff (as configured by :meth:`SetDebugLevel`). Can be either None for no file, Python file object or filename.
-    :type File: mixed
+    :type File: object
     :return: None
     :rtype: None
 

@@ -30,7 +30,7 @@ getting sms status.
 
     .. c:member:: const GSM_Phone_RequestID	requestID;
 
-       Match for request ID. this is filled in when calling :c:func:`GSM_WaitFor`.
+       Match for request ID. this is filled in when calling :c:func:`!GSM_WaitFor`.
 
 There are three types of answer matching:
 

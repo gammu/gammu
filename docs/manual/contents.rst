@@ -1,5 +1,3 @@
-.. _contents:
-
 Gammu Documentation Contents
 ----------------------------
 

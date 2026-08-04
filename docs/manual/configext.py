@@ -34,7 +34,7 @@ class ConfigOption(ObjectDescription):
                 indextype = "single"
                 indexentry = self.indextemplate % (name,)
             self.indexnode["entries"].append(
-                (indextype, indexentry, targetname, targetname),
+                (indextype, indexentry, targetname, targetname, None),
             )
         self.env.domaindata["config"]["objects"][self.objtype, name] = (
             self.env.docname,
@@ -52,8 +52,8 @@ class ConfigSectionXRefRole(XRefRole):
         tgtid = "index-{}".format(env.new_serialno("index"))
         indexnode = addnodes.index()
         indexnode["entries"] = [
-            ("single", varname, tgtid, varname),
-            ("single", f"configuration section; {varname}", tgtid, varname),
+            ("single", varname, tgtid, varname, None),
+            ("single", f"configuration section; {varname}", tgtid, varname, None),
         ]
         targetnode = nodes.target("", "", ids=[tgtid])
         document.note_explicit_target(targetnode)
@@ -87,7 +87,7 @@ class ConfigSection(ObjectDescription):
                 indextype = "single"
                 indexentry = self.indextemplate % (name,)
             self.indexnode["entries"].append(
-                (indextype, indexentry, targetname, targetname),
+                (indextype, indexentry, targetname, targetname, None),
             )
         self.env.domaindata["config"]["objects"][self.objtype, name] = (
             self.env.docname,
