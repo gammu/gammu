@@ -19,7 +19,7 @@ import sphinx.domains.std
 
 
 def gammu_process_link(self, env, refnode, has_explicit_title, title, target):
-    program = env.temp_data.get("std:program")
+    program = env.ref_context.get("std:program")
     if not has_explicit_title:
         if " " in title and not (title.startswith(("/", "-"))):
             program, target = re.split(" (?=-|--|/)?", title, 1)
@@ -28,7 +28,7 @@ def gammu_process_link(self, env, refnode, has_explicit_title, title, target):
     elif " " in target:
         program, target = re.split(" (?=-|--|/)?", target, 1)
         program = sphinx.domains.std.ws_re.sub("-", program)
-    refnode["refprogram"] = program
+    refnode["std:program"] = program
     return title, target
 
 
@@ -53,7 +53,7 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 # ones.
 extensions = ["breathe", "configext", "sphinx.ext.graphviz", "sphinx.ext.intersphinx"]
 
-intersphinx_mapping = {"python": ("https://docs.python.org/3.9", None)}
+intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["@CMAKE_CURRENT_SOURCE_DIR@/.templates"]
@@ -88,7 +88,33 @@ release = version
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
+
+# Breathe links types used inside documented declarations even when Doxygen
+# does not emit a corresponding target. These are C library types, private
+# structure tags, and public constants whose values are still shown in the
+# rendered declarations.
+nitpick_ignore_regex = [
+    ("c:identifier", r"(?:FILE|size_t|time_t)"),
+    (
+        "c:identifier",
+        (
+            r"(?:GSM_BACKUP_MAX_\w+|GSM_BITMAP_(?:SIZE|TEXT_LENGTH)|"
+            r"GSM_CALENDAR_ENTRIES|GSM_MAX\w+|"
+            r"GSM_PHONEBOOK_(?:ENTRIES|TEXT_LENGTH)|GSM_SECURITY_CODE_LEN|"
+            r"GSM_TODO_ENTRIES|SMSD_TEXT_LENGTH)"
+        ),
+    ),
+    ("c:identifier", r"(?:_GSM_Debug_Info|_GSM_SMSDConfig|_GSM_StateMachine)"),
+    (
+        "c:identifier",
+        (
+            r"(?:GSM_Phone_RequestID|GSM_Protocol_Message|"
+            r"GSM_SMSDSendingError|GSM_StringArray)"
+        ),
+    ),
+    ("std:ref", r"(?:bug|todo)_1_(?:bug|todo)\d+"),
+]
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -230,7 +256,7 @@ htmlhelp_basename = "gammudoc"
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
-    #    'papersize': 'a4',
+    "papersize": "@SPHINX_PAPER_SIZE@paper",
     # The font size ('10pt', '11pt' or '12pt').
     #'pointsize': '10pt',
     # Additional stuff for the LaTeX preamble.

@@ -19,68 +19,68 @@ bytes of data). You can construct it from :ref:`sms_info_obj` using
 
 Message dictionary can consist of following fields:
 
-.. attribute:: SMSC
+.. describe:: SMSC
 
    SMSC information, see :ref:`smsc_obj`.
 
-.. attribute:: Number
+.. describe:: Number
 
    Recipient number, needs to be set for sending.
 
-.. attribute:: Name
+.. describe:: Name
 
    Name of the message, does not make any effect on sending, some phones might
    store it.
 
-.. attribute:: UDH
+.. describe:: UDH
 
    User defined headers for SMS, see :ref:`udh_obj`.
 
-.. attribute:: Text
+.. describe:: Text
 
    Message text
 
-.. attribute:: Folder
+.. describe:: Folder
 
    Folder where the message is stored
 
-.. attribute:: Location
+.. describe:: Location
 
    Location where the message is stored
 
-.. attribute:: InboxFolder
+.. describe:: InboxFolder
 
    Indication whether folder is an inbox
 
-.. attribute:: DeliveryStatus
+.. describe:: DeliveryStatus
 
    Message delivery status, used only for received messages
 
-.. attribute:: ReplyViaSameSMSC
+.. describe:: ReplyViaSameSMSC
 
    Flag indicating whether reply using same SMSC is requested
 
-.. attribute:: Class
+.. describe:: Class
 
    Message class
 
-.. attribute:: MessageReference
+.. describe:: MessageReference
 
    Message reference number, used mostly to identify delivery reports
 
-.. attribute:: ReplaceMessage
+.. describe:: ReplaceMessage
 
    Id of message which this message is supposed to replace
 
-.. attribute:: RejectDuplicates
+.. describe:: RejectDuplicates
 
    Whether to reject duplicates
 
-.. attribute:: Memory
+.. describe:: Memory
 
    Memory where the message is stored
 
-.. attribute:: Type
+.. describe:: Type
 
    Message type, one of:
 
@@ -89,7 +89,7 @@ Message dictionary can consist of following fields:
 * ``Status_Report`` - when creating new message this will create submit message
   with request for delivery report
 
-.. attribute:: Coding
+.. describe:: Coding
 
    Message encoding, one of:
 
@@ -101,17 +101,17 @@ Message dictionary can consist of following fields:
 * ``Default_Compression`` - not supported by Gammu and most phones
 * ``8bit`` - for binary messages
 
-.. attribute:: DateTime
+.. describe:: DateTime
 
    Timestamp when the message was received or sent.
 
    Please note that most phones do no record timestamp of sent messages.
 
-.. attribute:: SMSCDateTime
+.. describe:: SMSCDateTime
 
    Timestamp when the message was at SMSC.
 
-.. attribute:: State
+.. describe:: State
 
    Message state, one of:
 
@@ -145,23 +145,23 @@ UDH Object
 
 UDH dictionary can consist of following fields:
 
-.. attribute:: ID8bit
+.. describe:: ID8bit
 
    8-bit ID of the message, not required
 
-.. attribute:: ID16bit
+.. describe:: ID16bit
 
    16-bit ID of the message, not required
 
-.. attribute:: PartNumber
+.. describe:: PartNumber
 
    Number of current part
 
-.. attribute:: AllParts
+.. describe:: AllParts
 
    Count of all message parts
 
-.. attribute:: Type
+.. describe:: Type
 
    UDH type, one of predefined strings:
 
@@ -186,7 +186,7 @@ UDH dictionary can consist of following fields:
 * ``NokiaPhonebookLong``
 * ``UserUDH``
 
-.. attribute:: Text
+.. describe:: Text
 
    UDH content
 
@@ -208,23 +208,23 @@ SMSC Object
 
 SMSC dictionary can consist of following fields:
 
-.. attribute:: Location
+.. describe:: Location
 
    Location where the SMSC is stored
 
-.. attribute:: Number
+.. describe:: Number
 
    SMSC number
 
-.. attribute:: Name
+.. describe:: Name
 
    Name of the SMSC configuration
 
-.. attribute:: DefaultNumber
+.. describe:: DefaultNumber
 
    Default recipient number, ignored on most phones
 
-.. attribute:: Format
+.. describe:: Format
 
    Default message format, one of:
 
@@ -233,7 +233,7 @@ SMSC dictionary can consist of following fields:
 * ``Fax``
 * ``Email``
 
-.. attribute:: Validity
+.. describe:: Validity
 
    Default message validity as a string
 
@@ -260,23 +260,23 @@ SMS Info Object
 
 Message info dictionary can consist of following fields:
 
-.. attribute:: Unicode
+.. describe:: Unicode
 
    Whether to use Unicode for the message.
 
-.. attribute:: ReplaceMessage
+.. describe:: ReplaceMessage
 
    Id of message which this message is supposed to replace
 
-.. attribute:: Unknown
+.. describe:: Unknown
 
    Boolean flag indicating there was some part which Gammu could not decode.
 
-.. attribute:: Class
+.. describe:: Class
 
    Message class
 
-.. attribute:: Entries
+.. describe:: Entries
 
    Actual message data, see :ref:`sms_info_part_obj`.
 
@@ -301,7 +301,7 @@ SMS Info Part Object
 
 Message component can consist of following fields:
 
-.. attribute:: ID
+.. describe:: ID
 
    Identification of the part type:
 
@@ -353,87 +353,87 @@ Message component can consist of following fields:
 * ``AlcatelSMSTemplateName``
 * ``SiemensFile`` - Siemens OTA
 
-.. attribute:: Left
+.. describe:: Left
 
    Text formatting
 
-.. attribute:: Right
+.. describe:: Right
 
    Text formatting
 
-.. attribute:: Center
+.. describe:: Center
 
    Text formatting
 
-.. attribute:: Large
+.. describe:: Large
 
    Text formatting
 
-.. attribute:: Small
+.. describe:: Small
 
    Text formatting
 
-.. attribute:: Bold
+.. describe:: Bold
 
    Text formatting
 
-.. attribute:: Italic
+.. describe:: Italic
 
    Text formatting
 
-.. attribute:: Underlined
+.. describe:: Underlined
 
    Text formatting
 
-.. attribute:: Strikethrough
+.. describe:: Strikethrough
 
    Text formatting
 
-.. attribute:: Protected
+.. describe:: Protected
 
    Whether message part should be protected (DRM)
 
-.. attribute:: Number
+.. describe:: Number
 
    Number to encode in message.
 
-.. attribute:: Ringtone
+.. describe:: Ringtone
 
    Ringtone to encode in message.
 
-.. attribute:: Bitmap
+.. describe:: Bitmap
 
    Bitmap to encode in message.
 
-.. attribute:: Bookmark
+.. describe:: Bookmark
 
    Bookmark to encode in message.
 
-.. attribute:: Settings
+.. describe:: Settings
 
    Settings to encode in message.
 
-.. attribute:: MMSIndicator
+.. describe:: MMSIndicator
 
    MMS indication to encode in message.
 
-.. attribute:: Phonebook
+.. describe:: Phonebook
 
    Phonebook entry to encode in message, see :ref:`pbk_obj`.
 
-.. attribute:: Calendar
+.. describe:: Calendar
 
    Calendar entry to encode in message, see :ref:`cal_obj`.
 
-.. attribute:: ToDo
+.. describe:: ToDo
 
    Todo entry to encode in message, see :ref:`todo_obj`.
 
-.. attribute:: File
+.. describe:: File
 
    File to encode in message, see :ref:`file_obj`.
 
-.. attribute:: Buffer
+.. describe:: Buffer
 
    String to encode in message.
 
@@ -444,11 +444,11 @@ Todo Object
 
 Todo entry is a dictionary consisting of following fields:
 
-.. attribute:: Location
+.. describe:: Location
 
    Location where the entry is stored
 
-.. attribute:: Type
+.. describe:: Type
 
    Type of entry, one of:
 
@@ -481,7 +481,7 @@ Todo entry is a dictionary consisting of following fields:
 * ``ALARM`` - Alarm
 * ``DAILY_ALARM`` - Alarm repeating each day.
 
-.. attribute:: Priority
+.. describe:: Priority
 
    Entry priority, one of:
 
@@ -490,7 +490,7 @@ Todo entry is a dictionary consisting of following fields:
 * ``Low``
 * ``None``
 
-.. attribute:: Entries
+.. describe:: Entries
 
    Actual entries, see :ref:`todo_entry_obj`
 
@@ -514,7 +514,7 @@ Example:
 Todo Entries Object
 -------------------
 
-.. attribute:: Type
+.. describe:: Type
 
    Type of entry, one of:
 
@@ -533,7 +533,7 @@ Todo Entries Object
 * ``LAST_MODIFIED`` - Date and time of last modification (Date).
 * ``START_DATETIME`` - Start date (Date).
 
-.. attribute:: Value
+.. describe:: Value
 
    Actual value, corresponding type to Type field.
 
@@ -544,11 +544,11 @@ Calendar Object
 
 Calendar entry is a dictionary consisting of following fields:
 
-.. attribute:: Location
+.. describe:: Location
 
    Location where the entry is stored
 
-.. attribute:: Type
+.. describe:: Type
 
    Type of entry, one of:
 
@@ -581,7 +581,7 @@ Calendar entry is a dictionary consisting of following fields:
 * ``ALARM`` - Alarm
 * ``DAILY_ALARM`` - Alarm repeating each day.
 
-.. attribute:: Entries
+.. describe:: Entries
 
    Actual entries, see :ref:`cal_entry_obj`
 
@@ -607,7 +607,7 @@ Example:
 Calendar Entries Object
 -----------------------
 
-.. attribute:: Type
+.. describe:: Type
 
    Type of entry, one of:
 
@@ -633,7 +633,7 @@ Calendar Entries Object
 * ``LUID`` - IrMC LUID which can be used for synchronisation.
 * ``LAST_MODIFIED`` - Date and time of last modification.
 
-.. attribute:: Value
+.. describe:: Value
 
    Actual value, corresponding type to Type field.
 
@@ -644,15 +644,15 @@ Phonebook Object
 
 Phonebook entry is a dictionary consisting of following fields:
 
-.. attribute:: Location
+.. describe:: Location
 
    Location where the entry is stored
 
-.. attribute:: MemoryType
+.. describe:: MemoryType
 
    Memory where the message is stored
 
-.. attribute:: Entries
+.. describe:: Entries
 
    Actual entries, see :ref:`pbk_entry_obj`
 
@@ -674,7 +674,7 @@ Example:
 Phonebook Entries Object
 ------------------------
 
-.. attribute:: Type
+.. describe:: Type
 
     Type of entry, one of:
 
@@ -728,7 +728,7 @@ Phonebook Entries Object
     * ``NamePrefix`` - Name prefix (Text)
     * ``NameSuffix`` - Name suffix (Text)
 
-.. attribute:: Location
+.. describe:: Location
 
     Location for the field:
 
@@ -736,11 +736,11 @@ Phonebook Entries Object
     * ``Home`` - home
     * ``Work`` - work
 
-.. attribute:: Value
+.. describe:: Value
 
    Actual value, corresponding type to Type field.
 
-.. attribute:: PictureType
+.. describe:: PictureType
 
    Type of picture which is stored in Value field (only for Picture fields).
 
@@ -751,23 +751,23 @@ File Object
 
 File is a dictionary consisting of following fields:
 
-.. attribute:: Used
+.. describe:: Used
 
    Number of bytes used by this file.
 
-.. attribute:: Name
+.. describe:: Name
 
    File name.
 
-.. attribute:: Folder
+.. describe:: Folder
 
    Boolean value indicating whether this is a folder.
 
-.. attribute:: Level
+.. describe:: Level
 
    Depth of file on the filesystem.
 
-.. attribute:: Type
+.. describe:: Type
 
    File type, one of:
 
@@ -784,39 +784,39 @@ File is a dictionary consisting of following fields:
 * ``Sound_MIDI``
 * ``MMS``
 
-.. attribute:: ID_FullName
+.. describe:: ID_FullName
 
    Full file name including path.
 
-.. attribute:: Buffer
+.. describe:: Buffer
 
    Content of the file.
 
-.. attribute:: Modified
+.. describe:: Modified
 
    Timestamp of last change
 
-.. attribute:: Protected
+.. describe:: Protected
 
    Boolean value indicating whether file is protected (DRM).
 
-.. attribute:: ReadOnly
+.. describe:: ReadOnly
 
    Boolean value indicating whether file is read only.
 
-.. attribute:: Hidden
+.. describe:: Hidden
 
    Boolean value indicating whether file is hidden.
 
-.. attribute:: System
+.. describe:: System
 
    Boolean value indicating whether file is system.
 
-.. attribute:: Pos
+.. describe:: Pos
 
    Current position of file upload
 
-.. attribute:: Finished
+.. describe:: Finished
 
    Boolean value indicating completed file transfer.
 
@@ -868,18 +868,18 @@ The call type for diverts can have one of following values:
 Call Divert Objects
 -------------------
 
-.. attribute:: DivertType
+.. describe:: DivertType
 
     When to do the divert, see :ref:`divert-type`.
 
-.. attribute:: CallType
+.. describe:: CallType
 
     What call types to divert, see :ref:`divert-call`.
 
-.. attribute:: Number
+.. describe:: Number
 
     Phone number where to divert.
 
-.. attribute:: Timeout
+.. describe:: Timeout
 
     Timeout after which the divert will happen.

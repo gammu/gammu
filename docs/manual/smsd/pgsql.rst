@@ -41,7 +41,7 @@ Creating tables for PostgreSQL
 SQL script for creating tables in PostgreSQL database:
 
 .. literalinclude:: ../../sql/pgsql.sql
-   :language: sql
+   :language: postgresql
 
 .. note::
 

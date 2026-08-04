@@ -13,7 +13,7 @@ only need to hook new code into right places.
 
 The main code for AT driver is in :file:`libgammu/phone/at/atgen.c`. At the
 bottom of the file, you can find two arrays, one defining driver interface
-(:c:type:`GSM_Phone_Functions`) and second one defining callbacks (see
+(:c:type:`!GSM_Phone_Functions`) and second one defining callbacks (see
 :ref:`reply-functions` for more detailed description. You will definitely need
 to define callbacks for newly introduced commands, but the interface for
 desired functionality might already exist.
@@ -72,8 +72,8 @@ some commands.
 Invoking AT command
 +++++++++++++++++++
 
-The AT commands are invoked using :c:func:`GSM_WaitFor`, or a wrapper
-:c:func:`ATGEN_WaitForAutoLen`, where you don't have to specify length for
+The AT commands are invoked using :c:func:`!GSM_WaitFor`, or a wrapper
+:c:func:`!ATGEN_WaitForAutoLen`, where you don't have to specify length for
 text commands and automatically sets error variable.
 
 Generally you need to construct buffer and then invoke it. For some simple
@@ -98,9 +98,9 @@ for most data types ``s->Phone.Data`` does contain the pointer to do that.
 Parsing reply
 +++++++++++++
 
-For parsing reply, you should use :c:func:`ATGEN_ParseReply`, which should
+For parsing reply, you should use :c:func:`!ATGEN_ParseReply`, which should
 be able to handle all encoding and parsing magic. You can grab lines from the
-reply using :c:func:`GetLineString`.
+reply using :c:func:`!GetLineString`.
 
 The reply function needs to be hooked to the reply functions array, so that it
 is invoked when reply is received from the phone.
@@ -165,9 +165,9 @@ function would look like:
 
 As you can see, all reply function first need to handle which error code did
 they receive and return appropriate error if needed. Functions
-:c:func:`ATGEN_HandleCMSError` and :c:func:`ATGEN_HandleCMEError` simplify
+:c:func:`!ATGEN_HandleCMSError` and :c:func:`!ATGEN_HandleCMEError` simplify
 this, but you might need to customize it by handling some error codes manually
 (eg. when phone returns error on empty location).
 
-The rest of the function is just call to :c:func:`ATGEN_ParseReply` and
+The rest of the function is just call to :c:func:`!ATGEN_ParseReply` and
 processing parsed data.

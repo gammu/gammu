@@ -842,11 +842,11 @@ level and Gammu does not use that.
 
     Delete folder with given ID.
 
-.. option:: getfilefolder fileID, fileID, ...
+.. option:: getfilefolder fileID [fileID ...]
 
     Retrieve files or all files from folder with given IDs from a phone filesystem.
 
-.. option:: getfiles fileID, fileID, ...
+.. option:: getfiles fileID [fileID ...]
 
     Retrieve files with given IDs from a phone filesystem.
 

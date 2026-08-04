@@ -18,28 +18,30 @@ Backend interface
 Each backend service needs to support several operations, which are exported
 in ``GSM_SMSDService`` structure:
 
-.. c:function:: GSM_Error	GSM_SMSDService::Init 	      (GSM_SMSDConfig *Config)
+.. c:namespace-push:: GSM_SMSDService
+
+.. c:member:: GSM_Error (*Init)(GSM_SMSDConfig *Config)
 
     Initializes internal state, connect to backend storage.
 
     :param Config: Pointer to SMSD configuration data
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::Free 	      (GSM_SMSDConfig *Config)
+.. c:member:: GSM_Error (*Free)(GSM_SMSDConfig *Config)
 
     Freeing internal data, disconnect from backend storage.
 
     :param Config: Pointer to SMSD configuration data
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::InitAfterConnect   (GSM_SMSDConfig *Config)
+.. c:member:: GSM_Error (*InitAfterConnect)(GSM_SMSDConfig *Config)
 
     Optional hook called after SMSD is connected to phone, can be used for storing information about phone in backend.
 
     :param Config: Pointer to SMSD configuration data
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::SaveInboxSMS       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, GSM_StringArray *Locations, GSM_StringArray *SentIDs)
+.. c:member:: GSM_Error (*SaveInboxSMS)(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, GSM_StringArray *Locations, GSM_StringArray *SentIDs)
 
     Saves message into inbox.
 
@@ -50,7 +52,7 @@ in ``GSM_SMSDService`` structure:
         delivery reports.
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::FindOutboxSMS      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID)
+.. c:member:: GSM_Error (*FindOutboxSMS)(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID)
 
     Finds message in outbox suitable for sending.
 
@@ -62,7 +64,7 @@ in ``GSM_SMSDService`` structure:
         this check.
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::MoveSMS  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, gboolean alwaysDelete, gboolean sent)
+.. c:member:: GSM_Error (*MoveSMS)(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, gboolean alwaysDelete, gboolean sent)
 
     Moves sent message from outbox to sent items.
 
@@ -73,7 +75,7 @@ in ``GSM_SMSDService`` structure:
     :param sent: Whether message was sent (``TRUE``) or there was a failure (``FALSE``).
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::CreateOutboxSMS    (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID)
+.. c:member:: GSM_Error (*CreateOutboxSMS)(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID)
 
     Saves message into outbox queue.
 
@@ -82,7 +84,7 @@ in ``GSM_SMSDService`` structure:
     :param NewID: ID of created message will be stored here.
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::AddSentSMSInfo     (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
+.. c:member:: GSM_Error (*AddSentSMSInfo)(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
 
     Logs information about sent message (eg. delivery report).
 
@@ -94,7 +96,7 @@ in ``GSM_SMSDService`` structure:
     :param TPMR: Message reference if available (:term:`TPMR`).
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::RefreshSendStatus  (GSM_SMSDConfig *Config, char *ID)
+.. c:member:: GSM_Error (*RefreshSendStatus)(GSM_SMSDConfig *Config, char *ID)
 
     Updates sending status in service backend.
 
@@ -102,19 +104,21 @@ in ``GSM_SMSDService`` structure:
     :param ID: Identification of message to be marked.
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::RefreshPhoneStatus (GSM_SMSDConfig *Config)
+.. c:member:: GSM_Error (*RefreshPhoneStatus)(GSM_SMSDConfig *Config)
 
     Updates information about phone in database (network status, battery, etc.).
 
     :param Config: Pointer to SMSD configuration data
     :return: Error code.
 
-.. c:function:: GSM_Error	GSM_SMSDService::ReadConfiguration (GSM_SMSDConfig *Config)
+.. c:member:: GSM_Error (*ReadConfiguration)(GSM_SMSDConfig *Config)
 
     Reads configuration specific for this backend.
 
     :param Config: Pointer to SMSD configuration data
     :return: Error code.
+
+.. c:namespace-pop::
 
 Message ID
 ++++++++++
@@ -125,24 +129,24 @@ just by it's internal identification instead of handling message data from
 :c:type:`GSM_MultiSMSMessage`.
 
 If the backend does not use any IDs internally, it really does not have to
-provide them, with only exception of :c:func:`GSM_SMSDService::FindOutboxSMS`,
+provide them, with only exception of :c:member:`GSM_SMSDService.FindOutboxSMS`,
 where ID is used for detection of repeated sending of same message.
 
 The lifetime of ID for sent message:
 
-    * :c:func:`GSM_SMSDService::CreateOutboxSMS` or direct manipulation
+    * :c:member:`GSM_SMSDService.CreateOutboxSMS` or direct manipulation
       with backend storage creates new ID
-    * :c:func:`GSM_SMSDService::FindOutboxSMS` returns ID of message to
+    * :c:member:`GSM_SMSDService.FindOutboxSMS` returns ID of message to
       process
-    * :c:func:`GSM_SMSDService::AddSentSMSInfo` and
-      :c:func:`GSM_SMSDService::RefreshSendStatus` are then notified using
+    * :c:member:`GSM_SMSDService.AddSentSMSInfo` and
+      :c:member:`GSM_SMSDService.RefreshSendStatus` are then notified using
       this ID about sending of the message
-    * :c:func:`GSM_SMSDService::MoveSMS` then moves the message based on
+    * :c:member:`GSM_SMSDService.MoveSMS` then moves the message based on
       ID to sent items
 
 The lifetime of ID for incoming messages:
 
-    * :c:func:`GSM_SMSDService::SaveInboxSMS` generates the message
+    * :c:member:`GSM_SMSDService.SaveInboxSMS` generates the message
     * :ref:`gammu-smsd-run` uses this ID
 
 Message Sending Workflow

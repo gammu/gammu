@@ -24,13 +24,15 @@ find_program(SPHINX_BUILD_EXECUTABLE NAMES sphinx-build
 
 if (SPHINX_BUILD_EXECUTABLE)
     set (SPHINX_PAPER_SIZE "a4" CACHE STRING "Paper size for Sphinx LaTeX/PDF/PS output")
+    set (SPHINX_BUILD_OPTIONS "" CACHE STRING "Additional options passed to Sphinx")
+    separate_arguments(SPHINX_BUILD_OPTIONS)
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/conf.py" "${CMAKE_CURRENT_BINARY_DIR}/conf.py" @ONLY)
     macro(sphinxdoc _format)
         add_custom_target (manual-${_format} ${SPHINX_BUILD_EXECUTABLE}
+                ${SPHINX_BUILD_OPTIONS}
                 -c ${CMAKE_CURRENT_BINARY_DIR}/
                 -n
                 -b ${_format}
-                -D latex_paper_size=${SPHINX_PAPER_SIZE}
                 ${CMAKE_CURRENT_SOURCE_DIR}/
                 ${CMAKE_CURRENT_BINARY_DIR}/${_format}
             COMMENT "Generating Sphinx documentation (${_format})")

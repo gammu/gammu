@@ -95,7 +95,7 @@ which are used by this class.
       Configures gammu instance according to config.
 
       :param config: Gammu configuration, same as :meth:`gammu.StateMachine.SetConfig` accepts.
-      :type config: hash
+      :type config: dict
 
 
    .. method:: GammuWorker.enqueue(command, params=None, commands=None)
@@ -104,11 +104,11 @@ which are used by this class.
       Enqueues command or task.
 
       :param command: Command(s) to execute. Each command is tuple containing function name and it's parameters.
-      :type command: tuple of list of tuples
+      :type command: tuple | list[tuple]
       :param params: Parameters to command.
-      :type params: tuple or string
+      :type params: tuple | str
       :param commands: List of commands to execute. When this is not none, params are ignored and command is taken as task name.
-      :type commands: list of tuples or strings
+      :type commands: list[tuple | str]
 
 
    .. method:: GammuWorker.enqueue_command(command, params)
@@ -117,9 +117,9 @@ which are used by this class.
       Enqueues command.
 
       :param command: Command(s) to execute. Each command is tuple containing function name and it's parameters.
-      :type command: tuple of list of tuples
+      :type command: tuple | list[tuple]
       :param params: Parameters to command.
-      :type params: tuple or string
+      :type params: tuple | str
 
 
    .. method:: GammuWorker.enqueue_task(command, commands)
@@ -128,9 +128,9 @@ which are used by this class.
       Enqueues task.
 
       :param command: Command(s) to execute. Each command is tuple containing function name and it's parameters.
-      :type command: tuple of list of tuples
+      :type command: tuple | list[tuple]
       :param commands: List of commands to execute.
-      :type commands: list of tuples or strings
+      :type commands: list[tuple | str]
 
 
    .. method:: GammuWorker.initiate()
@@ -157,4 +157,4 @@ which are used by this class.
    Checks whether command is valid.
 
    :param command: Name of command.
-   :type command: string
+   :type command: str

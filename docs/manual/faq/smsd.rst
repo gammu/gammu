@@ -46,7 +46,7 @@ There can be various reasons why the script you've supplied as
 in the debug log (see :ref:`reporting-bugs-smsd`). For example it can look like
 following:
 
-.. code-block:: log
+.. code-block:: text
 
     gammu-smsd[9886]: Starting run on receive: ../received.sh
     gammu-smsd[9875]: Process failed with exit status 2

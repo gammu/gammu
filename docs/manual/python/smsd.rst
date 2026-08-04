@@ -18,7 +18,7 @@
     For more infos look into :ref:`Gammu SMSD Overview <gammu-smsd-overview>`.
 
     :param Config: Path to SMSD configuration file.
-    :type Config: string
+    :type Config: str
 
     .. method:: MainLoop(MaxFailures)
 
@@ -88,4 +88,4 @@
         :param Message: Message to inject (can be multipart)
         :type Message: list of :ref:`sms_obj`
         :return: ID of inserted message
-        :rtype: string
+        :rtype: str
