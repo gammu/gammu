@@ -189,6 +189,17 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		/* Process line after \r\n */
 		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length - 2] == 13) {
+			/* Some modems (eg. SIMCom SIM7670G) emit the SMS prompt as a bare
+			 * ">" terminated by CRLF instead of "> ", so the EditMode check
+			 * in the default branch never matches and GSM_WaitFor blocks. */
+			if (d->EditMode && d->LineStart >= 0 &&
+					d->LineEnd == d->LineStart + 1 &&
+					d->Msg.Buffer[d->LineStart] == '>') {
+				s->Phone.Data.RequestMsg	= &d->Msg;
+				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
+				break;
+			}
+
 			/* Process standard responses */
 			for (i = 0; StatusStrings[i] != NULL; i++) {
 				if (strncmp(StatusStrings[i],
