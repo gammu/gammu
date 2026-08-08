@@ -5,6 +5,12 @@
 
 #include "../protocol.h"
 
+/* 3GPP TS 27.005 section 3.5.1 defines the SMS edit prompt as the four
+ * character sequence <CR><LF><greater_than><space>. Some modems (eg. SIMCom
+ * SIM7670G) omit the trailing space and terminate the line instead. */
+#define AT_SMS_PROMPT_PADDED	"> "
+#define AT_SMS_PROMPT_BARE	">"
+
 GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char);
 GSM_Error AT_Initialise(GSM_StateMachine *s);
 
