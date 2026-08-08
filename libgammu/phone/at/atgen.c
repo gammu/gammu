@@ -1549,7 +1549,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	if (!strncmp(line,"+CPIN:", 6) && s->Protocol.Data.AT.CPINNoOK) {
 		Priv->ReplyState = AT_Reply_OK;
 	}
-	if (!strcmp(line,"> ") || !strcmp(line,">")) {
+	if (!strcmp(line, AT_SMS_PROMPT_PADDED) || !strcmp(line, AT_SMS_PROMPT_BARE)) {
 		Priv->ReplyState = AT_Reply_SMSEdit;
 	}
 	if (!strcmp(line,"CONNECT")) {

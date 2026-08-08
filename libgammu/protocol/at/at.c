@@ -192,9 +192,10 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			/* Some modems (eg. SIMCom SIM7670G) emit the SMS prompt as a bare
 			 * ">" terminated by CRLF instead of "> ", so the EditMode check
 			 * in the default branch never matches and GSM_WaitFor blocks. */
-			if (d->EditMode && d->LineStart >= 0 &&
-					d->LineEnd == d->LineStart + 1 &&
-					d->Msg.Buffer[d->LineStart] == '>') {
+			if (d->EditMode && d->LineStart < d->Msg.Length &&
+					d->LineEnd - d->LineStart == strlen(AT_SMS_PROMPT_BARE) &&
+					strncmp(d->Msg.Buffer + d->LineStart, AT_SMS_PROMPT_BARE,
+						strlen(AT_SMS_PROMPT_BARE)) == 0) {
 				s->Phone.Data.RequestMsg	= &d->Msg;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 				break;
@@ -307,8 +308,7 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			d->wascrlf 	= FALSE;
 		}
 		if (d->EditMode) {
-			if (strlen(d->Msg.Buffer+d->LineStart) == 2 &&
-					strncmp(d->Msg. Buffer + d->LineStart, "> ", 2) == 0) {
+			if (strcmp(d->Msg.Buffer + d->LineStart, AT_SMS_PROMPT_PADDED) == 0) {
 				s->Phone.Data.RequestMsg	= &d->Msg;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 			}
