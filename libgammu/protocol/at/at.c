@@ -193,9 +193,10 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			 * ">" terminated by CRLF instead of "> ", so the EditMode check
 			 * in the default branch never matches and GSM_WaitFor blocks. */
 			if (d->EditMode && d->LineStart < d->Msg.Length &&
-					d->LineEnd - d->LineStart == strlen(AT_SMS_PROMPT_BARE) &&
+					d->LineEnd > d->LineStart &&
+					d->LineEnd - d->LineStart == sizeof(AT_SMS_PROMPT_BARE) - 1 &&
 					strncmp(d->Msg.Buffer + d->LineStart, AT_SMS_PROMPT_BARE,
-						strlen(AT_SMS_PROMPT_BARE)) == 0) {
+						sizeof(AT_SMS_PROMPT_BARE) - 1) == 0) {
 				s->Phone.Data.RequestMsg	= &d->Msg;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 				break;
