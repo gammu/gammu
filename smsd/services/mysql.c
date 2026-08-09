@@ -21,6 +21,10 @@
 #include "../core.h"
 #include "sql.h"
 
+/* Defines the CR_* client error constants used below. Oracle's mysql.h pulls
+ * this in for us, MariaDB Connector/C does not, so include it explicitly. */
+#include <errmsg.h>
+
 long long SMSDMySQL_GetNumber(GSM_SMSDConfig * Config, SQL_result *res, unsigned int field)
 {
 	return strtoll(res->my.row[field], NULL, 10);
