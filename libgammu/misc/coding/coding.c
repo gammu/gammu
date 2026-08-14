@@ -271,10 +271,39 @@ void DecodeUnicode (const unsigned char *src, char *dest)
 	dest[o]=0;
 }
 
+/*
+ * Grow a conversion buffer so that the decoded form of src always fits.
+ * Every UTF-16 unit expands to at most MB_LEN_MAX bytes (wctomb output,
+ * UTF-8 sequences and the '?' fallback all fit in that bound).
+ * Returns NULL when out of memory, keeping the old buffer valid.
+ */
+static char *EnsureConversionBuffer(char **buffer, size_t *size,
+				    const unsigned char *src)
+{
+	size_t needed = UnicodeLength(src) * MB_LEN_MAX + 1;
+	char *tmp;
+
+	if (*size < needed) {
+		tmp = (char *)realloc(*buffer, needed);
+		if (tmp == NULL)
+			return NULL;
+		*buffer = tmp;
+		*size = needed;
+	}
+	return *buffer;
+}
+
 /* Decode Unicode string and return as function result */
 char *DecodeUnicodeString (const unsigned char *src)
 {
- 	static char dest[500];
+	static char *dest;
+	static size_t dest_size;
+	static char empty[1];
+
+	if (EnsureConversionBuffer(&dest, &dest_size, src) == NULL) {
+		empty[0] = 0;
+		return empty;
+	}
 
 	DecodeUnicode(src,dest);
 	return dest;
@@ -285,7 +314,14 @@ char *DecodeUnicodeString (const unsigned char *src)
  */
 char *DecodeUnicodeConsole(const unsigned char *src)
 {
- 	static char dest[500];
+	static char *dest;
+	static size_t dest_size;
+	static char empty[1];
+
+	if (EnsureConversionBuffer(&dest, &dest_size, src) == NULL) {
+		empty[0] = 0;
+		return empty;
+	}
 
 	if (GSM_global_debug.coding[0] != 0) {
 		if (!strcmp(GSM_global_debug.coding,"utf8")) {
