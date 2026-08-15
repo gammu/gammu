@@ -272,15 +272,30 @@ void DecodeUnicode (const unsigned char *src, char *dest)
 }
 
 /*
+ * Every UTF-16 unit expands to at most MB_LEN_MAX bytes via wctomb() (the
+ * '?' fallback is one byte) and to at most 3 bytes via EncodeUTF8() (4-byte
+ * UTF-8 sequences encode surrogate pairs, i.e. two UTF-16 units).  MB_LEN_MAX
+ * only bounds the locale's multibyte encoding, so keep a separate floor for
+ * the explicit UTF-8 path.
+ */
+#define CONVERSION_UNIT_MAX (MB_LEN_MAX > 3 ? MB_LEN_MAX : 3)
+
+/*
+ * Callers nest conversions in a single expression, for example
+ * strcmp(DecodeUnicodeString(a), DecodeUnicodeString(b)), so results are
+ * returned from a set of rotating buffers: each call uses the next slot and
+ * never reallocates the storage handed out by the previous calls.
+ */
+#define CONVERSION_BUFFERS 4
+
+/*
  * Grow a conversion buffer so that the decoded form of src always fits.
- * Every UTF-16 unit expands to at most MB_LEN_MAX bytes (wctomb output,
- * UTF-8 sequences and the '?' fallback all fit in that bound).
  * Returns NULL when out of memory, keeping the old buffer valid.
  */
 static char *EnsureConversionBuffer(char **buffer, size_t *size,
 				    const unsigned char *src)
 {
-	size_t needed = UnicodeLength(src) * MB_LEN_MAX + 1;
+	size_t needed = UnicodeLength(src) * CONVERSION_UNIT_MAX + 1;
 	char *tmp;
 
 	if (*size < needed) {
@@ -296,17 +311,21 @@ static char *EnsureConversionBuffer(char **buffer, size_t *size,
 /* Decode Unicode string and return as function result */
 char *DecodeUnicodeString (const unsigned char *src)
 {
-	static char *dest;
-	static size_t dest_size;
+	static char *dest[CONVERSION_BUFFERS];
+	static size_t dest_size[CONVERSION_BUFFERS];
+	static unsigned int slot;
 	static char empty[1];
+	char *buffer;
 
-	if (EnsureConversionBuffer(&dest, &dest_size, src) == NULL) {
+	slot = (slot + 1) % CONVERSION_BUFFERS;
+	buffer = EnsureConversionBuffer(&dest[slot], &dest_size[slot], src);
+	if (buffer == NULL) {
 		empty[0] = 0;
 		return empty;
 	}
 
-	DecodeUnicode(src,dest);
-	return dest;
+	DecodeUnicode(src,buffer);
+	return buffer;
 }
 
 /* Decode Unicode string to UTF8 or other console charset
@@ -314,34 +333,38 @@ char *DecodeUnicodeString (const unsigned char *src)
  */
 char *DecodeUnicodeConsole(const unsigned char *src)
 {
-	static char *dest;
-	static size_t dest_size;
+	static char *dest[CONVERSION_BUFFERS];
+	static size_t dest_size[CONVERSION_BUFFERS];
+	static unsigned int slot;
 	static char empty[1];
+	char *buffer;
 
-	if (EnsureConversionBuffer(&dest, &dest_size, src) == NULL) {
+	slot = (slot + 1) % CONVERSION_BUFFERS;
+	buffer = EnsureConversionBuffer(&dest[slot], &dest_size[slot], src);
+	if (buffer == NULL) {
 		empty[0] = 0;
 		return empty;
 	}
 
 	if (GSM_global_debug.coding[0] != 0) {
 		if (!strcmp(GSM_global_debug.coding,"utf8")) {
-			EncodeUTF8(dest, src);
+			EncodeUTF8(buffer, src);
 		} else {
 #ifdef WIN32
 			setlocale(LC_ALL, GSM_global_debug.coding);
 #endif
-			DecodeUnicode(src,dest);
+			DecodeUnicode(src,buffer);
 		}
 	} else {
 #ifdef WIN32
 		setlocale(LC_ALL, ".OCP");
 #endif
-		DecodeUnicode(src,dest);
+		DecodeUnicode(src,buffer);
 #ifdef WIN32
 		setlocale(LC_ALL, ".ACP");
 #endif
 	}
-	return dest;
+	return buffer;
 }
 
 /* Encode string to Unicode. Len is number of input chars */
