@@ -360,7 +360,9 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsign
 				SMS->Length = 0;
 				break;
 			}
-			GSM_UnpackEightBitsToSeven(w, buffer[Layout.TPUDL]-off, SMS->Length, buffer+(Layout.Text+off), output);
+			/* TPUDL counts septets here, so the packed text occupies
+			   ceil(7 * TPUDL / 8) octets minus the UDH */
+			GSM_UnpackEightBitsToSeven(w, (buffer[Layout.TPUDL]*7+7)/8-off, SMS->Length, buffer+(Layout.Text+off), output);
 			smfprintf(di, "7 bit SMS, length %i\n",SMS->Length);
 			DecodeDefault (SMS->Text, output, SMS->Length, TRUE, NULL);
 			smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
@@ -809,7 +811,9 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 					SMS->Length = 0;
 					break;
 				}
-				GSM_UnpackEightBitsToSeven(w, udl-SMS->UDH.Length, SMS->Length, buffer+(pos + 1+SMS->UDH.Length), output);
+				/* udl counts septets here, so the packed text occupies
+				   ceil(7 * udl / 8) octets minus the UDH */
+				GSM_UnpackEightBitsToSeven(w, (udl*7+7)/8-SMS->UDH.Length, SMS->Length, buffer+(pos + 1+SMS->UDH.Length), output);
 				smfprintf(di, "7 bit SMS, length %i\n",SMS->Length);
 				DecodeDefault (SMS->Text, output, SMS->Length, TRUE, NULL);
 				smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));

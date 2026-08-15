@@ -1032,6 +1032,9 @@ int GSM_UnpackEightBitsToSeven(size_t offset, size_t in_length, size_t out_lengt
 
         while ((size_t)(input_pos - input) < in_length) {
 
+                /* Never consume input the output has no room for */
+                if ((size_t)(output_pos - output) >= out_length) break;
+
                 *output_pos = ((*input_pos & ByteMask) << (7 - Bits)) | Rest;
                 Rest = *input_pos >> Bits;
 
