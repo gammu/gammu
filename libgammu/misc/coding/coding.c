@@ -29,6 +29,7 @@
 #include <ctype.h>
 #include <locale.h>
 #include <limits.h>
+#include <stdint.h>
 #ifdef WIN32
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
@@ -290,13 +291,19 @@ void DecodeUnicode (const unsigned char *src, char *dest)
 
 /*
  * Grow a conversion buffer so that the decoded form of src always fits.
- * Returns NULL when out of memory, keeping the old buffer valid.
+ * Returns NULL when out of memory or when the input is so long that the
+ * allocation size would overflow, keeping the old buffer valid.
  */
 static char *EnsureConversionBuffer(char **buffer, size_t *size,
 				    const unsigned char *src)
 {
-	size_t needed = UnicodeLength(src) * CONVERSION_UNIT_MAX + 1;
+	size_t len = UnicodeLength(src);
+	size_t needed;
 	char *tmp;
+
+	if (len > (SIZE_MAX - 1) / CONVERSION_UNIT_MAX)
+		return NULL;
+	needed = len * CONVERSION_UNIT_MAX + 1;
 
 	if (*size < needed) {
 		tmp = (char *)realloc(*buffer, needed);
