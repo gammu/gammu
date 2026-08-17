@@ -1165,39 +1165,59 @@ int GSM_PackSevenBitsToEight(size_t offset, const unsigned char *input, unsigned
 GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const unsigned char *Number, size_t *pos, size_t bufferlength, gboolean semioctet)
 {
 	unsigned char	Buffer[GSM_MAX_NUMBER_LENGTH + 1];
-	size_t		length		= Number[*pos];
+	size_t		field_length;
+	size_t		payload_length;
+	size_t		decoded_length;
+	size_t		consumed;
 	GSM_Error ret = ERR_NONE;
 
-	smfprintf(di, "Number Length=%ld\n", (long)length);
+	if (*pos >= bufferlength) {
+		smfprintf(di, "Number starts beyond end of buffer!\n");
+		return ERR_CORRUPTED;
+	}
 
-	if (length == 0) {
-		strcpy(Buffer, "");
-		goto out;
+	field_length = Number[*pos];
+	consumed = semioctet ? 2 + ((field_length + 1) / 2) : 1 + field_length;
+	if (consumed > bufferlength - *pos) {
+		smfprintf(di, "Number exceeds remaining buffer!\n");
+		return ERR_CORRUPTED;
+	}
+
+	smfprintf(di, "Number Length=%ld\n", (long)field_length);
+
+	if (field_length == 0) {
+		Buffer[0] = 0;
+		EncodeUnicode(retval, Buffer, 0);
+		*pos += consumed;
+		return ERR_NONE;
 	}
 
 	/* Default ouput on error */
 	strcpy(Buffer, "<NOT DECODED>");
 
-	if (length > bufferlength) {
-		smfprintf(di, "Number too long!\n");
-		return ERR_UNKNOWN;
-	}
-
 	if (semioctet) {
-		/* Convert number of semioctets to number of chars */
-		if (length % 2) length++;
-		length=length / 2 + 1;
+		payload_length = (field_length + 1) / 2;
+	} else {
+		/* The SMSC length includes the type-of-address byte. */
+		payload_length = field_length - 1;
 	}
 
-	/* Check length */
-	if (length > GSM_MAX_NUMBER_LENGTH) {
-		smfprintf(di, "Number too big, not decoding! (Length=%ld, MAX=%d)\n", (long)length, GSM_MAX_NUMBER_LENGTH);
-		ret = ERR_UNKNOWN;
-		goto out;
+	if ((Number[*pos + 1] & 0x70) ==
+	    (NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN & 0x70)) {
+		decoded_length = semioctet ? (field_length * 4) / 7 :
+					      (payload_length * 8) / 7;
+	} else {
+		decoded_length = semioctet ? field_length : payload_length * 2;
+		if ((Number[*pos + 1] & 0x70) ==
+		    (NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN & 0x70)) {
+			decoded_length++;
+		}
 	}
-
-	/*without leading byte with format of number*/
-	length--;
+	if (decoded_length > GSM_MAX_NUMBER_LENGTH) {
+		smfprintf(di, "Number too big, not decoding! (Length=%ld, MAX=%d)\n",
+			 (long)decoded_length, GSM_MAX_NUMBER_LENGTH);
+		return ERR_CORRUPTED;
+	}
 
 	smfprintf(di, "Number type %02x (%d %d %d %d|%d %d %d %d)\n", Number[*pos + 1],
 			Number[*pos + 1] & 0x80 ? 1 : 0,
@@ -1218,29 +1238,25 @@ GSM_Error GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, c
 
 	switch ((Number[*pos + 1] & 0x70)) {
 	case (NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN & 0x70):
-		if (length > 6) length++;
-		smfprintf(di, "Alphanumeric number, length %ld\n", (long)length);
-		GSM_UnpackEightBitsToSeven(0, length, length, Number+*pos+2, Buffer);
-		Buffer[length]=0;
+		smfprintf(di, "Alphanumeric number, length %ld\n", (long)decoded_length);
+		GSM_UnpackEightBitsToSeven(0, payload_length, decoded_length,
+					 Number + *pos + 2, Buffer);
+		Buffer[decoded_length] = 0;
 		break;
 	case (NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN & 0x70):
 		smfprintf(di, "International number\n");
 		Buffer[0]='+';
-		DecodeBCD(Buffer+1,Number+*pos+2, length);
+		DecodeBCD(Buffer + 1, Number + *pos + 2, payload_length);
 		break;
 	default:
-		DecodeBCD (Buffer, Number+*pos+2, length);
+		DecodeBCD(Buffer, Number + *pos + 2, payload_length);
 		break;
 	}
 
-	smfprintf(di, "Len %ld\n", (long)length);
+	smfprintf(di, "Len %ld\n", (long)decoded_length);
 out:
 	EncodeUnicode(retval,Buffer,strlen(Buffer));
-	if (semioctet) {
-		*pos += 2 + ((Number[*pos] + 1) / 2);
-	} else {
-		*pos += 1 + Number[*pos];
-	}
+	*pos += consumed;
 	return ret;
 }
 
@@ -1502,9 +1518,10 @@ void GetBufferI(unsigned char 	*Source,
 
 /* Unicode char 0x00 0x01 makes blinking in some Nokia phones.
  * We replace single ~ chars into it. When user give double ~, it's replaced
- * to single ~
+ * to single ~. Returns the encoded length in code units; a NULL destination
+ * can be used to calculate the length without writing the result.
  */
-void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, size_t len)
+size_t EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, size_t len)
 {
 	size_t 	i,current = 0;
 	gboolean 	special=FALSE;
@@ -1512,30 +1529,45 @@ void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 	for (i = 0; i < len; i++) {
 		if (special) {
 			if (src[i*2] == 0x00 && src[i*2+1] == '~') {
-				dest[current++]	= 0x00;
-				dest[current++]	= '~';
+				if (dest != NULL) {
+					dest[current]	= 0x00;
+					dest[current + 1]	= '~';
+				}
+				current += 2;
 			} else {
-				dest[current++]	= 0x00;
-				dest[current++]	= 0x01;
-				dest[current++]	= src[i*2];
-				dest[current++]	= src[i*2+1];
+				if (dest != NULL) {
+					dest[current]	= 0x00;
+					dest[current + 1]	= 0x01;
+					dest[current + 2]	= src[i*2];
+					dest[current + 3]	= src[i*2+1];
+				}
+				current += 4;
 			}
 			special = FALSE;
 		} else {
 			if (src[i*2] == 0x00 && src[i*2+1] == '~') {
 				special = TRUE;
 			} else {
-				dest[current++]	= src[i*2];
-				dest[current++]	= src[i*2+1];
+				if (dest != NULL) {
+					dest[current]	= src[i*2];
+					dest[current + 1]	= src[i*2+1];
+				}
+				current += 2;
 			}
 		}
 	}
 	if (special) {
-		dest[current++]	= 0x00;
-		dest[current++]	= 0x01;
+		if (dest != NULL) {
+			dest[current]	= 0x00;
+			dest[current + 1]	= 0x01;
+		}
+		current += 2;
 	}
-	dest[current++] = 0x00;
-	dest[current] = 0x00;
+	if (dest != NULL) {
+		dest[current] = 0x00;
+		dest[current + 1] = 0x00;
+	}
+	return current / 2;
 }
 
 void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, size_t len)

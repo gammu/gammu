@@ -7,12 +7,37 @@
 #include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
 #include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
 #include "../libgammu/gsmphones.h"	/* Phone data */
+#include "../libgammu/misc/coding/coding.h"	/* SMS alphabet sizing */
 
 #include "common.h"
 
 extern GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, size_t hexlength, int *current, size_t *length2);
 
 #define BUFFER_SIZE 16384
+
+static gboolean SMS_ExceedsUserDataLimit(const GSM_SMSMessage *sms)
+{
+	size_t source_length, consumed, septets, header_septets;
+	size_t udh_length = sms->UDH.Type == UDH_NoUDH ? 0 : sms->UDH.Length;
+
+	if (udh_length > GSM_MAX_8BIT_SMS_LENGTH) return TRUE;
+	switch (sms->Coding) {
+	case SMS_Coding_8bit:
+		return sms->Length < 0 ||
+		       (size_t)sms->Length > GSM_MAX_8BIT_SMS_LENGTH - udh_length;
+	case SMS_Coding_Unicode_No_Compression:
+		return UnicodeLength(sms->Text) >
+		       (GSM_MAX_8BIT_SMS_LENGTH - udh_length) / 2;
+	case SMS_Coding_Default_No_Compression:
+		header_septets = (udh_length * 8 + 6) / 7;
+		source_length = UnicodeLength(sms->Text);
+		FindDefaultAlphabetLen(sms->Text, &consumed, &septets,
+				       GSM_MAX_SMS_CHARS_LENGTH - header_septets);
+		return consumed != source_length;
+	default:
+		return FALSE;
+	}
+}
 
 int main(int argc, char **argv)
 {
@@ -100,6 +125,11 @@ int main(int argc, char **argv)
 
 	/* Format SMS frame */
 	error = ATGEN_MakeSMSFrame(s, Backup->SMS[0], hexreq, sizeof(hexreq), &current, &current2);
+	if (error == ERR_INVALIDDATA && SMS_ExceedsUserDataLimit(Backup->SMS[0])) {
+		GSM_FreeSMSBackup(Backup);
+		GSM_FreeStateMachine(s);
+		return 0;
+	}
 	gammu_test_result(error, "ATGEN_MakeSMSFrame");
 
 	/* We don't need this anymore */

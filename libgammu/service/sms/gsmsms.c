@@ -258,6 +258,28 @@ void GSM_DecodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader *UDH)
 #endif
 }
 
+static gboolean GSM_IsValidUDH(const GSM_UDHHeader *UDH)
+{
+	size_t pos = 1;
+	size_t length;
+
+	if (UDH->Length < 1 || UDH->Length > GSM_MAX_UDH_LENGTH ||
+	    UDH->Text[0] + 1 != UDH->Length) {
+		return FALSE;
+	}
+	length = UDH->Length;
+	while (pos < length) {
+		if (length - pos < 2) {
+			return FALSE;
+		}
+		if (UDH->Text[pos + 1] > length - pos - 2) {
+			return FALSE;
+		}
+		pos += 2 + UDH->Text[pos + 1];
+	}
+	return pos == length;
+}
+
 GSM_Coding_Type GSM_GetMessageCoding(GSM_Debug_Info *di, const char TPDCS) {
 
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
@@ -525,12 +547,18 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	int i,w;
 	unsigned char	output[161];
 	int			datalength;
+	int			consumed_datalength;
 	int			udl;  /* User Data Length - may be adjusted if buffer is truncated */
 	gboolean have_data = FALSE;
+	gboolean truncated_data = FALSE;
 	GSM_Error error;
 
 	/* Set some sane data */
 	GSM_SetDefaultReceivedSMSData(SMS);
+	if (length == 0) {
+		smfprintf(di, "Empty PDU buffer!\n");
+		return ERR_CORRUPTED;
+	}
 
 	/* Parse SMSC if it is included */
 	if (SMSC) {
@@ -542,6 +570,10 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	}
 
 	/* Message type */
+	if (pos >= length) {
+		smfprintf(di, "Missing PDU message type!\n");
+		return ERR_CORRUPTED;
+	}
 	type = buffer[pos];
 	pos++;
 	switch (type & 0x3) {
@@ -595,13 +627,13 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 
 	/* Message reference */
 	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Status_Report) {
+		if (pos >= length) {
+			smfprintf(di, "Missing SMS message reference!\n");
+			return ERR_CORRUPTED;
+		}
 		SMS->MessageReference = buffer[pos];
 		smfprintf(di, "SMS MR: 0x%02X\n", SMS->MessageReference);
 		pos++;
-		if (pos >= length) {
-			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
-			return ERR_CORRUPTED;
-		}
 	}
 
 	/* Remote number */
@@ -610,25 +642,23 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 		return error;
 	}
 	smfprintf(di, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
-	if (pos >= length) {
-		smfprintf(di, "Ran out of buffer when parsing PDU!\n");
-		return ERR_CORRUPTED;
-	}
-
-
 	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver) {
 		/* Protocol identifier */
+		if (pos >= length) {
+			smfprintf(di, "Missing protocol identifier!\n");
+			return ERR_CORRUPTED;
+		}
 		smfprintf(di, "SMS PID: 0x%02X\n", buffer[pos]);
 		if (buffer[pos] > 0x40 && buffer[pos] < 0x48) {
 			SMS->ReplaceMessage = buffer[pos] - 0x40;
 		}
 		pos++;
-		if (pos >= length) {
-			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
-			return ERR_CORRUPTED;
-		}
 
 		/* Data coding scheme */
+		if (pos >= length) {
+			smfprintf(di, "Missing data coding scheme!\n");
+			return ERR_CORRUPTED;
+		}
 		smfprintf(di, "SMS DCS: 0x%02X\n", buffer[pos]);
 		SMS->Coding = GSM_GetMessageCoding(di, buffer[pos]);
 
@@ -641,15 +671,11 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 		smfprintf(di, "SMS class: %i\n", SMS->Class);
 
 		pos++;
-		if (pos >= length) {
-			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
-			return ERR_CORRUPTED;
-		}
 	}
 
 	/* SMSC time stamp */
 	if (SMS->PDU == SMS_Status_Report || SMS->PDU == SMS_Deliver) {
-		if (pos + 7 >= length) {
+		if (pos > length || length - pos < 7) {
 			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
 			return ERR_CORRUPTED;
 		}
@@ -659,7 +685,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 
 	if (SMS->PDU == SMS_Status_Report) {
 		/* Discharge Time */
-		if (pos + 7 >= length) {
+		if (pos > length || length - pos < 7) {
 			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
 			return ERR_CORRUPTED;
 		}
@@ -667,6 +693,10 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 		pos += 7;
 
 		/* Status */
+		if (pos >= length) {
+			smfprintf(di, "Missing SMS status!\n");
+			return ERR_CORRUPTED;
+		}
 		GSM_DecodeSMSStatusReportData(di, SMS, buffer[pos]);
 		pos++;
 
@@ -679,6 +709,9 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 
 			/* We have TP-PID */
 			if (tp_pi & 1) {
+				if (pos >= length) {
+					return ERR_CORRUPTED;
+				}
 				smfprintf(di, "SMS PID: 0x%02X\n", buffer[pos]);
 				if (buffer[pos] > 0x40 && buffer[pos] < 0x48) {
 					SMS->ReplaceMessage = buffer[pos] - 0x40;
@@ -688,6 +721,9 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 
 			/* We have TP-DCS */
 			if (tp_pi & 2) {
+				if (pos >= length) {
+					return ERR_CORRUPTED;
+				}
 				smfprintf(di, "SMS DCS: 0x%02X\n", buffer[pos]);
 				SMS->Coding = GSM_GetMessageCoding(di, buffer[pos]);
 				pos++;
@@ -705,29 +741,38 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	/* Validity period */
 	if (SMS->PDU == SMS_Submit) {
 		if (vpf == 2) {
+			if (pos >= length) {
+				return ERR_CORRUPTED;
+			}
 			SMS->SMSC.Validity.Format = SMS_Validity_RelativeFormat;
 			SMS->SMSC.Validity.Relative = buffer[pos];
 			smfprintf(di, "Relative validity: 0x%02X\n", buffer[pos]);
 			pos++;
-			if (pos >= length) {
-				smfprintf(di, "Ran out of buffer when parsing PDU!\n");
-				return ERR_CORRUPTED;
-			}
 		} else if (vpf == 3) {
 			/* @todo TODO: handle absolute validity */
 			smfprintf(di, "Absolute validity not handled!\n");
-			pos += 7;
-			if (pos >= length) {
-				smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+			if (pos > length || length - pos < 7) {
 				return ERR_CORRUPTED;
 			}
+			pos += 7;
 		}
 	}
 
 	/* Data */
 	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver || have_data) {
 		/* Read User Data Length from PDU */
+		if (pos >= length) {
+			smfprintf(di, "Missing user data length!\n");
+			return ERR_CORRUPTED;
+		}
 		udl = buffer[pos];
+		if ((SMS->Coding == SMS_Coding_Default_No_Compression &&
+		     udl > GSM_MAX_SMS_CHARS_LENGTH) ||
+		    (SMS->Coding != SMS_Coding_Default_No_Compression &&
+		     udl > GSM_MAX_8BIT_SMS_LENGTH)) {
+			smfprintf(di, "User data length exceeds GSM limits!\n");
+			return ERR_CORRUPTED;
+		}
 
 		/* Calculate how many bytes of data this represents based on encoding */
 		datalength = udl;
@@ -749,13 +794,10 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 		 * Data starts at pos+1 (after UDL byte) and extends for datalength bytes
 		 * So we need pos+1+datalength <= length, or pos+datalength+1 <= length
 		 */
-		if (pos + datalength + 1 > length) {
+		if ((size_t)datalength > length - pos - 1) {
 			/* Calculate actual available data (subtracting 1 for the UDL byte itself) */
-			int available_data = length - pos - 1;
-			if (available_data < 0) {
-				smfprintf(di, "Ran out of buffer when parsing PDU!\n");
-				return ERR_CORRUPTED;
-			}
+			int available_data = (int)(length - pos - 1);
+			truncated_data = TRUE;
 			smfprintf(di, "WARNING: PDU claims %d bytes of data but only %d bytes available, truncating\n",
 				  datalength, available_data);
 
@@ -782,20 +824,46 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 				datalength = available_data;
 			}
 		}
-		if (final_pos != NULL) {
-			*final_pos = pos + datalength + 1;
-		}
+		consumed_datalength = datalength;
 		SMS->UDH.Length = 0;
 		/* UDH header available */
 		if (udh) {
+			if (datalength < 1) {
+				smfprintf(di, "UDH flag set without a header!\n");
+				return ERR_CORRUPTED;
+			}
 			/* Length of UDH header */
 			SMS->UDH.Length = (buffer[pos + 1] + 1);
 			smfprintf(di, "UDH header available (length %i)\n",SMS->UDH.Length);
+			if (SMS->UDH.Length > GSM_MAX_UDH_LENGTH ||
+			    SMS->UDH.Length > datalength) {
+				smfprintf(di, "Invalid or truncated UDH header!\n");
+				return ERR_CORRUPTED;
+			}
 
 			/* Copy UDH header into SMS->UDH */
 			for (i = 0; i < SMS->UDH.Length; i++) SMS->UDH.Text[i] = buffer[pos + 1 + i];
+			if (!GSM_IsValidUDH(&SMS->UDH)) {
+				smfprintf(di, "Malformed UDH information elements!\n");
+				return ERR_CORRUPTED;
+			}
 
 			GSM_DecodeUDHHeader(di, &SMS->UDH);
+		}
+		if (SMS->Coding == SMS_Coding_Unicode_No_Compression &&
+		    (udl - SMS->UDH.Length) % 2 != 0) {
+			if (truncated_data) {
+				/* Drop only the incomplete text octet.  The UDH itself can
+				 * legitimately have an odd length. */
+				udl--;
+				datalength--;
+			} else {
+				smfprintf(di, "Unicode user data has an incomplete character!\n");
+				return ERR_CORRUPTED;
+			}
+		}
+		if (final_pos != NULL) {
+			*final_pos = pos + consumed_datalength + 1;
 		}
 
 		switch (SMS->Coding) {
@@ -983,12 +1051,15 @@ static GSM_Error GSM_EncodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, uns
 	return ERR_NONE;
 }
 
-static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
+static GSM_Error GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS,
+					unsigned char *buffer,
+					GSM_SMSMessageLayout Layout, int *encoded_size)
 {
 	int	off = 0;	/*  length of the User Data Header */
 	int	size = 0, size2 = 0, w;
-	size_t p;
-	char	buff[200];
+	size_t p, source_length, encoded_length, septets, max_septets, header_septets;
+	unsigned char buff[GSM_MAX_SMS_CHARS_LENGTH + 1];
+	GSM_UDHHeader checked_udh;
 
 	if (SMS->UDH.Type!=UDH_NoUDH) {
 		buffer[Layout.firstbyte] |= 0x40;			/* GSM 03.40 section 9.2.3.23 (TP-User-Data-Header-Indicator) */
@@ -1000,6 +1071,13 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 			off = SMS->UDH.Length;
 			smfprintf(di, "UDL: %i, UDHL: %i\n", off, SMS->UDH.Text[0]);
 		}
+		if (off < 1 || off > GSM_MAX_UDH_LENGTH ||
+		    off > GSM_MAX_8BIT_SMS_LENGTH || SMS->UDH.Text[0] + 1 != off) {
+			return ERR_INVALIDDATA;
+		}
+		checked_udh = SMS->UDH;
+		checked_udh.Length = off;
+		if (!GSM_IsValidUDH(&checked_udh)) return ERR_INVALIDDATA;
 		memcpy(buffer+Layout.Text, SMS->UDH.Text, off);		/* we copy the udh */
 		smfprintf(di, "UDH, length %i\n",off);
 		DumpMessageText(di, SMS->UDH.Text, off);
@@ -1010,40 +1088,54 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 			/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 			 * and GSM 03.38 section 4 */
 			buffer[Layout.TPDCS] |= (1 << 2);
-			memcpy(buffer+(Layout.Text+off), SMS->Text, MIN(SMS->Length, 140));
+			if (SMS->Length < 0 || SMS->Length > GSM_MAX_8BIT_SMS_LENGTH - off) {
+				return ERR_INVALIDDATA;
+			}
+			memcpy(buffer+(Layout.Text+off), SMS->Text, SMS->Length);
 			size2 = size = SMS->Length+off;
 			smfprintf(di, "8 bit SMS, length %i\n",SMS->Length);
 			DumpMessageText(di, SMS->Text, SMS->Length);
 			break;
 		case SMS_Coding_Default_No_Compression:
-			p = 0;
-			do {
-				p+=7;
-				w=(p-off)%p;
-			} while (w<0);
-			p = MIN(UnicodeLength(SMS->Text), 160);
+			w = (7 - off % 7) % 7;
+			header_septets = (off * 8 + w) / 7;
+			if (header_septets > GSM_MAX_SMS_CHARS_LENGTH) return ERR_INVALIDDATA;
+			max_septets = GSM_MAX_SMS_CHARS_LENGTH - header_septets;
+			source_length = UnicodeLength(SMS->Text);
+			FindDefaultAlphabetLen(SMS->Text, &p, &septets, max_septets);
+			if (p != source_length) return ERR_INVALIDDATA;
+			p = source_length;
 			EncodeDefault(buff, SMS->Text, &p, TRUE, NULL);
-			size = GSM_PackSevenBitsToEight(w, buff, buffer+(Layout.Text+off), p);
+			if (p != septets || p > sizeof(buff) - 1) return ERR_INVALIDDATA;
+			/* A non-septet-aligned UDH needs its partial padding octet even
+			 * when the message contains no text septets. */
+			size = GSM_PackSevenBitsToEight(w, buff,
+						 buffer+(Layout.Text+off), p);
 			size += off;
 			size2 = (off*8 + w) / 7 + p;
 			smfprintf(di, "7 bit SMS, length %i, %i\n",size,size2);
 			smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
 			if (size > GSM_MAX_8BIT_SMS_LENGTH) {
-				size = 0; size2 = 0;
+				return ERR_INVALIDDATA;
 			}
 			break;
 		case SMS_Coding_Unicode_No_Compression:
 			/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 			 * and GSM 03.38 section 4 */
 			buffer[Layout.TPDCS] |= (1 << 3);
-			EncodeUnicodeSpecialNOKIAChars(buffer+(Layout.Text+off), SMS->Text, MIN(UnicodeLength(SMS->Text), 70));
-			size=size2=UnicodeLength(buffer+(Layout.Text+off))*2+off;
-			smfprintf(di, "Unicode SMS, length %i\n",(size2-off)/2);
+			source_length = UnicodeLength(SMS->Text);
+			encoded_length = EncodeUnicodeSpecialNOKIAChars(NULL, SMS->Text, source_length);
+			if (encoded_length > (size_t)(GSM_MAX_8BIT_SMS_LENGTH - off) / 2) {
+				return ERR_INVALIDDATA;
+			}
+			EncodeUnicodeSpecialNOKIAChars(buffer+(Layout.Text+off), SMS->Text, source_length);
+			size=size2=encoded_length*2+off;
+			smfprintf(di, "Unicode SMS, length %ld\n", (long)encoded_length);
 			DumpMessageText(di, buffer+(Layout.Text+off), size2-off);
-			smfprintf(di, "%s\n",DecodeUnicodeString(buffer+(Layout.Text+off)));
+			smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
 			break;
 		default:
-			break;
+			return ERR_INVALIDDATA;
 	}
 
 	/* GSM 03.40 section 9.2.3.16 (TP-User-Data-Length)
@@ -1054,11 +1146,13 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 	     and the number of septets in TP-User-Data in other case
 	 */
 	buffer[Layout.TPUDL] = size2;
-	return size;
+	*encoded_size = size;
+	return ERR_NONE;
 }
 
 GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, gboolean clear)
 {
+	GSM_Error error;
 	if (clear) {
 		/* Cleaning up to the SMS text */
 		memset(buffer, 0, Layout.Text);
@@ -1145,8 +1239,8 @@ GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 	}
 
 	/* size is the length of the data in octets including UDH */
-	*length=GSM_EncodeSMSFrameText(di, SMS,buffer,Layout);
-/* 	if (*length == 0) return GE_UNKNOWN; */
+	error = GSM_EncodeSMSFrameText(di, SMS, buffer, Layout, length);
+	if (error != ERR_NONE) return error;
 	*length += Layout.Text;
 
 	return ERR_NONE;
@@ -1284,6 +1378,9 @@ gboolean GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info
 	if (SMS->Length < 22) {
 		return FALSE;
 	}
+	if (SMS->Length > GSM_MAX_SMS_LENGTH) {
+		return FALSE;
+	}
 
 	if (strncmp(SMS->Text, "//SEO",5) != 0) {
 		return FALSE; /* Siemens Exchange Object */
@@ -1292,13 +1389,17 @@ gboolean GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info
 		return FALSE; /* version 1 */
 	}
 	Info->DataLen = SMS->Text[6] + SMS->Text[7]*256;
-	Info->SequenceID = SMS->Text[8] + SMS->Text[9]*256 +
-			 SMS->Text[10]*256*256 + SMS->Text[11]*256*256*256;
+	Info->SequenceID = (unsigned long)SMS->Text[8] +
+			 ((unsigned long)SMS->Text[9] << 8) +
+			 ((unsigned long)SMS->Text[10] << 16) +
+			 ((unsigned long)SMS->Text[11] << 24);
 	Info->PacketNum = SMS->Text[12] + SMS->Text[13]*256;
 	Info->PacketsNum = SMS->Text[14] + SMS->Text[15]*256;
 	smfprintf(di, "Packet %i/%i\n",Info->PacketNum,Info->PacketsNum);
-	Info->AllDataLen = SMS->Text[16] + SMS->Text[17]*256 +
-			 SMS->Text[18]*256*256 + SMS->Text[19]*256*256*256;
+	Info->AllDataLen = (unsigned long)SMS->Text[16] +
+			 ((unsigned long)SMS->Text[17] << 8) +
+			 ((unsigned long)SMS->Text[18] << 16) +
+			 ((unsigned long)SMS->Text[19] << 24);
 	smfprintf(di, "DataLen %i/%lu\n",Info->DataLen,Info->AllDataLen);
 
 	if (SMS->Text[20] > 9) {
@@ -1309,7 +1410,13 @@ gboolean GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info
 	smfprintf(di, "DataType '%s'\n",Info->DataType);
 
 	current = 21+SMS->Text[20];
+	if (current >= SMS->Length) {
+		return FALSE;
+	}
 	if (SMS->Text[current] > 39) {
+		return FALSE;
+	}
+	if (SMS->Text[current] > SMS->Length - current - 1) {
 		return FALSE;
 	}
 	memcpy(Info->DataName,SMS->Text+current+1,SMS->Text[current]);
@@ -1317,6 +1424,10 @@ gboolean GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info
 	smfprintf(di, "DataName '%s'\n",Info->DataName);
 
 	current += SMS->Text[current]+1;
+	if (Info->DataLen > sizeof(Info->Data) ||
+	    Info->DataLen > (unsigned int)(SMS->Length - current)) {
+		return FALSE;
+	}
 	memcpy(Info->Data,SMS->Text+current,Info->DataLen);
 
 	return TRUE;

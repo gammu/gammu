@@ -35,7 +35,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di, GSM_MultiSMSMessage       *SMS
 				size_t		     	*CopiedText,
 				size_t		     	*CopiedSMSText);
 
-void GSM_MakeMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage   *SMS,
+GSM_Error GSM_MakeMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage   *SMS,
 			  unsigned char	 	*MessageBuffer,
 			  size_t	   	MessageLength,
 			  GSM_UDH	       	UDHType,

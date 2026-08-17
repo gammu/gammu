@@ -5,6 +5,7 @@
 
 #include "common.h"
 #include "../libgammu/gsmstate.h"
+#include "../libgammu/phone/nokia/dct4s40/6510/n6510.h"
 
 static void check_notification(GSM_StateMachine *s, unsigned char *buffer,
 			       size_t length)
@@ -67,10 +68,26 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_Protocol_Message msg;
 	GSM_StateMachine *s;
 	GSM_Error error;
+	unsigned char operator_logo_request[1000] = {0};
+	size_t operator_logo_length;
 
 	s = GSM_AllocStateMachine();
 	test_result(s != NULL);
 	s->Phone.Functions = &N6510Phone;
+
+	test_result(N6510_EncodeOperatorLogoFrameLengths(operator_logo_request,
+							 234 + 28,
+							 234, &operator_logo_length));
+	test_result(operator_logo_length == 262);
+	test_result(operator_logo_request[19] == 244);
+	test_result(operator_logo_length == (size_t)18 + operator_logo_request[19]);
+	test_result(operator_logo_request[22] == 0);
+	test_result(operator_logo_request[23] == 234);
+	test_result(operator_logo_request[24] == 0);
+	test_result(operator_logo_request[25] == 234);
+	test_result(!N6510_EncodeOperatorLogoFrameLengths(operator_logo_request,
+							  sizeof(operator_logo_request),
+							  246, &operator_logo_length));
 
 	check_notification(s, subtype_b6, sizeof(subtype_b6));
 	check_notification(s, subtype_2c, sizeof(subtype_2c));
