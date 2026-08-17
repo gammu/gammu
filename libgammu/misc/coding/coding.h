@@ -36,7 +36,7 @@ gboolean 		myiswspace	  		(const unsigned char *src);
 void 		ReverseUnicodeString		(unsigned char *String);
 
 void 		DecodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, size_t len);
-void 		EncodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, size_t len);
+size_t 		EncodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, size_t len);
 
 unsigned char *EncodeUnicodeSpecialChars(unsigned char *dest, const unsigned char *buffer);
 unsigned char *DecodeUnicodeSpecialChars(unsigned char *dest, const unsigned char *buffer);

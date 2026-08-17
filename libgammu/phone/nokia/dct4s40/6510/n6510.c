@@ -824,7 +824,8 @@ GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
  				i = i + output[i-1];
  			}
 #endif
-			GSM_MakeMultiPartSMS(&(s->di), Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,SMS_Coding_8bit,1,0);
+			error = GSM_MakeMultiPartSMS(&(s->di), Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,SMS_Coding_8bit,1,0);
+			if (error != ERR_NONE) return error;
 			for (i=0;i<3;i++) {
                 		Data->GetSMSMessage->SMS[i].Number[0]=0;
                 		Data->GetSMSMessage->SMS[i].Number[1]=0;
@@ -1417,6 +1418,28 @@ static GSM_Error N6510_ReplySetPicture(GSM_Protocol_Message *msg, GSM_StateMachi
 	return ERR_NONE;
 }
 
+gboolean N6510_EncodeOperatorLogoFrameLengths(unsigned char *request,
+					       size_t request_size,
+					       size_t bitmap_size,
+					       size_t *frame_length)
+{
+	if (request == NULL || frame_length == NULL || bitmap_size > 0xff - 10 ||
+	    request_size < 28 || bitmap_size > request_size - 28) {
+		return FALSE;
+	}
+
+	/* The old 205-byte size omitted the final partial rows, so these fields
+	 * compensated with 29 padding bytes.  The effective size now includes
+	 * all 234 column-aligned bytes and must be stored directly. */
+	request[19] = bitmap_size + 10;
+	request[22] = bitmap_size / 256;
+	request[23] = bitmap_size % 256;
+	request[24] = bitmap_size / 256;
+	request[25] = bitmap_size % 256;
+	*frame_length = 18 + request[19];
+	return TRUE;
+}
+
 static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_SMSMessage		sms;
@@ -1504,19 +1527,19 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			memset(reqOp + 19, 0, 281);
 			NOKIA_EncodeNetworkCode(reqOp+12, Bitmap->NetworkCode);
 			Type = GSM_Nokia6510OperatorLogo;
+			count = PHONE_GetBitmapSize(Type,0,0);
+			if (!N6510_EncodeOperatorLogoFrameLengths(reqOp, sizeof(reqOp),
+								 count, &i)) {
+				return ERR_INVALIDDATA;
+			}
 			reqOp[9]  = 0x02;	/* Logo enabled */
 			reqOp[18] = 0x1a;	/* FIXME */
-			reqOp[19] = PHONE_GetBitmapSize(Type,0,0) + 8 + 29 + 2;
 			PHONE_GetBitmapWidthHeight(Type, &Width, &Height);
 			reqOp[20] = Width;
 			reqOp[21] = Height;
-			reqOp[22] = 0x00;
-			reqOp[23] = PHONE_GetBitmapSize(Type,0,0) + 29;
-			reqOp[24] = 0x00;
-			reqOp[25] = PHONE_GetBitmapSize(Type,0,0) + 29;
 			PHONE_EncodeBitmap(Type, reqOp + 26, Bitmap);
 			smprintf(s, "Setting operator logo\n");
-			return GSM_WaitFor (s, reqOp, reqOp[19]+reqOp[11]+10, 0x0A, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
+			return GSM_WaitFor (s, reqOp, i, 0x0A, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 		} else {
 			error=N6510_GetNetworkInfo(s,&NetInfo);
 			if (error != ERR_NONE) return error;

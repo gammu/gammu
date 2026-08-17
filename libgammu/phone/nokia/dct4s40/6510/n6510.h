@@ -88,6 +88,10 @@ typedef struct {
 
 void N6510_EncodeFMFrequency(double freq, unsigned char *buff);
 void N6510_DecodeFMFrequency(double *freq, unsigned char *buff);
+gboolean N6510_EncodeOperatorLogoFrameLengths(unsigned char *request,
+					       size_t request_size,
+					       size_t bitmap_size,
+					       size_t *frame_length);
 
 #ifndef GSM_USED_MBUS2
 #  define GSM_USED_MBUS2

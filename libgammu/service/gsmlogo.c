@@ -43,17 +43,18 @@ void PHONE_GetBitmapWidthHeight(GSM_Phone_Bitmap_Types Type, size_t *width, size
 
 size_t PHONE_GetBitmapSize(GSM_Phone_Bitmap_Types Type, size_t Width, size_t Height)
 {
-	size_t width, height, x;
+	size_t width, height;
 
 	PHONE_GetBitmapWidthHeight(Type, &width, &height);
-	if (width == 0 && height == 0) {
+	if ((width == 0 && height == 0) ||
+	    ((Type == GSM_Nokia6510OperatorLogo ||
+	      Type == GSM_Nokia7110OperatorLogo) && Width != 0 && Height != 0)) {
 		width  = Width;
 		height = Height;
 	}
 	switch (Type) {
 		case GSM_Nokia6510OperatorLogo:
-			x = width * height;
-			return x/8 + (x%8 > 0);
+			return width * ((height + 7) / 8);
 		case GSM_Nokia7110OperatorLogo:
 			return (width*height + 7)/8;
 		case GSM_NokiaStartupLogo:
@@ -138,14 +139,31 @@ static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int 
 	}
 }
 
+static gboolean PHONE_AreBitmapDimensionsValid(size_t width, size_t height)
+{
+	size_t pixels;
+
+	if (width == 0 || height == 0 || width > ((size_t)-1) / height) {
+		return FALSE;
+	}
+	pixels = width * height;
+	return pixels / 8 + (pixels % 8 != 0) <= GSM_BITMAP_SIZE;
+}
+
 void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *Bitmap)
 {
 	size_t width, height, x,y;
+
+	if (buffer == NULL || Bitmap == NULL) return;
 
 	PHONE_GetBitmapWidthHeight(Type, &width, &height);
 	if (Type != GSM_Nokia6510OperatorLogo && Type != GSM_Nokia7110OperatorLogo && Type != GSM_EMSVariablePicture) {
 		Bitmap->BitmapHeight	= height;
 		Bitmap->BitmapWidth	= width;
+	}
+	if (!PHONE_AreBitmapDimensionsValid(Bitmap->BitmapWidth,
+					    Bitmap->BitmapHeight)) {
+		return;
 	}
 	switch (Type) {
 		case GSM_NokiaOperatorLogo	:
@@ -187,6 +205,33 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 			}
 		}
 	}
+}
+
+gboolean PHONE_DecodeBitmapChecked(GSM_Phone_Bitmap_Types Type,
+				    const char *buffer, size_t buffer_length,
+				    GSM_Bitmap *Bitmap)
+{
+	size_t width, height, required;
+
+	if (buffer == NULL || Bitmap == NULL) return FALSE;
+
+	PHONE_GetBitmapWidthHeight(Type, &width, &height);
+	if ((width == 0 && height == 0) ||
+	    Type == GSM_Nokia6510OperatorLogo ||
+	    Type == GSM_Nokia7110OperatorLogo ||
+	    Type == GSM_EMSVariablePicture) {
+		width = Bitmap->BitmapWidth;
+		height = Bitmap->BitmapHeight;
+	}
+	if (!PHONE_AreBitmapDimensionsValid(width, height)) {
+		return FALSE;
+	}
+	required = PHONE_GetBitmapSize(Type, width, height);
+	if (required == 0 || required > buffer_length || required > GSM_BITMAP_SIZE) {
+		return FALSE;
+	}
+	PHONE_DecodeBitmap(Type, (char *)buffer, Bitmap);
+	return TRUE;
 }
 
 void PHONE_ClearBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, size_t width, size_t height)
@@ -251,7 +296,14 @@ void GSM_ClearBitmap(GSM_Bitmap *bmp)
 
 size_t GSM_GetBitmapSize(GSM_Bitmap *bmp)
 {
-	return ((bmp->BitmapWidth * bmp->BitmapHeight) / 8) + 1;
+	size_t pixels;
+
+	if (bmp->BitmapHeight != 0 &&
+	    bmp->BitmapWidth > ((size_t)-1) / bmp->BitmapHeight) {
+		return 0;
+	}
+	pixels = bmp->BitmapWidth * bmp->BitmapHeight;
+	return pixels / 8 + (pixels % 8 != 0);
 }
 
 void GSM_PrintBitmap(FILE *file, GSM_Bitmap *bitmap)

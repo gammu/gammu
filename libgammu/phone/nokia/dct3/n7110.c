@@ -330,7 +330,8 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMa
 					output[i - 1] = UnicodeLength(output+i) * 2;
 					i = i + output[i-1];
 				}
-				GSM_MakeMultiPartSMS(&(s->di), Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,SMS_Coding_8bit,1,0);
+				error = GSM_MakeMultiPartSMS(&(s->di), Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,SMS_Coding_8bit,1,0);
+				if (error != ERR_NONE) return error;
 				for (i=0;i<3;i++) {
 	                		Data->GetSMSMessage->SMS[i].Number[0]=0;
 	                		Data->GetSMSMessage->SMS[i].Number[1]=0;

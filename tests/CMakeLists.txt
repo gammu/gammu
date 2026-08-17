@@ -828,6 +828,11 @@ target_link_libraries(sms-encode-decode libGammu ${LIBINTL_LIBRARIES})
 target_link_libraries(sms-encode-decode messagedisplay)
 add_test(sms-encode-decode "${GAMMU_TEST_PATH}/sms-encode-decode${CMAKE_EXECUTABLE_SUFFIX}")
 
+add_executable(sms-pdu-security sms-pdu-security.c)
+add_coverage(sms-pdu-security)
+target_link_libraries(sms-pdu-security libGammu ${LIBINTL_LIBRARIES})
+add_test(sms-pdu-security "${GAMMU_TEST_PATH}/sms-pdu-security${CMAKE_EXECUTABLE_SUFFIX}")
+
 # SMS encoding from commandline
 add_executable(sms-cmdline sms-cmdline.c)
 add_coverage(sms-cmdline)

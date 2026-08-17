@@ -35,6 +35,9 @@ void PHONE_GetBitmapWidthHeight	(GSM_Phone_Bitmap_Types Type, size_t *width, siz
 size_t PHONE_GetBitmapSize	(GSM_Phone_Bitmap_Types Type, size_t width, size_t height);
 void PHONE_ClearBitmap		(GSM_Phone_Bitmap_Types Type, char *buffer, size_t width, size_t height);
 void PHONE_DecodeBitmap		(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *Bitmap);
+gboolean PHONE_DecodeBitmapChecked(GSM_Phone_Bitmap_Types Type,
+				    const char *buffer, size_t buffer_length,
+				    GSM_Bitmap *Bitmap);
 void PHONE_EncodeBitmap		(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *Bitmap);
 
 void NOKIA_CopyBitmap		(GSM_Phone_Bitmap_Types Type, GSM_Bitmap *Bitmap, char *Buffer, size_t *Length);
