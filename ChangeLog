@@ -19,6 +19,13 @@ the issue.
 ChangeLog
 =========
 
+20260819 - 1.44.1
+
+[-] * Harden SMS PDU parsing and encoding against malformed or oversized data.
+[-] * Fix buffer overflows and size calculations in Unicode conversion.
+[-] * Accept bare SMS prompts from AT modems.
+[-] * Fix building the MySQL SMSD backend against MariaDB Connector/C.
+
 20260804 - 1.44.0
 
 [!] * Update SMSD SQL schema to version 18. Existing databases need the new
