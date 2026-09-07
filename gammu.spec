@@ -180,7 +180,7 @@ Currently supported phones include:
 * OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
 * Symbian phones through gnapplet.
 
-This package contain files needed for development.
+This package contains files needed for development.
 
 %package smsd
 Summary:        SMS message daemon
