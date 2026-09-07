@@ -22,7 +22,7 @@ Url:            https://wammu.eu/gammu/
 Source0:        https://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.%{extension}
 
 # Set to 0 to disable PostgreSQL support
-%define pqsql     1
+%define pgsql     1
 # Set to 0 to disable MySQL support
 %define mysql     1
 # Set to 0 to disable DBI support
@@ -100,7 +100,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %if %{bluetooth}
 BuildRequires:  %{dist_bluez_libs}
 %endif
-%if %{pqsql}
+%if %{pgsql}
 BuildRequires:  %{dist_postgres_libs}
 %endif
 %if %{mysql}
@@ -180,7 +180,7 @@ Currently supported phones include:
 * OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
 * Symbian phones through gnapplet.
 
-This package contain files needed for development.
+This package contains files needed for development.
 
 %package smsd
 Summary:        SMS message daemon
