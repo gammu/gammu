@@ -361,17 +361,18 @@ General parameters of SMS daemon
     The identifiers depend on the service backend; typically they are IDs of
     inserted rows for database backends or file names for file based backends.
 
-    On Windows, arguments containing command processor metacharacters, variable
-    expansion characters, or control characters are rejected and the hook is not
-    started. This prevents caller-controlled values from being interpreted when a
-    configured command invokes ``cmd.exe`` or a batch file. This restriction
-    applies to all ``RunOn`` directives.
+    On Windows, SMSD starts the configured executable directly. To run a batch
+    file, explicitly invoke ``cmd.exe /d /c`` as shown in
+    :ref:`smsd-run-windows`. Arguments containing command processor
+    metacharacters, variable expansion characters, or control characters are
+    rejected and the hook is not started. This prevents caller-controlled values
+    from being interpreted when a configured command invokes ``cmd.exe`` or a
+    batch file. This restriction applies to all ``RunOn`` directives.
 
-    Gammu SMSD waits for the script to terminate. If you make some time consuming
-    there, it will make SMSD not receive new messages. However to limit breakage
-    from this situation, the waiting time is limited to two minutes. After this
-    time SMSD will continue in normal operation and might execute your script
-    again.
+    On POSIX systems, SMSD waits for the script to terminate, so slow scripts can
+    delay receiving new messages. Do not rely on a fixed timeout to interrupt a
+    blocked script. On Windows, SMSD does not wait for completion or collect the
+    script's exit status; the script must log its own processing failures.
 
     The process has available lot of information about received message in
     environment, check :ref:`gammu-smsd-run` for more details.
