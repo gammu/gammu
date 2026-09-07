@@ -100,7 +100,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 %if %{bluetooth}
 BuildRequires:  %{dist_bluez_libs}
 %endif
-%if %{pqsql}
+%if %{pgsql}
 BuildRequires:  %{dist_postgres_libs}
 %endif
 %if %{mysql}
