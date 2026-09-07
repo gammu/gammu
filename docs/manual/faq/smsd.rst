@@ -43,8 +43,8 @@ The RunOnReceive script fails, how to fix that?
 
 There can be various reasons why the script you've supplied as
 :config:option:`RunOnReceive` has failed. You can usually find more information
-in the debug log (see :ref:`reporting-bugs-smsd`). For example it can look like
-following:
+in the debug log (see :ref:`reporting-bugs-smsd`). On POSIX systems, it can look
+like the following:
 
 .. code-block:: text
 
@@ -57,9 +57,20 @@ troubles.
 
 .. note::
 
-    If process output is missing from your debug log, you're using older
-    version, which didn't support this. Please upgrade to version newer than
+    Capturing subprocess output on POSIX systems requires a version newer than
     1.36.4.
+
+On Windows, batch files must be launched through ``cmd.exe``. Follow
+:ref:`smsd-run-windows` for a configuration example and a diagnostic batch file.
+SMSD appends received message identifiers automatically; ``%FILE%`` is not a
+Gammu placeholder.
+
+Check the SMSD log for ``Starting run on receive`` and ``CreateProcess failed``
+to investigate launch failures. Windows SMSD does not capture the script's output
+or exit status, so use the script's own log to investigate later processing or
+email delivery failures. Use absolute paths instead of relying on the working
+directory. If the hook works in the foreground but fails as a Windows service,
+check the service account's access to scripts, inbox files, logs, and credentials.
 
 .. seealso:: :ref:`gammu-smsd-run`, :config:option:`RunOnReceive`
 

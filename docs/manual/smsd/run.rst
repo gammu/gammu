@@ -11,22 +11,28 @@ Gammu SMSD can be configured by :config:option:`RunOnReceive` directive (see
 every message. It can receive single message or more messages, which are parts
 of one multipart message.
 
-This parameter is executed through shell, so you might need to escape some
-special characters and you can include any number of parameters. Additionally
-parameters with identifiers of received messages are appended to the command
-line. The identifiers depend on used service backend, typically it is ID of
-inserted row for database backends or file name for file based backends.
+The configured command can include parameters. SMSD appends identifiers of
+received messages as additional arguments. The identifiers depend on the
+service backend: typically database row IDs or file names for the files backend.
+File names do not include the inbox directory. There can be multiple arguments
+for a multipart message, so scripts must handle all supplied identifiers.
 
-Gammu SMSD waits for the script to terminate. If you make some time consuming
-there, it will make SMSD not receive new messages. However to limit breakage
-from this situation, the waiting time is limited to two minutes. After this
-time SMSD will continue in normal operation and might execute your script
-again.
+On POSIX systems, the configured command is executed through a shell, so special
+characters in that command need to be escaped. Message identifiers are passed
+as separate literal arguments. SMSD waits for the script to terminate, so slow
+scripts can delay receiving new messages. Do not rely on a fixed timeout to
+interrupt a blocked script.
+
+On Windows, SMSD starts the configured executable directly. Batch files require
+an explicit command interpreter, as shown in :ref:`smsd-run-windows`. SMSD does
+not wait for the process to finish or collect its exit status. Hooks can overlap,
+and successful process creation does not mean that message forwarding succeeded.
 
 .. note::
 
-    All input and output file descriptors are closed when this program is
-    invoked, so you have to ensure to open files on your own.
+    On POSIX systems, standard input is closed and standard output and standard
+    error are captured in the SMSD log. On Windows, the hook must arrange its own
+    output and error logging. Scripts should not require interactive input.
 
 Environment
 -----------
@@ -153,6 +159,71 @@ the :ref:`gammu-smsdrc`.
 
     [smsd]
     RunOnReceive = /path/to/script.sh
+
+.. _smsd-run-windows:
+
+Running a batch file on Windows
++++++++++++++++++++++++++++++++
+
+Use ``cmd.exe`` to launch a batch file. For example, with the script and inbox
+in ``C:\gammu``:
+
+.. code-block:: ini
+
+    [smsd]
+    RunOnReceive = C:\Windows\System32\cmd.exe /d /c C:\gammu\forward_sms.bat
+
+Adjust these absolute paths to match your installation and restart SMSD after
+changing the configuration. The example uses paths without spaces.
+
+Do not add ``"%FILE%"``: this is not a Gammu placeholder. SMSD appends the
+received file names automatically. For example, the batch file receives
+``IN20260228_053040_00_+61402111111_00.txt`` as its first argument. In the batch
+file, ``%1`` accesses that argument and ``%~1`` removes surrounding quotes. With
+the inbox above, the full path is ``C:\gammu\%~1``. Process subsequent arguments
+as well, for example using ``shift`` in a loop.
+
+Use absolute paths for the inbox, address book, log files, and helper programs.
+The hook inherits SMSD's working directory, which need not be the script or inbox
+directory. When moving SMSD to a Windows service, ensure the service account can
+access these files and any credentials needed by the forwarding program.
+
+To test invocation separately from email delivery, save the following as
+``C:\gammu\receive-test.bat`` and temporarily use that path in ``RunOnReceive``:
+
+.. code-block:: bat
+
+    @echo off
+    setlocal DisableDelayedExpansion
+    >>C:\gammu\receive-hook.log echo Hook started
+    >>C:\gammu\receive-hook.log set SMS_MESSAGES
+    >>C:\gammu\receive-hook.log set SMS_1_NUMBER
+
+Restart SMSD and send a fresh SMS. A new entry in ``receive-hook.log`` confirms
+that the batch file started. If no entry appears, check the SMSD log for
+``Starting run on receive`` and ``CreateProcess failed``, and check that the
+account running SMSD can write the diagnostic log. Restore the forwarding script
+path after testing. Its own log should record processing and email delivery
+errors because Windows SMSD does not collect the script's output or exit status.
+
+Forwarding messages with an address book
+++++++++++++++++++++++++++++++++++++++++
+
+A forwarding program can match :envvar:`SMS_1_NUMBER` against the ``Number``
+column of a CSV address book and use the corresponding ``Name`` in the email
+subject. Store and compare phone numbers in a consistent format, for example
+international numbers beginning with ``+``, and use the sender's number when no
+name matches.
+
+For multipart text, use the available ``DECODED_n_TEXT`` variables described
+above, or process all file arguments. Do not assume :envvar:`SMS_1_TEXT` contains
+the entire message. Read message text as data inside the forwarding program
+rather than expanding it into batch commands, where SMS characters could be
+interpreted as command syntax.
+
+Configure SMTP authentication in the forwarding program. That program is also
+responsible for logging delivery failures and retaining pending messages for
+retry; starting a hook does not guarantee email delivery.
 
 Processing messages from the files backend
 ++++++++++++++++++++++++++++++++++++++++++
