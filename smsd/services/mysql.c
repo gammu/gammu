@@ -85,18 +85,9 @@ static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 	unsigned int port = 0;
 	int error;
 	char *pport;
+	char *host;
 	char *socketname = NULL;
 
-	pport = strstr(Config->host, ":");
-	if (pport) {
-		*pport++ = '\0';
-		/* Is it port or socket? */
-		if (strchr("0123456798", *pport) != NULL) {
-			port = atoi(pport);
-		} else {
-			socketname = pport;
-		}
-	}
 	if (Config->conn.my == NULL) {
 		Config->conn.my = malloc(sizeof(MYSQL));
 		if (Config->conn.my == NULL) {
@@ -110,7 +101,23 @@ static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 			return ERR_DB_DRIVER;
 		}
 	}
-	if (!mysql_real_connect(Config->conn.my, Config->host, Config->user, Config->password, Config->database, port, socketname, 0)) {
+	/* Keep the configured port/socket available for subsequent connections. */
+	host = strdup(Config->host);
+	if (host == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	pport = strstr(host, ":");
+	if (pport) {
+		*pport++ = '\0';
+		/* Is it port or socket? */
+		if (strchr("0123456798", *pport) != NULL) {
+			port = atoi(pport);
+		} else {
+			socketname = pport;
+		}
+	}
+	if (!mysql_real_connect(Config->conn.my, host, Config->user, Config->password, Config->database, port, socketname, 0)) {
+		free(host);
 		SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database!");
 		SMSDMySQL_LogError(Config);
 		error = mysql_errno(Config->conn.my);
@@ -119,6 +126,8 @@ static GSM_Error SMSDMySQL_Connect(GSM_SMSDConfig * Config)
 		}
 		return ERR_DB_CONNECT;
 	}
+
+	free(host);
 
 	/* Try using utf8mb4 if MySQL server supports it */
 	if (mysql_query(Config->conn.my, "SET NAMES utf8mb4;") != 0) {

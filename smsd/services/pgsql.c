@@ -79,14 +79,22 @@ static GSM_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 
 	unsigned int port = 5432;
 	char *pport;
+	char *host;
 
-	pport = strstr(Config->host, ":");
+	/* Parsing must not discard the port from the saved configuration. */
+	host = strdup(Config->host);
+	if (host == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	pport = strstr(host, ":");
 	if (pport) {
 		*pport++ = '\0';
 		port = atoi(pport);
 	}
 
-	sprintf(buf, "host = '%s' user = '%s' password = '%s' dbname = '%s' port = %d", Config->host, Config->user, Config->password, Config->database, port);
+	sprintf(buf, "host = '%s' user = '%s' password = '%s' dbname = '%s' port = %d", host, Config->user, Config->password, Config->database, port);
+
+	free(host);
 
 	SMSDPgSQL_Free(Config);
 	Config->conn.pg = PQconnectdb(buf);
