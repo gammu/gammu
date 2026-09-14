@@ -16,6 +16,75 @@ static const char *second_test = "+CMTI: \"SM\",1\r\nAT+CPMS=\"SM\",\"SM\"\r\r\n
 
 static const char *nwtime_test = "^NWTIME: 18/03/09,12:36:21+4,00\r\nAT+CPMS=\"SM\",\"SM\"\r\r\n+CPMS: 0,20,0,20,0,20\r\n\r\nOK\r\n";
 
+static void feed_reply(GSM_StateMachine *s, const char *reply)
+{
+	size_t i;
+	GSM_Error error;
+
+	for (i = 0; reply[i] != '\0'; i++) {
+		error = AT_StateMachine(s, reply[i]);
+		gammu_test_result(error, "AT_StateMachine");
+	}
+}
+
+static void test_ecind(GSM_StateMachine *s)
+{
+	GSM_Phone_Data *data = &s->Phone.Data;
+	GSM_SecurityCodeType security = SEC_Pin;
+	GSM_SMSMemoryStatus status;
+	size_t messages;
+	size_t i;
+	static const char *sms_replies[] = {
+		"+ECIND: 2,0\r\nAT+CPMS=\"SM\",\"SM\"\r\r\n+CPMS: 1,10,1,10,1,10\r\n\r\nOK\r\n",
+		"AT+CPMS=\"SM\",\"SM\"\r\r\n+ECIND: 2,0\r\n+CPMS: 1,10,1,10,1,10\r\n\r\nOK\r\n"
+	};
+
+	/* Issue #441: a notification must not swallow the following PIN reply. */
+	data->SecurityStatus = &security;
+	data->RequestID = ID_GetSecurityStatus;
+	feed_reply(s, "+ECIND: 2,0\r\nAT+CPIN?\r\r\n+CPIN: READY\r\n\r\nOK\r\n");
+	test_result(data->RequestID == ID_None);
+	test_result(data->DispatchError == ERR_NONE);
+	test_result(security == SEC_None);
+
+	/* Notifications preceding or interleaved with SMS storage replies. */
+	data->SMSStatus = &status;
+	for (i = 0; i < sizeof(sms_replies) / sizeof(sms_replies[0]); i++) {
+		memset(&status, 0, sizeof(status));
+		data->RequestID = ID_GetSMSStatus;
+		feed_reply(s, sms_replies[i]);
+		test_result(data->RequestID == ID_None);
+		test_result(data->DispatchError == ERR_NONE);
+		test_result(status.SIMUsed == 1);
+		test_result(status.SIMSize == 10);
+	}
+
+	/* Repeated notifications alone must not complete an active request. */
+	security = SEC_Pin;
+	data->RequestID = ID_GetSecurityStatus;
+	messages = s->MessagesCount;
+	feed_reply(s, "+ECIND: 2,0\r\n+ECIND: 2,1\r\n");
+	test_result(data->RequestID == ID_GetSecurityStatus);
+	test_result(data->DispatchError == ERR_NONE);
+	test_result(security == SEC_Pin);
+	test_result(s->MessagesCount == messages + 2);
+	feed_reply(s, "AT+CPIN?\r\r\n+CPIN: READY\r\n\r\nOK\r\n");
+	test_result(data->RequestID == ID_None);
+	test_result(data->DispatchError == ERR_NONE);
+	test_result(security == SEC_None);
+
+	/* Idle notifications are consumed without changing reported state. */
+	messages = s->MessagesCount;
+	feed_reply(s, "+ECIND: 2,1\r\n+ECIND: 2,0\r\n");
+	test_result(data->RequestID == ID_None);
+	test_result(data->DispatchError == ERR_NONE);
+	test_result(s->MessagesCount == messages + 2);
+	test_result(status.SIMUsed == 1);
+	test_result(status.SIMSize == 10);
+	data->SecurityStatus = NULL;
+	data->SMSStatus = NULL;
+}
+
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
@@ -104,6 +173,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(SMSStatus.SIMUsed == 0);
 	test_result(SMSStatus.SIMSize == 20);
 	test_result(s->MessagesCount == 8);
+
+	test_ecind(s);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

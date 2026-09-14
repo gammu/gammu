@@ -6421,6 +6421,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"+PSBEARER:"	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZEND"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZPAS:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore,	"+ECIND:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+CIND:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+CSQ:"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingSMSInfo,		  "+CDSI:" 	 	,0x00,0x00,ID_IncomingFrame	 },
