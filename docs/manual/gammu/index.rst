@@ -568,21 +568,40 @@ ____________
         Take text from stdin (or commandline if -text
         specified) and save as text SMS into SIM/phone memory.
 
+        Ordinary text messages longer than one SMS are automatically split
+        into linked parts. No length option is required. Use
+        :option:`-maxsms` with a value of ``1`` to reject messages requiring
+        multiple parts. Notification, void, and replacement messages retain
+        their single-message behavior.
+
+        The default SMS alphabet is used unless :option:`-unicode` or
+        :option:`-autolen` is specified. Input decoding is controlled
+        separately by the locale or :option:`-textutf8`.
+
+        Stdin input is limited to 4,999 bytes, including any trailing newline.
+        Larger input is rejected, even when a length option is specified,
+        rather than sending an incomplete message.
+
         .. option:: -flash
 
             Class 0 SMS (should be displayed after receiving on recipients' phone display after receiving without entering Inbox)
 
         .. option:: -len len
 
-            specify, how many chars will be read. When use this option and text
-            will be longer than 1 SMS, will be split into more linked SMS
+            Limit the decoded text to at most ``len`` UTF-16 code units.
+            The value must be positive. The limit is applied after decoding
+            and trailing-newline handling, for both stdin and command-line
+            text, regardless of option order. Longer text is truncated;
+            shorter text is unchanged. ``-maxlen`` is a compatibility alias.
+            If the limit splits a surrogate pair, the entire character is
+            omitted so that the resulting text remains valid Unicode.
 
         .. option:: -autolen len
 
-            specify, how many chars will be read. When use this option and text
-            will be longer than 1 SMS, will be split into more linked
-            SMS. Coding type (SMS default alphabet/Unicode) is set according to
-            input text
+            Apply the same length limit as :option:`-len`, and automatically
+            choose the SMS default alphabet or Unicode according to the
+            resulting text. If length options are repeated, the last one
+            determines the limit and whether coding is selected automatically.
 
         .. option:: -enablevoice
 

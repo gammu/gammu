@@ -19,6 +19,16 @@ the issue.
 ChangeLog
 =========
 
+Unreleased
+
+[!] * Automatically split ordinary CLI text SMS into linked parts without
+      requiring -len (GitHub issue #413). Use -maxsms 1 to require one part.
+[-] * Apply explicit SMS text length limits after decoding, including stdin
+      and text supplied after the length option. Honor -16bit regardless of
+      its position relative to length options.
+[-] * Preserve Unicode surrogate pairs and special-message modes when
+      limiting SMS text. Reject oversized stdin instead of sending a prefix.
+
 20260819 - 1.44.1
 
 [-] * Harden SMS PDU parsing and encoding against malformed or oversized data.

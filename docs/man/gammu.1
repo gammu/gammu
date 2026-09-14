@@ -29,7 +29,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU" "1" "Aug 19, 2026" "1.44.1" "Gammu"
+.TH "GAMMU" "1" "Sep 14, 2026" "1.44.1" "Gammu"
 .SH NAME
 gammu \- Does some neat things with your cellular phone or modem.
 .SH SYNOPSIS
@@ -728,6 +728,20 @@ Saves a SMS template (for Alcatel phones).
 .B TEXT  [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]
 Take text from stdin (or commandline if \-text
 specified) and save as text SMS into SIM/phone memory.
+.sp
+Ordinary text messages longer than one SMS are automatically split
+into linked parts. No length option is required. Use
+\fB\-maxsms\fP with a value of \fB1\fP to reject messages requiring
+multiple parts. Notification, void, and replacement messages retain
+their single\-message behavior.
+.sp
+The default SMS alphabet is used unless \fB\-unicode\fP or
+\fB\-autolen\fP is specified. Input decoding is controlled
+separately by the locale or \fB\-textutf8\fP\&.
+.sp
+Stdin input is limited to 4,999 bytes, including any trailing newline.
+Larger input is rejected, even when a length option is specified,
+rather than sending an incomplete message.
 .INDENT 7.0
 .TP
 .B \-flash
@@ -736,16 +750,21 @@ Class 0 SMS (should be displayed after receiving on recipients\(aq phone display
 .INDENT 7.0
 .TP
 .B \-len len
-specify, how many chars will be read. When use this option and text
-will be longer than 1 SMS, will be split into more linked SMS
+Limit the decoded text to at most \fBlen\fP UTF\-16 code units.
+The value must be positive. The limit is applied after decoding
+and trailing\-newline handling, for both stdin and command\-line
+text, regardless of option order. Longer text is truncated;
+shorter text is unchanged. \fB\-maxlen\fP is a compatibility alias.
+If the limit splits a surrogate pair, the entire character is
+omitted so that the resulting text remains valid Unicode.
 .UNINDENT
 .INDENT 7.0
 .TP
 .B \-autolen len
-specify, how many chars will be read. When use this option and text
-will be longer than 1 SMS, will be split into more linked
-SMS. Coding type (SMS default alphabet/Unicode) is set according to
-input text
+Apply the same length limit as \fB\-len\fP, and automatically
+choose the SMS default alphabet or Unicode according to the
+resulting text. If length options are repeated, the last one
+determines the limit and whether coding is selected automatically.
 .UNINDENT
 .INDENT 7.0
 .TP
