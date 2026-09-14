@@ -79,6 +79,20 @@ if (HAVE_MYSQL_MYSQL_H OR LIBDBI_FOUND OR HAVE_POSTGRESQL_LIBPQ_FE_H OR ODBC_FOU
         add_test(odbc-quote-string "${GAMMU_TEST_PATH}/odbc-quote-string${CMAKE_EXECUTABLE_SUFFIX}")
     endif (ODBC_FOUND)
 
+    if (HAVE_MYSQL_MYSQL_H)
+        add_executable(mysql-reconnect mysql-reconnect.c)
+        add_coverage(mysql-reconnect)
+        target_link_libraries(mysql-reconnect gsmsd ${MYSQL_LIBRARIES})
+        add_test(mysql-reconnect "${GAMMU_TEST_PATH}/mysql-reconnect${CMAKE_EXECUTABLE_SUFFIX}")
+    endif ()
+
+    if (HAVE_POSTGRESQL_LIBPQ_FE_H)
+        add_executable(pgsql-reconnect pgsql-reconnect.c)
+        add_coverage(pgsql-reconnect)
+        target_link_libraries(pgsql-reconnect gsmsd ${POSTGRES_LIBRARY})
+        add_test(pgsql-reconnect "${GAMMU_TEST_PATH}/pgsql-reconnect${CMAKE_EXECUTABLE_SUFFIX}")
+    endif ()
+
     add_executable(sql-parse-date sql-parse-date.c)
     add_coverage(sql-parse-date)
     target_link_libraries (sql-parse-date gsmsd)
