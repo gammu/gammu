@@ -260,7 +260,12 @@ Default is 30.
 .TP
 .B MaxRetries
 How many times will SMSD try to resend message if sending fails. This
-is tracked per message and currently supported only with SQL backends.
+is tracked per message and supported with SQL and Files backends.
+.sp
+With the Files backend, retry counts are kept in memory and reset when
+SMSD restarts. Counts are keyed by filename, so use a unique filename for
+each queued message. After the initial attempt and the configured number
+of retries fail, the message is moved to \fBErrorSMSPath\fP\&.
 .sp
 Default is 1.
 .UNINDENT
@@ -271,6 +276,9 @@ How long to wait before resending failed message (needs to be enabled by
 \fBMaxRetries\fP).
 .sp
 Is used in \fBupdate_retries\fP \%<#\:option-update_retries>\&.
+.sp
+Supported only with SQL backends. The Files backend retries on subsequent
+processing loops without this delay.
 .sp
 Default is 600.
 .UNINDENT

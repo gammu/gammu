@@ -117,6 +117,7 @@ static int TestFilename(GSM_StateMachine *state_machine, const char *outbox_path
 		result = 1;
 	}
 
+	SMSDFiles.Free(&config);
 	remove(full_path);
 	free(full_path);
 	return result;

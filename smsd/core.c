@@ -668,6 +668,7 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->debug_level = 0;
 	Config->ServiceName = NULL;
 	Config->Service = NULL;
+	Config->files_retries = NULL;
 	Config->IgnoredMessages = 0;
 	Config->ProcessedSMSUsed = 0;
 	Config->ReceivePollCount = 0;
@@ -2349,7 +2350,9 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config)
 				error = GSM_GetSMSC(Config->gsm, &Config->SMSCCache);
 				if (error!=ERR_NONE) {
 					SMSD_Log(DEBUG_ERROR, Config, "Error getting SMSC from phone");
-					return ERR_UNKNOWN;
+					Config->StatusCode = -1;
+					Config->Part = -1;
+					goto failure_sent;
 				}
 
 			}

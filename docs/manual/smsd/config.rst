@@ -184,7 +184,12 @@ General parameters of SMS daemon
 .. config:option:: MaxRetries
 
     How many times will SMSD try to resend message if sending fails. This
-    is tracked per message and currently supported only with SQL backends.
+    is tracked per message and supported with SQL and Files backends.
+
+    With the Files backend, retry counts are kept in memory and reset when
+    SMSD restarts. Counts are keyed by filename, so use a unique filename for
+    each queued message. After the initial attempt and the configured number
+    of retries fail, the message is moved to :config:option:`ErrorSMSPath`.
 
     Default is 1.
 
@@ -194,6 +199,9 @@ General parameters of SMS daemon
     :config:option:`MaxRetries`).
 
     Is used in :config:option:`update_retries`.
+
+    Supported only with SQL backends. The Files backend retries on subsequent
+    processing loops without this delay.
 
     Default is 600.
 

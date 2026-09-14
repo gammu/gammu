@@ -101,6 +101,97 @@ static GSM_Error SMSDFiles_BuildPath(char *result, size_t result_size,
 	return ERR_NONE;
 }
 
+/* Retry state belongs to the daemon, not to the user-provided spool files. */
+struct SMSDFilesRetry {
+	char ID[GSM_MAX_FILENAME_LENGTH + 1];
+	unsigned int retries;
+	struct SMSDFilesRetry *next;
+};
+
+static void SMSDFiles_ForgetRetries(GSM_SMSDConfig *Config, const char *ID)
+{
+	struct SMSDFilesRetry **entry = &Config->files_retries;
+
+	while (*entry != NULL) {
+		struct SMSDFilesRetry *current = *entry;
+
+		if (strcmp(current->ID, ID) == 0) {
+			*entry = current->next;
+			free(current);
+			return;
+		}
+		entry = &current->next;
+	}
+}
+
+static GSM_Error SMSDFiles_Free(GSM_SMSDConfig *Config)
+{
+	while (Config->files_retries != NULL) {
+		struct SMSDFilesRetry *entry = Config->files_retries;
+
+		Config->files_retries = entry->next;
+		free(entry);
+	}
+	return ERR_NONE;
+}
+
+static void SMSDFiles_PruneRetries(GSM_SMSDConfig *Config)
+{
+	struct SMSDFilesRetry **entry = &Config->files_retries;
+	char path[PATH_MAX];
+	struct stat status;
+
+	while (*entry != NULL) {
+		struct SMSDFilesRetry *current = *entry;
+
+		/* Hooks and administrators can remove messages from the outbox. */
+		if (SMSDFiles_BuildPath(path, sizeof(path), Config->outboxpath,
+				       current->ID, Config) == ERR_NONE &&
+		    stat(path, &status) != 0 && (errno == ENOENT || errno == ENOTDIR)) {
+			*entry = current->next;
+			free(current);
+		} else {
+			entry = &current->next;
+		}
+	}
+}
+
+static GSM_Error SMSDFiles_LoadRetries(GSM_SMSDConfig *Config, const char *ID)
+{
+	struct SMSDFilesRetry *entry;
+
+	for (entry = Config->files_retries; entry != NULL; entry = entry->next) {
+		if (strcmp(entry->ID, ID) == 0) {
+			Config->retries = entry->retries;
+			return ERR_NONE;
+		}
+	}
+	entry = malloc(sizeof(*entry));
+	if (entry == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	strcpy(entry->ID, ID);
+	entry->retries = 0;
+	entry->next = Config->files_retries;
+	Config->files_retries = entry;
+	Config->retries = 0;
+	return ERR_NONE;
+}
+
+static GSM_Error SMSDFiles_UpdateRetries(GSM_SMSDConfig *Config, char *ID)
+{
+	struct SMSDFilesRetry *entry;
+
+	for (entry = Config->files_retries; entry != NULL; entry = entry->next) {
+		if (strcmp(entry->ID, ID) == 0) {
+			/* SMSD_SendSMS increments the count before attempting delivery. */
+			entry->retries = Config->retries;
+			return ERR_NONE;
+		}
+	}
+	return ERR_EMPTY;
+}
+
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfig * Config, GSM_StringArray *Locations, GSM_StringArray *SentIDs)
 {
@@ -258,6 +349,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	struct _finddata_t c_file;
 	intptr_t hFile;
 
+	SMSDFiles_PruneRetries(Config);
+
 	error = SMSDFiles_BuildPath(FullName, sizeof(FullName), Config->outboxpath, "OUT*.txt*", Config);
 	if (error != ERR_NONE) {
 		return error;
@@ -288,6 +381,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 	int outboxFd;
 	int cur_file, num_files;
 	char *pos;
+
+	SMSDFiles_PruneRetries(Config);
 
 	error = SMSDFiles_BuildPath(FullName, sizeof(FullName), Config->outboxpath, "", Config);
 	if (error != ERR_NONE) {
@@ -569,9 +664,13 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConf
 		SMSD_Log(DEBUG_NOTICE, Config, "error: SMS-count = 0");
 	}
 
-	Config->retries = 0;
-
-	return ERR_NONE;
+	error = SMSDFiles_LoadRetries(Config, ID);
+	if (error != ERR_NONE) {
+		/* A transient allocation failure must not make the core discard a
+		 * valid outbox message through its generic scan-error path. */
+		ID[0] = '\0';
+	}
+	return error;
 }
 
 /* After sending SMS is moved to Sent Items or Error Items. */
@@ -608,6 +707,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDCon
 		// First try rename
 		if (rename(ifilename, ofilename) == 0) {
 			SMSD_Log(DEBUG_INFO, Config, "Renamed %s to %s", ifilename, ofilename);
+			SMSDFiles_ForgetRetries(Config, ID);
 			return ERR_NONE;
 		}
 
@@ -652,6 +752,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDCon
 			SMSD_LogErrno(Config, "Can not remove file");
 			return ERR_UNKNOWN;
 		}
+		SMSDFiles_ForgetRetries(Config, ID);
 	}
 
 	return error;
@@ -1349,15 +1450,15 @@ GSM_Error SMSDFiles_ReadConfiguration(GSM_SMSDConfig *Config)
 
 GSM_SMSDService SMSDFiles = {
 	NONEFUNCTION,		/* Init                 */
-	NONEFUNCTION,		/* Free                 */
+	SMSDFiles_Free,		/* Free                 */
 	NONEFUNCTION,		/* InitAfterConnect     */
 	SMSDFiles_SaveInboxSMS,
 	SMSDFiles_FindOutboxSMS,
 	SMSDFiles_MoveSMS,
 	SMSDFiles_CreateOutboxSMS,
 	SMSDFiles_AddSentSMSInfo,
-	NOTIMPLEMENTED,		/* UpdateRetries        */
 	NOTIMPLEMENTED,		/* RefreshSendStatus    */
+	SMSDFiles_UpdateRetries,	/* UpdateRetries        */
 	NOTIMPLEMENTED,		/* RefreshPhoneStatus   */
 	SMSDFiles_ReadConfiguration
 };
