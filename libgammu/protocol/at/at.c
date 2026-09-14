@@ -108,6 +108,9 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		/* Alcatel */
 		{"+ECIND:"	,1, ID_All},
 
+		/* Quectel SMS initialization notification */
+		{"+QIND: SMS DONE",1, ID_All},
+
 		/* GlobeTrotter */
 		{"_OSIGQ:"	,1, ID_All},
 		{"_OBS:"	,1, ID_All},

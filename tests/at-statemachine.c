@@ -85,6 +85,78 @@ static void test_ecind(GSM_StateMachine *s)
 	data->SMSStatus = NULL;
 }
 
+static void count_sms_status(GSM_StateMachine *s UNUSED, int status UNUSED,
+		int reference UNUSED, void *user_data)
+{
+	(*(int *)user_data)++;
+}
+
+static void test_quectel_sms_done(GSM_StateMachine *s)
+{
+	GSM_Phone_Data *data = &s->Phone.Data;
+	GSM_Protocol_ATData *protocol = &s->Protocol.Data.AT;
+	GSM_SecurityCodeType security = SEC_Pin;
+	int callbacks = 0;
+	size_t messages;
+	size_t i;
+	static const struct {
+		const char *before_prompt;
+		const char *prompt;
+	} replies[] = {
+		{"", "+QIND: SMS DONE\r\nAT+CMGS=40\r\r\n> "},
+		{"+QIND: SMS DONE\r\n", "AT+CMGS=40\r\r\n> "},
+		{"AT+CMGS=40\r\r\n+QIND: SMS DONE\r\n", "> "},
+		{"+QIND: SMS DONE\r\n+QIND: SMS DONE\r\n", "AT+CMGS=40\r\r\n> "}
+	};
+
+	GSM_SetSendSMSStatusCallback(s, count_sms_status, &callbacks);
+
+	/* Issue #468: the notification must not hide or replace the prompt. */
+	for (i = 0; i < sizeof(replies) / sizeof(replies[0]); i++) {
+		data->RequestID = ID_IncomingFrame;
+		protocol->EditMode = TRUE;
+		feed_reply(s, replies[i].before_prompt);
+		test_result(data->RequestID == ID_IncomingFrame);
+		test_result(protocol->EditMode);
+		test_result(callbacks == 0);
+		feed_reply(s, replies[i].prompt);
+		test_result(data->RequestID == ID_None);
+		test_result(data->DispatchError == ERR_NONE);
+		test_result(!protocol->EditMode);
+		test_result(callbacks == 0);
+
+		/* Only the subsequent send result should report SMS completion. */
+		feed_reply(s, "\r\n+CMGS: 1\r\nOK\r\n");
+		test_result(data->DispatchError == ERR_NONE);
+		test_result(callbacks == 1);
+		callbacks = 0;
+	}
+
+	/* Idle notifications are consumed without reporting an SMS result. */
+	messages = s->MessagesCount;
+	feed_reply(s, "+QIND: SMS DONE\r\n+QIND: SMS DONE\r\n");
+	test_result(data->RequestID == ID_None);
+	test_result(data->DispatchError == ERR_NONE);
+	test_result(!protocol->EditMode);
+	test_result(s->MessagesCount == messages + 2);
+	test_result(callbacks == 0);
+
+	/* An unrelated request must still wait for its own response. */
+	data->SecurityStatus = &security;
+	data->RequestID = ID_GetSecurityStatus;
+	feed_reply(s, "+QIND: SMS DONE\r\n");
+	test_result(data->RequestID == ID_GetSecurityStatus);
+	test_result(data->DispatchError == ERR_NONE);
+	test_result(security == SEC_Pin);
+	feed_reply(s, "AT+CPIN?\r\r\n+CPIN: READY\r\n\r\nOK\r\n");
+	test_result(data->RequestID == ID_None);
+	test_result(data->DispatchError == ERR_NONE);
+	test_result(security == SEC_None);
+	test_result(callbacks == 0);
+	data->SecurityStatus = NULL;
+	GSM_SetSendSMSStatusCallback(s, NULL, NULL);
+}
+
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
@@ -175,6 +247,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(s->MessagesCount == 8);
 
 	test_ecind(s);
+	test_quectel_sms_done(s);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
