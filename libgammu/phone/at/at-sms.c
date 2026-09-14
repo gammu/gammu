@@ -62,8 +62,9 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message *msg, GSM_StateMachine 
 	char *pos_start = NULL, *pos_end = NULL, *pos_tmp = NULL;
 	const char *Line;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
-	char *search_pos;
-	int param_count;
+	const char *receive_start, *receive_end, *memory_pos;
+	int memory;
+	char memory_name[5];
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -86,6 +87,7 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message *msg, GSM_StateMachine 
 		Priv->SIMSaveSMS = AT_NOTAVAILABLE;
 		Priv->SRSaveSMS = AT_NOTAVAILABLE;
 		Priv->CPMSReceiveMemory = FALSE;
+		memset(Priv->CPMSReceiveMemories, 0, sizeof(Priv->CPMSReceiveMemories));
 
 		Line = GetLineString(msg->Buffer, &Priv->Lines, 2);
 		/* Skip empty line in response */
@@ -135,19 +137,16 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message *msg, GSM_StateMachine 
 				Priv->SRSaveSMS = AT_AVAILABLE;
 			}
 
-			/* Check if there is a third parameter for receive memory */
-			/* Count parameter sets by counting opening parentheses in the response */
-			search_pos = msg->Buffer;
-			param_count = 0;
-
-			while ((search_pos = strchr(search_pos, '(')) != NULL) {
-				param_count++;
-				search_pos++;
-			}
-
-			if (param_count >= 3) {
-				smprintf(s, "Phone requires third parameter in AT+CPMS (receive memory)\n");
+			/* The third list advertises supported receive memories, not a requirement. */
+			receive_start = strchr(pos_end, '(');
+			receive_end = receive_start == NULL ? NULL : strchr(receive_start, ')');
+			if (receive_end != NULL) {
 				Priv->CPMSReceiveMemory = TRUE;
+				for (memory = MEM_ME; memory < MEM_INVALID; memory++) {
+					snprintf(memory_name, sizeof(memory_name), "\"%s\"", GSM_MemoryTypeToString(memory));
+					memory_pos = strstr(receive_start, memory_name);
+					Priv->CPMSReceiveMemories[memory] = memory_pos != NULL && memory_pos < receive_end;
+				}
 			}
 		}
 		if (strstr(msg->Buffer, "\"SM\"") != NULL) {
@@ -174,7 +173,7 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message *msg, GSM_StateMachine 
 
 		}
 completed:
-		smprintf(s, "Available SMS memories received: read: ME : %s, SM : %s, SR : %s save: ME : %s, SM : %s, SR : %s, Motorola = %s, CPMS 3rd param = %s\n",
+		smprintf(s, "Available SMS memories received: read: ME : %s, SM : %s, SR : %s save: ME : %s, SM : %s, SR : %s, Motorola = %s, CPMS 3rd param supported = %s\n",
 				Priv->PhoneSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
 				Priv->SIMSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
 	 		  Priv->SRSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
@@ -266,9 +265,11 @@ static size_t ATGEN_BuildCPMSCommand(GSM_StateMachine *s, const char *memory_str
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	int len;
+	GSM_MemoryType memory = GSM_StringToMemoryType(memory_str);
 
-	if (writeable && Priv->CPMSReceiveMemory) {
-		/* Need three parameters: read, write, receive */
+	if (writeable && Priv->CPMSReceiveMemory &&
+	    memory > 0 && memory < MEM_INVALID && Priv->CPMSReceiveMemories[memory]) {
+		/* Set receive memory only when it is advertised for this storage. */
 		len = snprintf(command, command_size, "AT+CPMS=\"%s\",\"%s\",\"%s\"\r",
 		               memory_str, memory_str, memory_str);
 	} else if (writeable) {
@@ -3241,6 +3242,8 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	param = s->CurrentConfig->CNMIParams[4];
 	if (param >= 0 && InRange(range, param)) {
 		Priv->CNMIClearUnsolicitedResultCodes = param;
+	} else if (!InRange(range, 0) && InRange(range, 1)) {
+		Priv->CNMIClearUnsolicitedResultCodes = 1;
 	}
 	free(range);
 	range = NULL;
