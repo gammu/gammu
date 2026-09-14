@@ -1628,6 +1628,15 @@ GSM_Error ATGEN_GenericReplyIgnore(GSM_Protocol_Message *msg UNUSED, GSM_StateMa
 	return ERR_NONE;
 }
 
+static GSM_Error ATGEN_ReplyQuectelSMSDone(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
+{
+	/* Sending SMS waits for its prompt using ID_IncomingFrame too. */
+	if (s->Phone.Data.RequestID == ID_IncomingFrame) {
+		return ERR_NEEDANOTHERANSWER;
+	}
+	return ERR_NONE;
+}
+
 GSM_Error ATGEN_GenericReply(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
@@ -6422,6 +6431,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"+ZEND"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZPAS:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"+ECIND:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_ReplyQuectelSMSDone,	"+QIND: SMS DONE"	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+CIND:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+CSQ:"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingSMSInfo,		  "+CDSI:" 	 	,0x00,0x00,ID_IncomingFrame	 },
