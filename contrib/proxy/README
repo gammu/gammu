@@ -1,8 +1,52 @@
 Example script for using proxy connection
 =========================================
 
+Install socat on the remote host and copy gammu-backend there as an executable
+script. The helper requires a POSIX shell; Bash is not required.
+
 Usage:
 
-[gammu]
-device = ssh root@my.router /usr/local/bin/gammu-backend /dev/ttyUSB0
-connection = proxyat
+    gammu-backend DEVICE [BAUD]
+
+The default baud rate is 115200. The serial port is configured for raw data,
+8 data bits, no parity, one stop bit, and no software or hardware flow control.
+The helper forwards all bytes unchanged, including SMS prompts without a newline.
+Diagnostics go to stderr; stdout is reserved for modem data.
+
+Example Gammu configuration:
+
+    [gammu]
+    device = ssh -T -o BatchMode=yes root@my.router /usr/local/bin/gammu-backend /dev/ttyUSB0
+    connection = proxyat
+
+Append a baud rate to the device command if the modem needs another speed, for
+example `/dev/ttyUSB0 19200`. Unsupported speeds are rejected by socat.
+
+Configure SSH keys and known hosts for the account running Gammu or SMSD. Test
+SSH access as that account before starting the service. The -T option disables
+SSH terminal allocation, and BatchMode=yes makes authentication fail instead of
+waiting for an interactive prompt. Remote shell startup files must not print to
+stdout.
+
+Only one process may read the modem at a time. Stop other modem services and
+interactive sessions before testing; a second reader can consume replies meant
+for Gammu. The helper does not lock the device against other programs.
+
+When upgrading from the old example, replace the remote copy as well. Upgrading
+the local Gammu library does not update a script installed on another machine.
+
+Direct AT over TCP
+------------------
+
+For a modem with a raw AT-over-TCP service, install socat on the Gammu host and
+connect directly:
+
+    [gammu]
+    device = socat STDIO TCP:192.0.2.1:1234
+    connection = proxyat
+
+Replace the example address and port with the modem's AT endpoint. This does not
+use SSH or gammu-backend and requires no scripts or software on the modem. The
+endpoint must carry raw AT commands and responses, without Telnet negotiation.
+Configure serial settings on the modem if needed; the local proxy forwards bytes
+without changing them.

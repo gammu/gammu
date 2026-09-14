@@ -565,20 +565,54 @@ Added in version 1.36.7.
 .sp
 You can connect using Gammu to phone running on different host. This can be
 achieved using proxy connection, which executes command to forward
-bi\-directional communication with the phone.
+bi\-directional communication with the phone. Proxy commands are interpreted by
+\fB/bin/sh\fP, independently of the \fBSHELL\fP environment variable. To use another
+shell, invoke it explicitly in the device command.
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
 [gammu]
-device = ssh root@my.router /usr/local/bin/myscript /dev/ttyUSB0
+device = ssh \-T \-o BatchMode=yes root@my.router /usr/local/bin/gammu\-backend /dev/ttyUSB0
 connection = proxyat
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-You can find sample script which can be used on the remote side in
-\fBcontrib/proxy/gammu\-backend\fP\&.
+Install \fBsocat\fP on the remote host and copy
+\fBcontrib/proxy/gammu\-backend\fP there as an executable script. The helper
+requires a POSIX shell and forwards modem data unchanged. It configures the
+serial port for raw data, 115200 baud, 8N1, and no flow control. Append an optional
+baud rate to the device command if needed, for example \fB/dev/ttyUSB0 19200\fP\&.
+.sp
+Configure SSH keys and known hosts for the account running Gammu or SMSD.
+\fB\-T\fP disables SSH terminal allocation, and \fBBatchMode=yes\fP prevents
+interactive authentication prompts. Remote shell startup files must not print
+to stdout, which is reserved for modem data.
+.sp
+Use only one modem reader at a time: other services or interactive sessions can
+consume replies intended for Gammu. The helper does not lock the device.
+When upgrading the helper, replace the remote copy; updating local Gammu does
+not update scripts on the remote host.
+.sp
+If the modem already exposes a raw AT\-over\-TCP endpoint, run \fBsocat\fP
+on the same host as Gammu instead:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+[gammu]
+device = socat STDIO TCP:192.0.2.1:1234
+connection = proxyat
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Replace \fB192.0.2.1\fP and \fB1234\fP with the modem\(aqs address and AT service port.
+This connects directly to the modem without SSH or a script installed on it,
+so it also works with devices whose filesystem cannot be modified. The endpoint
+must carry raw AT commands and responses, without Telnet negotiation. Serial
+settings, if needed, are configured on the modem rather than by the local proxy.
 .SS Fully documented example
 .sp
 You can find this sample file as \fBdocs/config/gammurc\fP in Gammu sources.

@@ -420,16 +420,46 @@ Connecting to remote phone
 
 You can connect using Gammu to phone running on different host. This can be
 achieved using proxy connection, which executes command to forward
-bi-directional communication with the phone.
+bi-directional communication with the phone. Proxy commands are interpreted by
+``/bin/sh``, independently of the ``SHELL`` environment variable. To use another
+shell, invoke it explicitly in the device command.
 
 .. code-block:: ini
 
     [gammu]
-    device = ssh root@my.router /usr/local/bin/myscript /dev/ttyUSB0
+    device = ssh -T -o BatchMode=yes root@my.router /usr/local/bin/gammu-backend /dev/ttyUSB0
     connection = proxyat
 
-You can find sample script which can be used on the remote side in
-:file:`contrib/proxy/gammu-backend`.
+Install :program:`socat` on the remote host and copy
+:file:`contrib/proxy/gammu-backend` there as an executable script. The helper
+requires a POSIX shell and forwards modem data unchanged. It configures the
+serial port for raw data, 115200 baud, 8N1, and no flow control. Append an optional
+baud rate to the device command if needed, for example ``/dev/ttyUSB0 19200``.
+
+Configure SSH keys and known hosts for the account running Gammu or SMSD.
+``-T`` disables SSH terminal allocation, and ``BatchMode=yes`` prevents
+interactive authentication prompts. Remote shell startup files must not print
+to stdout, which is reserved for modem data.
+
+Use only one modem reader at a time: other services or interactive sessions can
+consume replies intended for Gammu. The helper does not lock the device.
+When upgrading the helper, replace the remote copy; updating local Gammu does
+not update scripts on the remote host.
+
+If the modem already exposes a raw AT-over-TCP endpoint, run :program:`socat`
+on the same host as Gammu instead:
+
+.. code-block:: ini
+
+    [gammu]
+    device = socat STDIO TCP:192.0.2.1:1234
+    connection = proxyat
+
+Replace ``192.0.2.1`` and ``1234`` with the modem's address and AT service port.
+This connects directly to the modem without SSH or a script installed on it,
+so it also works with devices whose filesystem cannot be modified. The endpoint
+must carry raw AT commands and responses, without Telnet negotiation. Serial
+settings, if needed, are configured on the modem rather than by the local proxy.
 
 .. _Fully documented example:
 
