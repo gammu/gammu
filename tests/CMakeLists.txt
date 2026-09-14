@@ -1354,6 +1354,22 @@ add_test(smsd-files-unicode-write
 set_tests_properties(smsd-files-unicode-write PROPERTIES SKIP_RETURN_CODE 77)
 
 if (WIN32 OR (HAVE_DIRENT_H AND HAVE_SCANDIR AND HAVE_ALPHASORT))
+    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/smsd-retry-alloc")
+    add_executable(smsd-files-retry-alloc smsd-files-retry-alloc.c)
+    add_coverage(smsd-files-retry-alloc)
+    target_link_libraries(smsd-files-retry-alloc libGammu ${LIBINTL_LIBRARIES} gsmsd)
+    add_test(smsd-files-retry-alloc
+        "${GAMMU_TEST_PATH}/smsd-files-retry-alloc${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_BINARY_DIR}/smsd-retry-alloc/")
+    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/smsd-retry-outbox")
+    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/smsd-retry-error")
+    add_executable(smsd-files-retries smsd-files-retries.c)
+    add_coverage(smsd-files-retries)
+    target_link_libraries(smsd-files-retries libGammu ${LIBINTL_LIBRARIES} gsmsd)
+    add_test(smsd-files-retries
+        "${GAMMU_TEST_PATH}/smsd-files-retries${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_BINARY_DIR}/smsd-retry-outbox/"
+        "${CMAKE_BINARY_DIR}/smsd-retry-error/")
     # Leave room for long basenames within the Windows MAX_PATH limit.
     file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/smsd-outbox")
     add_executable(smsd-files-outbox smsd-files-outbox.c)

@@ -234,11 +234,21 @@ esac
 
 $SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Don't panic." &
 INJECT_PID_1=$!
+if [ "$SERVICE" = "dbi-sqlite3" ]; then
+    # Concurrent SQLite writers can also disrupt libdbi's schema reads.
+    # This test exercises SMS processing, so serialize its SQLite setup.
+    wait "$INJECT_PID_1"
+fi
 $SMSD_INJECT_CMD -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
 INJECT_PID_2=$!
+if [ "$SERVICE" = "dbi-sqlite3" ]; then
+    wait "$INJECT_PID_2"
+fi
 $SMSD_INJECT_CMD -c "$CONFIG_PATH" USSD "*127*1#"
-wait "$INJECT_PID_1"
-wait "$INJECT_PID_2"
+if [ "$SERVICE" != "dbi-sqlite3" ]; then
+    wait "$INJECT_PID_1"
+    wait "$INJECT_PID_2"
+fi
 
 $SMSD_CMD -c "$CONFIG_PATH" $SMSD_EXTRA_PARAMS &
 SMSD_PID=$!

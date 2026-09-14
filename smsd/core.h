@@ -100,6 +100,7 @@ struct _GSM_SMSDConfig {
 	/* options for FILES */
 	const char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
 	const char   *errorsmspath, 	 *inboxformat,  *transmitformat, *outboxformat;
+	struct SMSDFilesRetry *files_retries;
 
 	/* private variables required for work */
 	int		relativevalidity;
