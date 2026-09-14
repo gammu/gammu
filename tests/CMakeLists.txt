@@ -1420,3 +1420,39 @@ if (NOT WIN32)
         message("/var/lock is not writable, skipping locking tests!")
     endif (VAR_LOCK_WRITABLE EQUAL 0)
 endif (NOT WIN32)
+
+# Proxy transport tests include the implementation for syscall fault injection.
+if (NOT WIN32 AND HAVE_PTHREAD AND HAVE_SIGTIMEDWAIT)
+    add_executable(proxy proxy.c)
+    add_coverage(proxy)
+    target_link_libraries(proxy libGammu ${CMAKE_THREAD_LIBS_INIT} ${LIBINTL_LIBRARIES})
+    add_test(proxy "${GAMMU_TEST_PATH}/proxy${CMAKE_EXECUTABLE_SUFFIX}")
+    set_tests_properties(proxy PROPERTIES TIMEOUT 35)
+endif ()
+
+if (UNIX)
+    find_program(PROXY_PYTHON_EXECUTABLE python3)
+    find_program(SOCAT_EXECUTABLE socat)
+    if (TARGET proxy AND SOCAT_EXECUTABLE)
+        add_test(proxy-tcp "${GAMMU_TEST_PATH}/proxy${CMAKE_EXECUTABLE_SUFFIX}"
+            --tcp "${SOCAT_EXECUTABLE}")
+        set_tests_properties(proxy-tcp PROPERTIES TIMEOUT 35)
+    elseif (TARGET proxy)
+        message(STATUS "Skipping proxy-tcp test: socat unavailable")
+    endif ()
+    if (PROXY_PYTHON_EXECUTABLE AND SOCAT_EXECUTABLE)
+        execute_process(COMMAND "${PROXY_PYTHON_EXECUTABLE}" -c "import pty, termios"
+            RESULT_VARIABLE PROXY_PTY_UNAVAILABLE)
+        if (NOT PROXY_PTY_UNAVAILABLE)
+            add_test(proxy-backend "${PROXY_PYTHON_EXECUTABLE}"
+                "${CMAKE_CURRENT_SOURCE_DIR}/proxy-backend.py"
+                "${CMAKE_CURRENT_SOURCE_DIR}/../contrib/proxy/gammu-backend"
+                "${SOCAT_EXECUTABLE}")
+            set_tests_properties(proxy-backend PROPERTIES TIMEOUT 30)
+        else ()
+            message(STATUS "Skipping proxy-backend test: Python PTY support unavailable")
+        endif ()
+    else ()
+        message(STATUS "Skipping proxy-backend test: python3 or socat unavailable")
+    endif ()
+endif ()
