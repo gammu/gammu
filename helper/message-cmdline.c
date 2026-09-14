@@ -17,6 +17,7 @@
 
 #include "formats.h"
 #include "printing.h"
+#include "../libgammu/misc/coding/coding.h"
 #include "../libgammu/misc/string.h"
 #include "message-cmdline.h"
 #include "cmdline.h"
@@ -141,10 +142,13 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
 	unsigned char			Buffer		[GSM_MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
 	ssize_t				chars_read		= 0;
+	ssize_t				TextLength		= -1;
 	int 				nextlong		= 0;
 	gboolean				ReplyViaSameSMSC 	= FALSE;
 	int				MaxSMS			= -1;
 	gboolean				EMS16Bit		= FALSE;
+	gboolean				Text16Bit		= FALSE;
+	gboolean				TextAutoCoding		= FALSE;
 	gboolean				TextUTF8		= FALSE;
 	int frames_num;
 	ssize_t param_value;
@@ -707,8 +711,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 				if (strcasecmp(argv[i],"-16bit") == 0) {
-					if (SMSInfo.Entries[0].ID == SMS_ConcatenatedTextLong) SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong16bit;
-					if (SMSInfo.Entries[0].ID == SMS_ConcatenatedAutoTextLong) SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong16bit;
+					Text16Bit = TRUE;
 					break;
 				}
 				if (strcasecmp(argv[i],"-flash") == 0) {
@@ -760,8 +763,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					SMSInfo.Entries[0].ID = SMS_VoidSMS;
 					break;
 				}
-				if (strcasecmp(argv[i],"-replacemessages") == 0 &&
-				    SMSInfo.Entries[0].ID != SMS_ConcatenatedTextLong) {
+				if (strcasecmp(argv[i],"-replacemessages") == 0) {
 					nextlong = 8;
 					break;
 				}
@@ -1104,15 +1106,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				printf(_("Wrong message length (\"%s\")\n"),argv[i]);
 				exit(-1);
 			}
-			printf("%ld / %ld\n", (long)param_value, (long)chars_read);
-			if (param_value < chars_read) {
-				Buffer[0][param_value * 2]	= 0x00;
-				Buffer[0][param_value * 2 + 1]	= 0x00;
-			}
-			SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
-			if (strcasecmp(argv[i-1],"-autolen") == 0) {
-				SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
-			}
+			TextLength = param_value;
+			TextAutoCoding = strcasecmp(argv[i-1], "-autolen") == 0;
 			nextlong = 0;
 			break;
 		case 6:	/* Picture Images - text */
@@ -1387,11 +1382,22 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 #endif
 				);
 			}
-			chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
+			/* Leave room for the decoded text's two-byte terminator. */
+			chars_read = fread(InputBuffer, 1, sizeof(Buffer[0]) / 2 - 1, stdin);
+			if (fgetc(stdin) != EOF) {
+				printf_err("%s\n", _("Input text is too long."));
+				error = ERR_INVALIDDATA;
+				goto end_compose;
+			}
+			if (ferror(stdin)) {
+				printf_err("%s\n", _("Could not read input text."));
+				error = ERR_CANTOPENFILE;
+				goto end_compose;
+			}
 			/* Zero terminate string */
 			InputBuffer[chars_read] = 0;
 			/* Trim \n at the end of string */
-			if (InputBuffer[chars_read - 1] == '\n') {
+			if (chars_read > 0 && InputBuffer[chars_read - 1] == '\n') {
 				chars_read--;
 				InputBuffer[chars_read] = 0;
 			}
@@ -1412,7 +1418,39 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			if (Buffer[0][chars_read*2-1] == '\n' && Buffer[0][chars_read*2-2] == 0)
 			{
 				Buffer[0][chars_read*2-1] = 0;
+				chars_read--;
 			}
+		}
+		/* Apply the limit to decoded text, independently of option order. */
+		if (TextLength != -1 && TextLength < chars_read) {
+			/* Do not leave half of a UTF-16 surrogate pair in the text. */
+			if (Buffer[0][TextLength * 2 - 2] >= 0xd8 &&
+			    Buffer[0][TextLength * 2 - 2] <= 0xdb &&
+			    Buffer[0][TextLength * 2] >= 0xdc &&
+			    Buffer[0][TextLength * 2] <= 0xdf) {
+				TextLength--;
+			}
+			Buffer[0][TextLength * 2] = 0;
+			Buffer[0][TextLength * 2 + 1] = 0;
+		}
+		if (TextAutoCoding) {
+			size_t text_length = UnicodeLength(Buffer[0]);
+
+			/*
+			 * Use the same alphabet round trip as automatic multipart coding,
+			 * without replacing notification or replacement message types.
+			 */
+			EncodeDefault(Buffer[1], Buffer[0], &text_length, TRUE, NULL);
+			DecodeDefault(Buffer[2], Buffer[1], text_length, TRUE, NULL);
+			SMSInfo.UnicodeCoding = memcmp(Buffer[0], Buffer[2],
+						      UnicodeLength(Buffer[0]) * 2 + 2) != 0;
+		}
+		/* Ordinary text can use as many linked parts as needed. */
+		if (SMSInfo.Entries[0].ID == SMS_Text && SMSInfo.ReplaceMessage == 0) {
+			SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
+		}
+		if (Text16Bit && SMSInfo.Entries[0].ID == SMS_ConcatenatedTextLong) {
+			SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong16bit;
 		}
 	}
 

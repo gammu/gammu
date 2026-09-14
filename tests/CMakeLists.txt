@@ -840,6 +840,27 @@ target_link_libraries(sms-cmdline libGammu ${LIBINTL_LIBRARIES})
 target_link_libraries(sms-cmdline messagedisplay)
 target_link_libraries(sms-cmdline messagecmdline)
 
+add_executable(sms-cmdline-text sms-cmdline-text.c)
+add_coverage(sms-cmdline-text)
+target_link_libraries(sms-cmdline-text messagecmdline libGammu ${LIBINTL_LIBRARIES})
+add_test(sms-cmdline-text "${GAMMU_TEST_PATH}/sms-cmdline-text${CMAKE_EXECUTABLE_SUFFIX}"
+    "${CMAKE_CURRENT_BINARY_DIR}/sms-cmdline-text-input.txt")
+
+foreach(LENGTH_OPTION -len -maxlen -autolen)
+    foreach(INVALID_LENGTH 0 -1 invalid)
+        add_test(sms-cmdline-TEXT${LENGTH_OPTION}-${INVALID_LENGTH}
+            "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
+            TEXT 213 ${LENGTH_OPTION} ${INVALID_LENGTH} -text abc)
+        set_tests_properties(sms-cmdline-TEXT${LENGTH_OPTION}-${INVALID_LENGTH}
+            PROPERTIES WILL_FAIL TRUE)
+    endforeach()
+    add_test(sms-cmdline-TEXT${LENGTH_OPTION}-missing
+        "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
+        TEXT 213 -text abc ${LENGTH_OPTION})
+    set_tests_properties(sms-cmdline-TEXT${LENGTH_OPTION}-missing
+        PROPERTIES WILL_FAIL TRUE)
+endforeach()
+
 add_test(sms-cmdline-TEXT "${GAMMU_TEST_PATH}/sms-cmdline${CMAKE_EXECUTABLE_SUFFIX}"
     TEXT 213 -text aaafdsfdfasd)
 set_tests_properties(sms-cmdline-TEXT PROPERTIES

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-INJECT" "1" "Aug 19, 2026" "1.44.1" "Gammu"
+.TH "GAMMU-SMSD-INJECT" "1" "Sep 14, 2026" "1.44.1" "Gammu"
 .SH NAME
 gammu-smsd-inject \- Inject messages into queue of SMS daemon for Gammu
 .SH SYNOPSIS
@@ -119,12 +119,12 @@ gammu\-smsd\-inject TEXT 123456 \-unicode \-textutf8 \(dqZkouška sirén\(dq
 Use \fB\-textutf8\fP for UTF\-8 text supplied by applications or services, where
 the locale inherited by \fBgammu\-smsd\-inject\fP might not be configured.
 .sp
-Inject long text message:
+Inject a long text message (automatically split into linked SMS parts):
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-echo \(dqAll your base are belong to us\(dq | gammu\-smsd\-inject TEXT 123456 \-len 400
+gammu\-smsd\-inject TEXT 123456 < message.txt
 .EE
 .UNINDENT
 .UNINDENT
@@ -134,12 +134,21 @@ or
 .INDENT 3.5
 .sp
 .EX
-gammu\-smsd\-inject TEXT 123456 \-len 400 \-text \(dqAll your base are belong to us\(dq
+gammu\-smsd\-inject TEXT 123456 \-text \(dqLong message text...\(dq
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-or
+No length option is required. Use \fB\-maxsms 1\fP to reject messages requiring
+multiple parts. To truncate input to a maximum length, use \fB\-len 400\fP;
+\fB\-autolen 400\fP also automatically selects the SMS alphabet or Unicode.
+These limits apply to decoded text from both stdin and command\-line arguments,
+regardless of option order.
+.sp
+Stdin input exceeding 4,999 bytes (including a trailing newline) is rejected
+instead of injecting a truncated message, even with a length option.
+.sp
+Alternatively, use EMS:
 .INDENT 0.0
 .INDENT 3.5
 .sp

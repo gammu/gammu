@@ -79,19 +79,28 @@ Inject unicode text message:
 Use ``-textutf8`` for UTF-8 text supplied by applications or services, where
 the locale inherited by :program:`gammu-smsd-inject` might not be configured.
 
-Inject long text message:
+Inject a long text message (automatically split into linked SMS parts):
 
 .. code-block:: sh
 
-    echo "All your base are belong to us" | gammu-smsd-inject TEXT 123456 -len 400
+    gammu-smsd-inject TEXT 123456 < message.txt
 
 or
 
 .. code-block:: sh
 
-    gammu-smsd-inject TEXT 123456 -len 400 -text "All your base are belong to us"
+    gammu-smsd-inject TEXT 123456 -text "Long message text..."
 
-or
+No length option is required. Use ``-maxsms 1`` to reject messages requiring
+multiple parts. To truncate input to a maximum length, use ``-len 400``;
+``-autolen 400`` also automatically selects the SMS alphabet or Unicode.
+These limits apply to decoded text from both stdin and command-line arguments,
+regardless of option order.
+
+Stdin input exceeding 4,999 bytes (including a trailing newline) is rejected
+instead of injecting a truncated message, even with a length option.
+
+Alternatively, use EMS:
 
 .. code-block:: sh
 
