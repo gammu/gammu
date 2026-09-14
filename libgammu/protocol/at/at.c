@@ -105,6 +105,9 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"NO CARRIER"	,1, ID_All},
 		{"NO ANSWER"	,1, ID_All},
 
+		/* Alcatel */
+		{"+ECIND:"	,1, ID_All},
+
 		/* GlobeTrotter */
 		{"_OSIGQ:"	,1, ID_All},
 		{"_OBS:"	,1, ID_All},
