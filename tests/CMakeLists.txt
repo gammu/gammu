@@ -829,6 +829,11 @@ if (WITH_ATGEN)
 endif (WITH_ATGEN)
 
 if (WITH_OBEXGEN)
+    add_executable(obex-mobex-notes obex-mobex-notes.c)
+    add_coverage(obex-mobex-notes)
+    target_link_libraries(obex-mobex-notes libGammu ${LIBINTL_LIBRARIES})
+    add_test(obex-mobex-notes "${GAMMU_TEST_PATH}/obex-mobex-notes${CMAKE_EXECUTABLE_SUFFIX}")
+
     # OBEX entries splitting
     add_executable(obex-vcard-split obex-vcard-split.c)
     add_coverage(obex-vcard-split)

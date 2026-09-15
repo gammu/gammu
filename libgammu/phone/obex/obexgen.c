@@ -3132,6 +3132,9 @@ GSM_Error OBEXGEN_GetNoteInformation(GSM_StateMachine *s, int *free_records, int
  */
 GSM_Error OBEXGEN_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
 {
+	/* Notes are not supported over m-OBEX; keep the current service. */
+	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_m_OBEX) return ERR_NOTSUPPORTED;
+
 	return OBEXGEN_GetNoteInformation(s, &(Status->Free), &(Status->Used));
 
 }
@@ -3258,6 +3261,9 @@ GSM_Error OBEXGEN_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
+	/* Notes are not supported over m-OBEX; keep the current service. */
+	if (Priv->Service == OBEX_m_OBEX) return ERR_NOTSUPPORTED;
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -3285,6 +3291,9 @@ GSM_Error OBEXGEN_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Entry, gboolea
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error = ERR_EMPTY;;
+
+	/* Notes are not supported over m-OBEX; keep the current service. */
+	if (Priv->Service == OBEX_m_OBEX) return ERR_NOTSUPPORTED;
 
 	/* Get  location */
 	if (start) {
