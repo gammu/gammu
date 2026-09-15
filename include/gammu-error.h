@@ -359,6 +359,10 @@ typedef enum {
 	 * The type of memory is not available or has been disabled.
 	 */
 	ERR_MEMORY_NOT_AVAILABLE,
+	/**
+	 * Modem responded without AT command echo after echo was enabled.
+	 */
+	ERR_NOECHO,
 
 	/**
 	 * Just marker of highest error code, should not be used.

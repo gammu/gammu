@@ -92,6 +92,13 @@ In gammu, it can happen quite early with error message "Phone does not support
 enabled echo, it can not work with Gammu!", but it can be spotted later as
 well, depending on various conditions.
 
+Gammu requires AT command echo and verifies it after enabling it. If the modem
+responds without echo, Gammu reports "The modem responded without AT command
+echo. Echo may be unsupported or disabled by another program using the modem."
+This does not necessarily mean that the modem lacks echo support: another
+program may have disabled it. Check for other programs accessing the device
+as described below.
+
 In case you see such behavior, check what other programs are using given device.
 This can be done using :program:`fuser` tool:
 

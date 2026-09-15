@@ -162,6 +162,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_SQL, "SQL", N_("Error in executing SQL query.")},
 	{ERR_MEMORY_NOT_AVAILABLE, "MEMORY_NOT_AVAILABLE", N_("The type of memory is not available or has been disabled.")},
 	{ERR_INVALID_OPERATION, "INVALID_OPERATION", N_("The operation cannot be performed.")},
+	{ERR_NOECHO, "NOECHO", N_("The modem responded without AT command echo. Echo may be unsupported or disabled by another program using the modem.")},
 
 	{0,	"",				""}
 };
