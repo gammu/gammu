@@ -1150,6 +1150,53 @@ static GSM_Error GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS,
 	return ERR_NONE;
 }
 
+static size_t GSM_SMSLayoutFieldCapacity(GSM_SMSMessageLayout Layout,
+					 unsigned char start)
+{
+	const unsigned char offsets[] = {
+		Layout.Text, Layout.Number, Layout.SMSCNumber, Layout.TPDCS,
+		Layout.DateTime, Layout.SMSCTime, Layout.TPStatus,
+		Layout.TPUDL, Layout.TPVP, Layout.firstbyte, Layout.TPMR,
+		Layout.TPPID
+	};
+	size_t i;
+	unsigned char end = 255;
+
+	for (i = 0; i < sizeof(offsets) / sizeof(offsets[0]); i++) {
+		if (offsets[i] != 255 && offsets[i] > start && offsets[i] < end) {
+			end = offsets[i];
+		}
+	}
+	if (end == 255) return 0;
+	return end - start;
+}
+
+static GSM_Error GSM_EncodeSMSNumberField(GSM_SMSMessageLayout Layout,
+					  unsigned char field,
+					  const unsigned char *number,
+					  unsigned char *buffer,
+					  gboolean semioctet)
+{
+	unsigned char packed[GSM_MAX_NUMBER_LENGTH + 2] = {0};
+	size_t capacity, field_length;
+	int packed_length;
+
+	packed_length = GSM_PackSemiOctetNumber(number, packed, semioctet);
+	if (packed_length < 0 || packed_length > 255) return ERR_INVALIDDATA;
+
+	if (semioctet) {
+		field_length = 2 + ((size_t)packed_length + 1) / 2;
+	} else {
+		field_length = 1 + (size_t)packed_length;
+	}
+	capacity = GSM_SMSLayoutFieldCapacity(Layout, field);
+	if (capacity != 0 && field_length > capacity) return ERR_INVALIDDATA;
+
+	buffer[field] = (unsigned char)packed_length;
+	memcpy(buffer + field + 1, packed, field_length - 1);
+	return ERR_NONE;
+}
+
 GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, gboolean clear)
 {
 	GSM_Error error;
@@ -1179,11 +1226,15 @@ GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 	if (SMS->ReplyViaSameSMSC) buffer[Layout.firstbyte] |= 0x80;
 
 	if (Layout.Number!=255) {
-		buffer[Layout.Number] = GSM_PackSemiOctetNumber(SMS->Number,buffer+(Layout.Number+1),TRUE);
+		error = GSM_EncodeSMSNumberField(Layout, Layout.Number, SMS->Number,
+					       buffer, TRUE);
+		if (error != ERR_NONE) return error;
 		smfprintf(di, "Recipient number \"%s\"\n", DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout.SMSCNumber!=255) {
-		buffer[Layout.SMSCNumber] = GSM_PackSemiOctetNumber(SMS->SMSC.Number,buffer+(Layout.SMSCNumber+1), FALSE);
+		error = GSM_EncodeSMSNumberField(Layout, Layout.SMSCNumber,
+					       SMS->SMSC.Number, buffer, FALSE);
+		if (error != ERR_NONE) return error;
 		smfprintf(di, "SMSC number \"%s\"\n", DecodeUnicodeString(SMS->SMSC.Number));
 	}
 
