@@ -2,5 +2,31 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>WeblateOrg/meta:renovate"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/actions/windows-installer/mariadb\\.json$/"
+      ],
+      "matchStrings": [
+        "\"version\":\\s*\"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
+      ],
+      "depNameTemplate": "MariaDB/mariadb-connector-c",
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+\\.\\d+)$",
+      "versioningTemplate": "semver"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "MariaDB/mariadb-connector-c"
+      ],
+      "automerge": false,
+      "prBodyNotes": [
+        "Before merging: confirm the official win64 MSI is available; run `.github/actions/windows-installer/mariadb.ps1 -ChecksumOnly` and review/copy its SHA-256 into `mariadb.json`; require the Windows database and installed-package tests to pass."
+      ]
+    }
   ]
 }

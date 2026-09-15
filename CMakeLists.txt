@@ -25,6 +25,7 @@ option (COVERAGE "Add flags for Coverage analysis" OFF)
 
 option (ONLINE_TESTING "Enable testing of parts which use remote servers" OFF)
 option (PSQL_TESTING "Enable testing of PostgreSQL SMSD backend" OFF)
+option (REQUIRE_MYSQL "Fail configuration when MySQL support is unavailable" OFF)
 option (MYSQL_TESTING "Enable testing of MySQL SMSD backend" OFF)
 option (ODBC_TESTING "Enable testing of ODBC MySQL SMSD backend" OFF)
 option (MSSQL_TESTING "Enable testing of ODBC Microsoft SQL Server SMSD backend" OFF)
@@ -194,6 +195,14 @@ find_package (Threads)
 
 # Packages in sources
 macro_optional_find_package (MySQL)
+# The optional-package macro uses MySQL_FOUND, but this finder exports MYSQL_FOUND.
+# Clear the cached result when reconfiguring a full build as a minimal build.
+if (NOT WITH_MySQL)
+    set(MYSQL_FOUND FALSE)
+endif()
+if (REQUIRE_MYSQL AND (NOT WITH_MySQL OR NOT MYSQL_FOUND))
+    message(FATAL_ERROR "MySQL support is required, but a working client library was not found")
+endif()
 macro_optional_find_package (ODBC)
 macro_optional_find_package (Postgres)
 macro_optional_find_package (LibDBI)
@@ -369,16 +378,11 @@ endif (IRDA_FOUND)
 
 if (MYSQL_FOUND)
     set (HAVE_MYSQL_MYSQL_H TRUE)
-    if (WIN32)
-        set(WIN_LIB_MYSQL libmysql.dll)
-    endif ()
 endif (MYSQL_FOUND)
 
 if (POSTGRES_FOUND)
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
     if (WIN32)
-        # Modern PostgreSQL on Windows handles its own SSL dependencies
-        # Only libpq.dll needs to be distributed, SSL libraries are resolved at runtime
         set(WIN_LIB_PGSQL libpq.dll)
     endif ()
 endif (POSTGRES_FOUND)
@@ -758,6 +762,15 @@ if (WIN32 AND NOT CYGWIN)
             ADD_DLL("${lib}" "${MYSQL_LIBRARIES}")
         endforeach(lib ${WIN_LIB_MYSQL})
 
+        foreach(plugin ${MYSQL_PLUGIN_DLLS})
+            get_filename_component(plugin_name "${plugin}" NAME)
+            ADD_DLL("${plugin_name}" "${plugin}")
+        endforeach()
+        if (MYSQL_LICENSE_DIR)
+            install(DIRECTORY "${MYSQL_LICENSE_DIR}/"
+                DESTINATION "${INSTALL_DOC_DIR}/mariadb-connector-c" COMPONENT dlls)
+        endif()
+
         if (MYSQL_LIBRARIES)
             install (FILES ${MYSQL_LIBRARIES}
                     DESTINATION "${INSTALL_LIB_DIR}"
@@ -771,6 +784,20 @@ if (WIN32 AND NOT CYGWIN)
         foreach(lib ${WIN_LIB_PGSQL})
             ADD_DLL("${lib}" "${POSTGRES_LIBRARY}")
         endforeach(lib ${WIN_LIB_PGSQL})
+        # libpq imports OpenSSL even when SMSD uses a different SQL backend.
+        # Package the libraries from the same PostgreSQL installation instead
+        # of relying on an unrelated OpenSSL installation in PATH.
+        get_filename_component(POSTGRES_LIBRARY_DIR "${POSTGRES_LIBRARY}" DIRECTORY)
+        file(GLOB POSTGRES_SSL_DLLS
+            "${POSTGRES_LIBRARY_DIR}/../bin/libssl*.dll"
+            "${POSTGRES_LIBRARY_DIR}/../bin/libcrypto*.dll"
+            "${POSTGRES_LIBRARY_DIR}/libssl*.dll"
+            "${POSTGRES_LIBRARY_DIR}/libcrypto*.dll"
+        )
+        foreach(lib ${POSTGRES_SSL_DLLS})
+            get_filename_component(lib_name "${lib}" NAME)
+            ADD_DLL("${lib_name}" "${lib}")
+        endforeach()
 
         if (POSTGRES_LIBRARY)
             install (FILES ${POSTGRES_LIBRARY}
