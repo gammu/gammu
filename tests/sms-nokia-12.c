@@ -12,7 +12,7 @@
 
 #include "../helper/message-display.h"
 
-unsigned char data[] = {
+static const unsigned char data[] = {
 	0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x01, 0x3C, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -48,6 +48,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_File file;
 	GSM_Error error;
 	GSM_MultiSMSMessage sms;
+	GSM_Phone_N6510Data *priv;
+	int folder;
 
 	/* Init locales for proper output */
 	GSM_InitLocales(NULL);
@@ -63,16 +65,35 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(TRUE, debug_info);
 
-	/* Init file */
-	file.Buffer = malloc(sizeof(data));
-	memcpy(file.Buffer, data, sizeof(data));
-	file.Used = sizeof(data);
-	file.ID_FullName[0] = 0;
-	file.ID_FullName[1] = 0;
-	GSM_GetCurrentDateTime(&(file.Modified));
+	priv = &s->Phone.Data.Priv.N6510;
+	priv->LastSMSFolders.Number = GSM_MAX_SMS_FOLDERS;
+	/* Alternate inbox flags so using either adjacent folder is detected. */
+	for (folder = 0; folder < GSM_MAX_SMS_FOLDERS; folder++) {
+		priv->LastSMSFolders.Folder[folder].InboxFolder = (folder % 2 == 0);
+	}
 
-	/* Parse it */
-	error = N6510_DecodeFilesystemSMS(s, &sms, &file, 0);
+	/* Include the first and last array entries, preserving one-based IDs. */
+	for (folder = 1; folder <= GSM_MAX_SMS_FOLDERS; folder++) {
+		priv->SMSFileFolder = folder;
+		GSM_SetDefaultReceivedSMSData(&sms.SMS[0]);
+
+		/* The decoder consumes the file buffer. */
+		file.Buffer = malloc(sizeof(data));
+		test_result(file.Buffer != NULL);
+		memcpy(file.Buffer, data, sizeof(data));
+		file.Used = sizeof(data);
+		file.ID_FullName[0] = 0;
+		file.ID_FullName[1] = 0;
+		GSM_GetCurrentDateTime(&(file.Modified));
+
+		error = N6510_DecodeFilesystemSMS(s, &sms, &file, 0);
+		gammu_test_result(error, "N6510_DecodeFilesystemSMS");
+		test_result(sms.Number == 1);
+		test_result(sms.SMS[0].Folder == folder);
+		test_result(sms.SMS[0].InboxFolder == (folder % 2 == 1));
+		EncodeUTF8(decoded_text, sms.SMS[0].Text);
+		test_result(strcmp(text, decoded_text) == 0);
+	}
 
 	/* Display message */
 	DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);

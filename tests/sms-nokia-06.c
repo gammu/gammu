@@ -71,6 +71,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	file.ID_FullName[1] = 0;
 	GSM_GetCurrentDateTime(&(file.Modified));
 
+	/* The filesystem reader supplies one-based folder numbers. */
+	s->Phone.Data.Priv.N6510.SMSFileFolder = 1;
+	s->Phone.Data.Priv.N6510.LastSMSFolders.Number = 1;
+
 	/* Parse it */
 	error = N6510_DecodeFilesystemSMS(s, &sms, &file, 0);
 

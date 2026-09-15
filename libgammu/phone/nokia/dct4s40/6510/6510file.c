@@ -2302,6 +2302,7 @@ static void N26510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsi
 GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location)
 {
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
+	GSM_OneSMSFolder *folder;
 	size_t parse_len, pos;
 	int loc;
 	GSM_Error error;
@@ -2520,8 +2521,11 @@ done:
 	N26510_SetSMSLocation(s, &sms->SMS[0], 0, location);
 
 	sms->SMS[0].Folder = Priv->SMSFileFolder;
-	smprintf(s, "Folder[%d] %s: %d\n", sms->SMS[0].Folder, DecodeUnicodeString(Priv->LastSMSFolders.Folder[sms->SMS[0].Folder].Name), Priv->LastSMSFolders.Folder[sms->SMS[0].Folder].InboxFolder);
-	sms->SMS[0].InboxFolder = Priv->LastSMSFolders.Folder[sms->SMS[0].Folder].InboxFolder;
+	/* SMS folder numbers are one-based, but the folder array is zero-based. */
+	folder = &Priv->LastSMSFolders.Folder[sms->SMS[0].Folder - 1];
+	smprintf(s, "Folder[%d] %s: %d\n", sms->SMS[0].Folder,
+		DecodeUnicodeString(folder->Name), folder->InboxFolder);
+	sms->SMS[0].InboxFolder = folder->InboxFolder;
 	sms->SMS[0].Location = 0; /* fixme */
 
 	return ERR_NONE;
