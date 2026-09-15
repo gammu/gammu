@@ -27,6 +27,66 @@ static void feed_reply(GSM_StateMachine *s, const char *reply)
 	}
 }
 
+static ssize_t silent_read(GSM_StateMachine *s UNUSED, void *buf UNUSED,
+			   size_t nbytes UNUSED)
+{
+	return 0;
+}
+
+static void test_echo(GSM_StateMachine *s)
+{
+	GSM_Phone_Data *data = &s->Phone.Data;
+	GSM_Device_Functions device = {NULL, NULL, NULL, NULL, NULL, silent_read, NULL};
+	size_t i;
+	static const struct {
+		const char *reply;
+		GSM_Error error;
+	} cases[] = {
+		{"\r\nOK\r\n", ERR_NOECHO},
+		{"ATE1\r\r\nOK\r\n", ERR_NONE},
+		{"ATE1\r\nATE1\r\nOK\r\n", ERR_NONE},
+		{"\r\nERROR\r\n", ERR_UNKNOWN},
+		{"ATE1\r\r\nERROR\r\n", ERR_UNKNOWN},
+		{"^NWTIME: 18/03/09,12:36:21+4,00\r\nATE1\r\r\nOK\r\n", ERR_NONE},
+		{"^NWTIME: 18/03/09,12:36:21+4,00\r\n\r\nOK\r\n", ERR_NOECHO}
+	};
+
+	/* Enabling echo must still accept an acknowledgement without echo. */
+	data->RequestID = ID_EnableEcho;
+	feed_reply(s, "\r\nOK\r\n");
+	test_result(data->RequestID == ID_None);
+	gammu_test_result_code(data->DispatchError, "Enable echo", ERR_NONE);
+
+	/* Issue #510: a response without echo must have a specific diagnostic. */
+	for (i = 0; i < sizeof(cases) / sizeof(cases[0]); i++) {
+		data->RequestID = ID_VerifyEcho;
+		feed_reply(s, cases[i].reply);
+		test_result(data->RequestID == ID_None);
+		gammu_test_result_code(data->DispatchError, "Verify echo", cases[i].error);
+	}
+
+	/* A partial response cannot complete verification. */
+	data->RequestID = ID_VerifyEcho;
+	feed_reply(s, "ATE");
+	test_result(data->RequestID == ID_VerifyEcho);
+	feed_reply(s, "1\r\r\nO");
+	test_result(data->RequestID == ID_VerifyEcho);
+	feed_reply(s, "K\r\n");
+	test_result(data->RequestID == ID_None);
+	gammu_test_result_code(data->DispatchError, "Fragmented echo", ERR_NONE);
+
+	/* Silence is not evidence of missing echo. */
+	s->Device.Functions = &device;
+	s->opened = TRUE;
+	data->RequestID = ID_VerifyEcho;
+	gammu_test_result_code(GSM_WaitForOnce(s, NULL, 0, 0, 0),
+			       "Silent echo verification", ERR_TIMEOUT);
+	test_result(data->RequestID == ID_VerifyEcho);
+	s->opened = FALSE;
+	s->Device.Functions = NULL;
+	data->RequestID = ID_None;
+}
+
 static void test_ecind(GSM_StateMachine *s)
 {
 	GSM_Phone_Data *data = &s->Phone.Data;
@@ -248,6 +308,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	test_ecind(s);
 	test_quectel_sms_done(s);
+	test_echo(s);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

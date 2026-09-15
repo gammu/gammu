@@ -213,7 +213,8 @@ typedef enum {
 	ID_User10,
 
 	ID_All,
-	ID_EachFrame
+	ID_EachFrame,
+	ID_VerifyEcho
 } GSM_Phone_RequestID;
 
 /**

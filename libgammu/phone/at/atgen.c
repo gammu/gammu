@@ -1655,6 +1655,17 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine 
 	return ERR_UNKNOWNRESPONSE;
 }
 
+static GSM_Error ATGEN_ReplyVerifyEcho(GSM_Protocol_Message *msg, GSM_StateMachine *s)
+{
+	GSM_Error error = ATGEN_GenericReply(msg, s);
+	const char *line = GetLineString(msg->Buffer, &s->Phone.Data.Priv.ATGEN.Lines, 1);
+
+	if (error == ERR_NONE && strcmp(line, "OK") == 0) {
+		return ERR_NOECHO;
+	}
+	return error;
+}
+
 GSM_Error ATGEN_SQWEReply(GSM_Protocol_Message *msg UNUSED, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -2356,6 +2367,13 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		smprintf(s, "Phone does not support enabled echo, it can not work with Gammu!\n");
 		smprintf(s, "It might be caused by other program using the modem.\n");
 		smprintf(s, "See <https://wammu.eu/docs/manual/faq/general.html#echo> for help.\n");
+		return error;
+	}
+
+	/* The first ATE1 can legitimately lack echo. Verify it on the next command. */
+	smprintf(s, "Verifying command echo\n");
+	error = GSM_WaitForAutoLen(s, "ATE1\r", 0x00, 10, ID_VerifyEcho);
+	if (error != ERR_NONE) {
 		return error;
 	}
 
@@ -6242,6 +6260,9 @@ GSM_Error ATGEN_ReplyCheckCHUP(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 }
 
 GSM_Reply_Function ATGENReplyFunctions[] = {
+{ATGEN_ReplyVerifyEcho,		"ATE1"			,0x00,0x00,ID_VerifyEcho	 },
+{ATGEN_ReplyVerifyEcho,		"ERROR"			,0x00,0x00,ID_VerifyEcho	 },
+{ATGEN_ReplyVerifyEcho,		"OK"			,0x00,0x00,ID_VerifyEcho	 },
 {ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"ERROR" 	 	,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"OK"		 	,0x00,0x00,ID_EnableEcho	 },
