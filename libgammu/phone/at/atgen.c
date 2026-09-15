@@ -32,6 +32,7 @@
 #include "../pfunc.h"
 
 #include "atgen.h"
+#include "at-error.h"
 #include "atfunc.h"
 
 #include "samsung.h"
@@ -83,205 +84,6 @@ static GSM_AT_Charset_Info AT_Charsets[] = {
 	{0,			NULL,		FALSE,	FALSE,	FALSE}
 };
 
-typedef struct {
-	int     Number;
-	char    Text[60];
-} ATErrorCode;
-
-static ATErrorCode CMSErrorCodes[] = {
-	/*
-	 * Error codes not specified here were either undefined or reserved in my
-	 * copy of specifications, if you have newer one, please fill in the gaps.
-	 */
-	/* 0...127 from GSM 04.11 Annex E-2 */
-	{1,    "Unassigned (unallocated) number"},
-	{8,    "Operator determined barring"},
-	{10,   "Call barred"},
-	{21,   "Short message transfer rejected"},
-	{27,   "Destination out of service"},
-	{28,   "Unidentified subscriber"},
-	{29,   "Facility rejected"},
-	{30,   "Unknown subscriber"},
-	{38,   "Network out of order"},
-	{41,   "Temporary failure"},
-	{42,   "Congestion"},
-	{47,   "Resources unavailable, unspecified"},
-	{50,   "Requested facility not subscribed"},
-	{69,   "Requested facility not implemented"},
-	{81,   "Invalid short message transfer reference value"},
-	{95,   "Invalid message, unspecified"},
-	{96,   "Invalid mandatory information"},
-	{97,   "Message type non-existent or not implemented"},
-	{98,   "Message not compatible with short message protocol state"},
-	{99,   "Information element non-existent or not implemented"},
-	{111,  "Protocol error, unspecified"},
-	{127,  "Interworking, unspecified"},
-	/* 128...255 from GSM 03.40 subclause 9.2.3.22 */
-	{0x80, "Telematic interworking not supported"},
-	{0x81, "Short message Type 0 not supported"},
-	{0x82, "Cannot replace short message"},
-	{0x8F, "Unspecified TP-PID error"},
-	{0x90, "Data coding scheme (alphabet) not supported"},
-	{0x91, "Message class not supported"},
-	{0x9F, "Unspecified TP-DCS error"},
-	{0xA0, "Command cannot be actioned"},
-	{0xA1, "Command unsupported"},
-	{0xAF, "Unspecified TP-Command error"},
-	{0xB0, "TPDU not supported"},
-	{0xC0, "SC busy"},
-	{0xC1, "No SC subscription"},
-	{0xC2, "SC system failure"},
-	{0xC3, "Invalid SME address"},
-	{0xC4, "Destination SME barred"},
-	{0xC5, "SM Rejected-Duplicate SM"},
-	{0xC6, "TP-VPF not supported"},
-	{0xC7, "TP-VP not supported"},
-	{0xD0, "SIM SMS storage full"},
-	{0xD1, "No SMS storage capability in SIM"},
-	{0xD2, "Error in MS"},
-	{0xD3, "Memory Capacity Exceede"},
-	{0xD4, "SIM Application Toolkit Busy"},
-	{0xFF, "Unspecified error cause"},
-	/* From Siemens documentation, does not have to be valid for all vendors */
-	{256, "Operation temporary not allowed"},
-	{257, "call barred"},
-	{258, "phone busy"},
-	{259, "user abort"},
-	{260, "invalid dial string"},
-	{261, "ss not executed"},
-	{262, "SIM blocked"},
-	{263, "Invalid Block"},
-	/* 300...511 from GSM 07.05 subclause 3.2.5 */
-	{300,  "ME failure"},
-	{301,  "SMS service of ME reserved"},
-	{302,  "operation not allowed"},
-	{303,  "operation not supported"},
-	{304,  "invalid PDU mode parameter"},
-	{305,  "invalid text mode parameter"},
-	{310,  "SIM not inserted"},
-	{311,  "SIM PIN required"},
-	{312,  "PH-SIM PIN required"},
-	{313,  "SIM failure"},
-	{314,  "SIM busy"},
-	{315,  "SIM wrong"},
-	{316,  "SIM PUK required"},
-	{317,  "SIM PIN2 required"},
-	{318,  "SIM PUK2 required"},
-	{320,  "memory failure"},
-	{321,  "invalid memory index"},
-	{322,  "memory full"},
-	{330,  "SMSC address unknown"},
-	{331,  "no network service"},
-	{332,  "network timeout"},
-	{340,  "no CNMA acknowledgement expected"},
-	{500,  "unknown error"},
-	/* > 512 are manufacturer specific according to GSM 07.05 subclause 3.2.5 */
-	{516,  "Motorola - too high location?"},
-	/* Siemens */
-	{512, "User abort"},
-	{513, "unable to store"},
-	{514, "invalid status"},
-	{515, "invalid character in address string"},
-	{516, "invalid length"},
-	{517, "invalid character in pdu"},
-	{519, "invalid length or character"},
-	{520, "invalid character in text"},
-	{521, "timer expired"},
-	{522, "Operation temporary not allowed"},
-	{532, "SIM not ready"},
-	{534, "Cell Broadcast error unknown"},
-	{535, "PS busy"},
-	{538, "invalid parameter"},
-	{549, "incorrect PDU length"},
-	{550, "invalid message type indication (MTI)"},
-	{551, "invalid (non-hex) chars in address"},
-	{553, "incorrect PDU length (UDL)"},
-	{554, "incorrect SCA length"},
-	{578, "GPRS - unspecified activation rejection"},
-	{588, "GPRS - feature not supported"},
-	{594, "GPRS - invalid address length"},
-	{595, "GPRS - invalid character in address string"},
-	{596, "GPRS - invalid cid value"},
-	{607, "GPRS - missing or unknown APN"},
-	{615, "network failure"},
-	{616, "network is down"},
-	{625, "GPRS - pdp type not supported"},
-	{630, "GPRS - profile (cid) not defined"},
-	{632, "GPRS - QOS not accepted"},
-	{633, "GPRS - QOS validation fail"},
-	{639, "service type not yet available"},
-	{640, "operation of service temporary not allowed"},
-	{643, "GPRS - unknown PDP address or type"},
-	{644, "GPRS - unknown PDP context"},
-	{646, "GPRS - QOS invalid parameter"},
-	{764, "missing input value"},
-	{765, "invalid input value"},
-	{767, "operation failed"},
-	{769, "unable to get control of required module"},
-	{770, "SIM invalid - network reject"},
-	{771, "call setup in progress"},
-	{772, "SIM powered down"},
-	{-1,   ""}
-};
-
-static ATErrorCode CMEErrorCodes[] = {
-	/* CME Error codes from GSM 07.07 section 9.2 */
-	{0,   "phone failure"},
-	{1,   "no connection to phone"},
-	{2,   "phone-adaptor link reserved"},
-	{3,   "operation not allowed"},
-	{4,   "operation not supported"},
-	{5,   "PH-SIM PIN required"},
-	{10,  "SIM not inserted"},
-	{11,  "SIM PIN required"},
-	{12,  "SIM PUK required"},
-	{13,  "SIM failure"},
-	{14,  "SIM busy"},
-	{15,  "SIM wrong"},
-	{16,  "incorrect password"},
-	{17,  "SIM PIN2 required"},
-	{18,  "SIM PUK2 required"},
-	{20,  "memory full"},
-	{21,  "invalid index"},
-	{22,  "not found"},
-	{23,  "memory failure"},
-	{24,  "text string too long"},
-	{25,  "invalid characters in text string"},
-	{26,  "dial string too long"},
-	{27,  "invalid characters in dial string"},
-	{30,  "no network service"},
-	{31,  "network timeout"},
-	/* 3GPP TS 27.007 /2/ */
-	{32,  "Network not allowed - emergency calls only."},
-	{40,  "Network personalization PIN required."},
-	{41,  "Network personalization PUK required."},
-	{42,  "Network subset personalization PIN required."},
-	{43,  "Network subset personalization PUK required."},
-	{44,  "Service provider personalization PIN required."},
-	{45,  "Service provider personalization PUK required."},
-	{46,  "Corporate personalization PIN required."},
-	{47,  "Corporate personalization PUK required."},
-	{100, "unknown"},
-	/* GPRS-related errors - (#X = GSM 04.08 cause codes) */
-	{103,  "Illegal MS (#3)."},
-	{106,  "Illegal ME (#6)."},
-	{107,  "GPRS services not allowed (#7)."},
-	{111,  "Public Land Mobile Network (PLMN) not allowed (#11)."},
-	{112,  "Location area not allowed (#12)."},
-	{113,  "Roaming not allowed in this location area (#13)."},
-	/* Errors related to a failure in Activating a Context and
-	   Other GPRS errors */
-	{132,  "Service option not supported (#32)."},
-	{133,  "Requested service option not subscribed (#33)."},
-	{134,  "Service option temporarily out of order (#34)."},
-	{148,  "Unspecified GPRS error."},
-	{149,  "PDP authentication failure."},
-	{150,  "Invalid mobile class."},
-	{-1,   ""}
-};
-
-static char samsung_location_error[] = "[Samsung] Empty location";
-
 GSM_Error ATGEN_BeforeDeferredEventHook(GSM_StateMachine *s)
 {
   /* we can do this because deferred events must only be run when no other
@@ -310,139 +112,28 @@ gboolean ATGEN_IsMemoryWriteable(const GSM_Phone_ATGENData *data, GSM_MemoryType
 			(type == MEM_SR && data->SRSaveSMS == AT_AVAILABLE);
 }
 
+static GSM_Error ATGEN_HandleError(GSM_StateMachine *s, const char *family)
+{
+	GSM_Phone_ATGENData *priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (!priv->ErrorCodeValid) {
+		smprintf(s, "%s error without a recognized code or description\n", family);
+	} else if (priv->ErrorText == NULL) {
+		smprintf(s, "%s Error %i, no description available\n", family, priv->ErrorCode);
+	} else {
+		smprintf(s, "%s Error %i: \"%s\"\n", family, priv->ErrorCode, priv->ErrorText);
+	}
+	return ATGEN_ErrorResult(priv);
+}
+
 GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
-
-	if (Priv->ErrorCode == 0) {
-		smprintf(s, "CME Error occurred, but it's type not detected\n");
-	} else if (Priv->ErrorText == NULL) {
-		smprintf(s, "CME Error %i, no description available\n", Priv->ErrorCode);
-	} else {
-		smprintf(s, "CME Error %i: \"%s\"\n", Priv->ErrorCode, Priv->ErrorText);
-	}
-	/* For error codes descriptions see table a bit above */
-	switch (Priv->ErrorCode) {
-		case -1:
-			return ERR_EMPTY;
-		case 4:
-		case 601: /* This seems to be returned by SE P1i when writing to pbk */
-			return ERR_NOTSUPPORTED;
-		case 3:
-		case 5:
-		case 11:
-		case 12:
-		case 16:
-		case 17:
-		case 18:
-		case 40:
-		case 41:
-		case 42:
-		case 43:
-		case 44:
-		case 45:
-		case 46:
-		case 47:
-			return ERR_SECURITYERROR;
-		case 10:
-		case 13:
-		case 14:
-		case 15:
-			return ERR_NOSIM;
-		case 20:
-			return ERR_FULL;
-		case 21:
-			return ERR_INVALIDLOCATION;
-		case 22:
-			return ERR_EMPTY;
-		case 23:
-			return ERR_MEMORY;
-		case 24:
-		case 25:
-		case 26:
-		case 27:
-			return ERR_INVALIDDATA;
-		case 30:
-		case 31:
-		case 32:
-			return ERR_NETWORK_ERROR;
-		case 132:
-		case 133:
-		case 134:
-			/* Service option errors - GPRS related */
-			return ERR_NOTSUPPORTED;
-		case 515:
-			return ERR_BUSY;
-		default:
-			return ERR_UNKNOWN;
-	}
+	return ATGEN_HandleError(s, "CME");
 }
 
 GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
-
-	if (Priv->ErrorCode == 0) {
-		smprintf(s, "CMS Error occurred, but it's type not detected\n");
-	} else if (Priv->ErrorText == NULL) {
-		smprintf(s, "CMS Error %i, no description available\n", Priv->ErrorCode);
-	} else {
-		smprintf(s, "CMS Error %i: \"%s\"\n", Priv->ErrorCode, Priv->ErrorText);
-	}
-	/* For error codes descriptions see table a bit above */
-	switch (Priv->ErrorCode) {
-		case 0xD3:
-			return ERR_FULL;
-		case 0:
-		case 300:
-		case 320:
-			return ERR_PHONE_INTERNAL;
-		case 38:
-		case 41:
-		case 42:
-		case 47:
-		case 111:
-		case 331:
-		case 332:
-		case 615:
-		case 616:
-			return ERR_NETWORK_ERROR;
-		case 304:
-			return ERR_NOTSUPPORTED;
-		case 305:
-		case 514:
-		case 515:
-		case 517:
-		case 519:
-		case 520:
-		case 538:
-		case 549:
-		case 550:
-		case 551:
-		case 553:
-		case 554:
-			return ERR_BUG;
-		case 302:
-		case 311:
-		case 312:
-		case 316:
-		case 317:
-		case 318:
-			return ERR_SECURITYERROR;
-		case 313:
-		case 314:
-		case 315:
-			return ERR_NOSIM;
-		case 322:
-			return ERR_FULL;
-		case 321:
-		case 516:
-			return ERR_INVALIDLOCATION;
-		case 535:
-			return ERR_BUSY;
-		default:
-			return ERR_UNKNOWN;
-	}
+	return ATGEN_HandleError(s, "CMS");
 }
 
 /**
@@ -1485,9 +1176,8 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	GSM_Protocol_Message	*msg	= s->Phone.Data.RequestMsg;
-	int 			i = 0,j = 0,k = 0;
-	const char		*err, *line = "";
-	ATErrorCode		*ErrorCodes = NULL;
+	int 			i = 0;
+	const char		*line = "";
 	char *line1, *line2;
 
 	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, "\"", 1, TRUE);
@@ -1523,7 +1213,8 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 
 	Priv->ReplyState 	= AT_Reply_Unknown;
 	Priv->ErrorText     	= NULL;
-	Priv->ErrorCode     	= 0;
+	Priv->ErrorCode     	= -1;
+	Priv->ErrorCodeValid = FALSE;
 
 	/* Skip empty lines from the end (Huawei E1752 sends extra blank lines) */
 	while (i > 0) {
@@ -1564,11 +1255,9 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 
 	if (!strncmp(line,"+CME ERROR:",11)) {
 		Priv->ReplyState = AT_Reply_CMEError;
-		ErrorCodes = CMEErrorCodes;
 	}
 	if (!strncmp(line,"+CMS ERROR:",11)) {
 		Priv->ReplyState = AT_Reply_CMSError;
-		ErrorCodes = CMSErrorCodes;
 	}
 
 	/* Huawei E220 returns COMMAND NOT SUPPORT on AT+MODE=2 */
@@ -1580,45 +1269,10 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	if (!strncmp(line, "MODEM ERROR:", 12)) {
 		Priv->ReplyState = AT_Reply_Error;
 	}
-
-	/* FIXME: Samsung phones can answer +CME ERROR:-1 meaning empty location */
-	if (Priv->ReplyState == AT_Reply_CMEError && Priv->Manufacturer == AT_Samsung) {
-		err = line + 11;
-		Priv->ErrorCode = atoi(err);
-
-		if (Priv->ErrorCode == -1) {
-			Priv->ErrorText = samsung_location_error;
-			return GSM_DispatchMessage(s);
-		}
-	}
-
 	if (Priv->ReplyState == AT_Reply_CMEError || Priv->ReplyState == AT_Reply_CMSError) {
-		if (ErrorCodes == NULL) {
-			return ERR_BUG;
-		}
-	        j = 0;
-		/* One char behind +CM[SE] ERROR */
-		err = line + 11;
-		while (err[j] && !isalnum((int)err[j])) j++;
-
-		if (isdigit((int)err[j])) {
-			Priv->ErrorCode = atoi(&(err[j]));
-			for (k = 0; ErrorCodes[k].Number != -1; k++) {
-				if (ErrorCodes[k].Number == Priv->ErrorCode) {
-					Priv->ErrorText = ErrorCodes[k].Text;
-					break;
-				}
-			}
-		} else if (isalpha((int)err[j])) {
-			for (k = 0; ErrorCodes[k].Number != -1; k++) {
-				if (!strncmp(err + j, ErrorCodes[k].Text, strlen(ErrorCodes[k].Text))) {
-					Priv->ErrorCode = ErrorCodes[k].Number;
-					Priv->ErrorText = ErrorCodes[k].Text;
-					break;
-				}
-			}
-		}
+		ATGEN_ParseError(Priv, line + 11);
 	}
+
 	smprintf(s, "AT reply state: %d\n", Priv->ReplyState);
 	return GSM_DispatchMessage(s);
 }
@@ -2001,6 +1655,12 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message *msg, GSM_StateMachine
 		{"Qualcomm", AT_Qualcomm},
 		{"Telit", AT_Telit},
 		{"ZTE", AT_ZTE},
+		{"Quectel", AT_Quectel},
+		{"SIMCOM", AT_SIMCom},
+		{"Sierra Wireless", AT_Sierra},
+		{"u-blox", AT_UBlox},
+		{"iTegno", AT_ITegno},
+		{"iWOW", AT_ITegno},
 		{"\0", 0}
 	};
 	vendors_t *vendor;

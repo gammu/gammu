@@ -72,7 +72,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	s->Phone.Data.RequestID = ID_GetSignalQuality;
 	s->Phone.Data.SignalQuality = &Signal;
-	do_test("AT+CSQ\r\nAT+CSQ\r\n+CME ERROR: 515", AT_Reply_CMEError, ERR_BUSY);
+	/* Without manufacturer identification, proprietary 515 has no generic meaning. */
+	do_test("AT+CSQ\r\nAT+CSQ\r\n+CME ERROR: 515", AT_Reply_CMEError, ERR_UNKNOWN);
 
 	s->Phone.Data.RequestID = ID_GetUSSD;
 	do_test("AT+CUSD=1,\"002A003900390023\",15\r\n+CME ERROR: 132", AT_Reply_CMEError, ERR_NOTSUPPORTED);

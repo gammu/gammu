@@ -41,6 +41,7 @@ atgen_test(is-memory-writeable)
 atgen_test(set-requested-sms-memory)
 atgen_test(test-cpms-three-param)
 
+atgen_test(error-codes)
 atgen_test(deferred-event)
 atgen_test(incoming-sms-info)
 atgen_test(incoming-sms)
