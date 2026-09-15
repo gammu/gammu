@@ -498,10 +498,28 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	return error;
 }
 
+static GSM_Error GNAPGEN_GetSMSAddressFieldSize(const unsigned char *number,
+					       gboolean semioctet,
+					       size_t *field_size)
+{
+	unsigned char packed[GSM_MAX_NUMBER_LENGTH + 2] = {0};
+	int packed_length;
+
+	packed_length = GSM_PackSemiOctetNumber(number, packed, semioctet);
+	if (packed_length < 0 || packed_length > 255) return ERR_INVALIDDATA;
+	if (semioctet) {
+		*field_size = 2 + ((size_t)packed_length + 1) / 2;
+	} else {
+		*field_size = 1 + (size_t)packed_length;
+	}
+	return ERR_NONE;
+}
+
 static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *req, GSM_SMSMessageLayout *Layout, int *length)
 {
 	int			count = 0;
 	GSM_Error		error;
+	size_t			field_size;
 
 	memset(Layout,255,sizeof(GSM_SMSMessageLayout));
 
@@ -512,10 +530,12 @@ static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms
 	/*  smsc number is semi-octet */
 	Layout->SMSCNumber 	 = count;
 	smprintf(s, "SMSCNumber: %d\n", count );
-	if( UnicodeLength(sms->SMSC.Number) == 0 )
-		count += (UnicodeLength(sms->SMSC.Number) / 2) + 1;
-	else
-		count += ((UnicodeLength(sms->SMSC.Number) + 1 ) / 2) + 1;
+	error = GNAPGEN_GetSMSAddressFieldSize(sms->SMSC.Number, FALSE,
+						&field_size);
+	if (error != ERR_NONE || field_size > 255 - count) {
+		return ERR_INVALIDDATA;
+	}
+	count += field_size;
 
 	/*  firstbyte set in SMS Layout */
 	Layout->firstbyte 	 = count;
@@ -531,11 +551,11 @@ static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms
 	/*  Phone number */
 	Layout->Number 		 = count;
 	smprintf(s, "Number: %d\n", count);
-
-	if( UnicodeLength(sms->Number) == 0 )
-		count += (UnicodeLength(sms->Number) / 2) + 1;
-	else
-		count += ((UnicodeLength(sms->Number) + 1 ) / 2) + 1;
+	error = GNAPGEN_GetSMSAddressFieldSize(sms->Number, TRUE, &field_size);
+	if (error != ERR_NONE || field_size > 255 - count) {
+		return ERR_INVALIDDATA;
+	}
+	count += field_size;
 
 
 	Layout->TPPID	 = count;

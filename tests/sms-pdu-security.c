@@ -250,6 +250,25 @@ static void test_single_part_encoding(void)
 	EncodeUnicode(sms.Text, text, 160);
 	test_result(GSM_EncodeSMSFrame(NULL, &sms, output, layout, &length, TRUE) == ERR_INVALIDDATA);
 
+	/* Variable-length addresses must not overwrite following layout fields. */
+	GSM_SetDefaultSMSData(&sms);
+	sms.PDU = SMS_Submit;
+	sms.Coding = SMS_Coding_Default_No_Compression;
+	EncodeUnicode(sms.Number, "1", 1);
+	EncodeUnicode(sms.SMSC.Number, "9999999999999999999999999999999999999999", 40);
+	test_result(GSM_EncodeSMSFrame(NULL, &sms, output, PHONE_SMSSubmit,
+				       &length, TRUE) == ERR_INVALIDDATA);
+
+	/* The maximum standard numeric SMSC address still fits exactly. */
+	EncodeUnicode(sms.SMSC.Number, "99999999999999999999", 20);
+	error = GSM_EncodeSMSFrame(NULL, &sms, output, PHONE_SMSSubmit,
+				 &length, TRUE);
+	gammu_test_result_code(error, "maximum SMSC address encoding", ERR_NONE);
+
+	EncodeUnicode(sms.Number, "999999999999999999999", 21);
+	test_result(GSM_EncodeSMSFrame(NULL, &sms, output, PHONE_SMSSubmit,
+				       &length, TRUE) == ERR_INVALIDDATA);
+
 	GSM_SetDefaultSMSData(&sms);
 	sms.PDU = SMS_Submit;
 	sms.Coding = SMS_Coding_8bit;
@@ -340,6 +359,24 @@ static void test_multipart_encoding(void)
 	char compacted_text[73];
 	int frame_length;
 	size_t length = 40000;
+
+	GSM_ClearMultiPartSMSInfo(&info);
+	info.EntriesNum = 1;
+	info.Entries[0].ID = SMS_MMSIndicatorLong;
+	test_result(GSM_EncodeMultiPartSMS(NULL, &info, &sms) == ERR_INVALIDDATA);
+
+	GSM_ClearMultiPartSMSInfo(&info);
+	info.EntriesNum = 1;
+	info.Entries[0].ID = SMS_EMSFixedBitmap;
+	test_result(GSM_EncodeMultiPartSMS(NULL, &info, &sms) == ERR_INVALIDDATA);
+
+	/* A null buffer retains its historical meaning of empty linked text. */
+	GSM_ClearMultiPartSMSInfo(&info);
+	info.EntriesNum = 1;
+	info.Entries[0].ID = SMS_ConcatenatedTextLong;
+	test_result(GSM_EncodeMultiPartSMS(NULL, &info, &sms) == ERR_NONE);
+	test_result(sms.Number == 1);
+	test_result(sms.SMS[0].Length == 0);
 
 	memset(compacted_text, 'a', 68);
 	memcpy(compacted_text + 68, "~~~~", 4);
