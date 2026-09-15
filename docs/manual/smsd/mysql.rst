@@ -14,6 +14,17 @@ For tables description see :ref:`gammu-smsd-tables`.
 
 This backend is based on :ref:`gammu-smsd-sql`.
 
+Windows installers
+------------------
+
+The full Windows installer includes MariaDB Connector/C and supports
+``driver = native_mysql`` with both MySQL and MariaDB servers. You do not
+need to install a separate client connector. You still need a database
+server, a database user, and the SMSD tables described below.
+
+The minimal Windows installer does not include SQL backends. Use the full
+installer when you need native MySQL support.
+
 Configuration
 -------------
 

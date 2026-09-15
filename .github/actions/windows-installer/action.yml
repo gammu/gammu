@@ -24,20 +24,31 @@ runs:
     with:
       arch: x64
 
+  - name: Provision MariaDB Connector/C
+    if: inputs.minimal-build != 'true'
+    shell: pwsh
+    run: '& "${{ github.action_path }}/mariadb.ps1"'
+
   - name: cmake
     shell: pwsh
     run: |
       $cmakeArgs = "-S . -B _build -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}"
       if ('${{ inputs.enable-testing }}' -eq 'true') {
-        $cmakeArgs += " -DENABLE_COVERAGE=ON -DONLINE_TESTING=ON -DPSQL_TESTING=ON"
+        $cmakeArgs += " -DENABLE_COVERAGE=ON -DONLINE_TESTING=ON -DPSQL_TESTING=ON -DMYSQL_TESTING=ON"
+        $cmakeArgs += " -DMYSQL_BIN=`"$env:MYSQL_BIN`""
       }
       if ('${{ inputs.minimal-build }}' -eq 'true') {
-        $cmakeArgs += " -DWITH_MySQL=OFF -DWITH_Postgres=OFF -DWITH_ODBC=OFF -DWITH_LibDBI=OFF"
+        $cmakeArgs += " -DREQUIRE_MYSQL=OFF -DWITH_MySQL=OFF -DWITH_Postgres=OFF -DWITH_ODBC=OFF -DWITH_LibDBI=OFF"
         $cmakeArgs += " -DWITH_CURL=OFF -DWITH_Glib=OFF -DWITH_GObject=OFF"
         $cmakeArgs += " -DWITH_Libintl=OFF -DWITH_Iconv=OFF -DWITH_USB=OFF"
         $cmakeArgs += " -DCPACK_SYSTEM_NAME=Windows-Minimal"
       }
+      else {
+        $cmakeArgs += " -DREQUIRE_MYSQL=ON -DMYSQL_ROOT=`"$env:MYSQL_ROOT`""
+        $cmakeArgs += " -DMYSQL_LICENSE_DIR=`"$env:MYSQL_LICENSE_DIR`""
+      }
       Invoke-Expression "cmake $cmakeArgs"
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
   - name: build
     shell: pwsh

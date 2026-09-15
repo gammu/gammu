@@ -201,6 +201,10 @@ jobs:
       run: ctest --test-dir _build-oracle --output-on-failure --no-tests=error -R '^smsd-odbc-oracle$'
   windows:
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        database: [mysql, mariadb]
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
@@ -218,16 +222,54 @@ jobs:
         & $env:PGBIN\createdb --owner=smsd smsd
         $env:PGPASSWORD = 'smsd'
         & $env:PGBIN\psql --username=smsd --host=localhost --list smsd
+    - name: Provision SQL test server
+      shell: pwsh
+      run: ./.github/actions/windows-installer/test-database.ps1 -Server '${{ matrix.database }}'
     - name: Configure and build
       uses: ./.github/actions/windows-installer
       with:
         build-type: Release
         enable-testing: 'true'
+    - name: Require MySQL tests
+      shell: pwsh
+      run: |
+        $tests = ctest --test-dir _build -C Release --show-only=json-v1 | ConvertFrom-Json
+        foreach ($name in @('smsd-mysql', 'smsd-inject-mysql', 'smsd-inject-ussd-mysql', 'smsd-inject-long-mysql', 'mysql-reconnect')) {
+          if ($name -notin $tests.tests.name) { throw "Missing required test: $name" }
+        }
     - name: test
       run: |
+        & $env:MYSQL_BIN --no-defaults --host=127.0.0.1 --user=root --execute='SELECT 1'
+        if ($LASTEXITCODE -ne 0) { throw 'SQL test server stopped before tests' }
         cd _build
         ctest --output-on-failure --no-compress-output --dashboard ExperimentalTest --build-config Release
+    - name: Test installed MySQL support
+      shell: pwsh
+      run: ./.github/actions/windows-installer/test-installed.ps1
+    - name: SQL server diagnostics
+      if: failure()
+      shell: pwsh
+      run: Get-Content "$env:RUNNER_TEMP/gammu-database/server-error.log" -ErrorAction SilentlyContinue
+    - name: Remove SQL test service
+      if: always()
+      shell: pwsh
+      run: |
+        if (Get-Service GammuSQLTest -ErrorAction SilentlyContinue) {
+          Stop-Service GammuSQLTest
+          sc.exe delete GammuSQLTest
+          if ($LASTEXITCODE -ne 0) { throw 'Database service removal failed' }
+        }
     - uses: codecov/codecov-action@0b35c9ecc4f0529d0eb674914510c22f85b196b4 # v7
+  windows-minimal:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+    - uses: ./.github/actions/windows-installer
+      with:
+        minimal-build: 'true'
+    - name: Test installed minimal build
+      shell: pwsh
+      run: ./.github/actions/windows-installer/test-installed.ps1 -Minimal
   macos:
     runs-on: macos-latest
     env:

@@ -72,7 +72,8 @@ ENDIF(UNIX)
 
 if (WIN32)
     find_path(MYSQL_INCLUDE_DIR mysql.h
-        /usr/local/include
+        HINTS ${MYSQL_ROOT}/include $ENV{MYSQL_DIR}/include
+        PATHS /usr/local/include
         /usr/local/include/mysql
         /usr/local/mysql/include
         /usr/local/mysql/include/mysql
@@ -99,24 +100,20 @@ endif()
 set(TMP_MYSQL_LIBRARIES "")
 
 if (WIN32)
-    foreach(LIB ${MYSQL_ADD_LIBRARIES})
-        find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
-            PATHS
-            ${MYSQL_ADD_LIBRARY_PATH}
-            /usr/lib/mysql
-            /usr/local/lib
-            /usr/local/lib/mysql
-            /usr/local/mysql/lib
-            $ENV{MYSQL_DIR}/lib/opt
-            $ENV{ProgramFiles}/MySQL/*/lib
-            $ENV{SystemDrive}/MySQL/*/lib
+    # Prefer the dynamic import libraries. mysqlclient is Oracle's legacy
+    # static library; mariadbclient is deliberately not a Windows fallback.
+    find_library(MYSQL_LIBRARIES_mysqlclient NAMES libmariadb libmysql mysqlclient
+        HINTS ${MYSQL_ROOT} $ENV{MYSQL_DIR}
+        PATHS ${MYSQL_ADD_LIBRARY_PATH}
+            "$ENV{ProgramFiles}/MySQL/*/lib"
+            "$ENV{SystemDrive}/MySQL/*/lib"
             "C:/Program Files/MySQL/*/lib"
-            $ENV{ProgramFiles}/MySQL/*/lib/opt
-            $ENV{SystemDrive}/MySQL/*/lib/opt
+            "$ENV{ProgramFiles}/MySQL/*/lib/opt"
+            "$ENV{SystemDrive}/MySQL/*/lib/opt"
             "C:/Program Files/MySQL/*/lib/opt"
-        )
-        list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
-    endforeach(LIB ${MYSQL_ADD_LIBRARIES})
+        PATH_SUFFIXES lib lib/opt
+    )
+    list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_mysqlclient}")
 else()
     find_library("MYSQL_LIBRARIES_mysqlclient" NAMES mysqlclient mariadbclient
         PATHS
@@ -149,3 +146,19 @@ else(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
 endif(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
 
 mark_as_advanced(MYSQL_INCLUDE_DIR MYSQL_LIBRARIES)
+
+if (WIN32 AND MYSQL_FOUND)
+    get_filename_component(_mysql_libdir "${MYSQL_LIBRARIES_mysqlclient}" DIRECTORY)
+    get_filename_component(_mysql_libname "${MYSQL_LIBRARIES_mysqlclient}" NAME_WE)
+    if (_mysql_libname MATCHES "mariadb")
+        set(WIN_LIB_MYSQL libmariadb.dll)
+        # Windows Connector/C loads plugins by DLL name. Install them beside
+        # the executables, where the Windows loader can find them without PATH.
+        file(GLOB MYSQL_PLUGIN_DLLS
+            "${_mysql_libdir}/mariadb/plugin/*.dll"
+            "${_mysql_libdir}/plugin/*.dll"
+        )
+    else()
+        set(WIN_LIB_MYSQL libmysql.dll)
+    endif()
+endif()
