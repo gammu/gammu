@@ -567,6 +567,76 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage 
         return ERR_NONE;
 }
 
+static gboolean GSM_IsValidMultiPartBitmap(const GSM_MultiPartSMSEntry *Entry)
+{
+	return Entry->Bitmap != NULL && Entry->Bitmap->Number > 0 &&
+	       Entry->Bitmap->Number <= GSM_MAX_MULTI_BITMAP;
+}
+
+static gboolean GSM_IsValidMultiPartEntry(const GSM_MultiPartSMSEntry *Entry)
+{
+	switch (Entry->ID) {
+	case SMS_Text:
+	case SMS_ConcatenatedAutoTextLong:
+	case SMS_ConcatenatedAutoTextLong16bit:
+	case SMS_DisableVoice:
+	case SMS_DisableFax:
+	case SMS_DisableEmail:
+	case SMS_EnableVoice:
+	case SMS_EnableFax:
+	case SMS_EnableEmail:
+	case SMS_VoidSMS:
+	case SMS_AlcatelSMSTemplateName:
+		return Entry->Buffer != NULL;
+	case SMS_ConcatenatedTextLong:
+	case SMS_ConcatenatedTextLong16bit:
+		/* A null buffer represents an empty concatenated message. */
+		return TRUE;
+	case SMS_NokiaRingtone:
+	case SMS_NokiaRingtoneLong:
+	case SMS_EMSSound10:
+	case SMS_EMSSound12:
+	case SMS_EMSSonyEricssonSound:
+	case SMS_EMSSound10Long:
+	case SMS_EMSSound12Long:
+	case SMS_EMSSonyEricssonSoundLong:
+		return Entry->Ringtone != NULL;
+	case SMS_NokiaOperatorLogo:
+	case SMS_NokiaOperatorLogoLong:
+	case SMS_NokiaCallerLogo:
+	case SMS_NokiaPictureImageLong:
+	case SMS_NokiaScreenSaverLong:
+	case SMS_EMSAnimation:
+	case SMS_EMSFixedBitmap:
+	case SMS_EMSVariableBitmap:
+	case SMS_EMSVariableBitmapLong:
+	case SMS_AlcatelMonoBitmapLong:
+	case SMS_AlcatelMonoAnimationLong:
+		return GSM_IsValidMultiPartBitmap(Entry);
+	case SMS_NokiaProfileLong:
+		return Entry->Bitmap == NULL || GSM_IsValidMultiPartBitmap(Entry);
+	case SMS_MMSIndicatorLong:
+	case SMS_WAPIndicatorLong:
+		return Entry->MMSIndicator != NULL;
+	case SMS_NokiaWAPBookmarkLong:
+		return Entry->Bookmark != NULL;
+	case SMS_NokiaWAPSettingsLong:
+	case SMS_NokiaMMSSettingsLong:
+		return Entry->Settings != NULL;
+	case SMS_NokiaVCARD10Long:
+	case SMS_NokiaVCARD21Long:
+	case SMS_VCARD10Long:
+	case SMS_VCARD21Long:
+		return Entry->Phonebook != NULL;
+	case SMS_NokiaVCALENDAR10Long:
+		return Entry->Calendar != NULL;
+	case SMS_NokiaVTODOLong:
+		return Entry->ToDo != NULL;
+	default:
+		return TRUE;
+	}
+}
+
 /* Alcatel docs from www.alcatel.com/wap/ahead and other */
 GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 				 GSM_MultiPartSMSInfo		*Info,
@@ -587,6 +657,14 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	size_t		source_length, encoded_length;
 
 	if (Info->EntriesNum == 0) return ERR_EMPTY;
+	if (Info->EntriesNum < 0 || Info->EntriesNum > GSM_MAX_MULTI_SMS) {
+		return ERR_INVALIDDATA;
+	}
+	for (i = 0; i < Info->EntriesNum; i++) {
+		if (!GSM_IsValidMultiPartEntry(&Info->Entries[i])) {
+			return ERR_INVALIDDATA;
+		}
+	}
 
 	Buffer = malloc(buffer_size);
 	if (Buffer == NULL) {
@@ -696,6 +774,14 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		if (EMS) break;
 	}
 	if (EMS) {
+		for (i = 0; i < Info->EntriesNum; i++) {
+			if ((Info->Entries[i].ID == SMS_ConcatenatedTextLong ||
+			     Info->Entries[i].ID == SMS_ConcatenatedTextLong16bit) &&
+			    Info->Entries[i].Buffer == NULL) {
+				error = ERR_INVALIDDATA;
+				goto out;
+			}
+		}
 		error=GSM_EncodeEMSMultiPartSMS(di, Info,SMS,UDH_NoUDH);
 		if (error != ERR_NONE) {
 			goto out;

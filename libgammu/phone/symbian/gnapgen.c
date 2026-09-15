@@ -498,10 +498,30 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	return error;
 }
 
-static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *req, GSM_SMSMessageLayout *Layout, int *length)
+static GSM_Error GNAPGEN_GetSMSAddressFieldSize(const unsigned char *number,
+					       gboolean semioctet,
+					       size_t *field_size)
+{
+	unsigned char packed[GSM_MAX_NUMBER_LENGTH + 2] = {0};
+	int packed_length;
+
+	packed_length = GSM_PackSemiOctetNumber(number, packed, semioctet);
+	if (packed_length < 0 || packed_length > 255) return ERR_INVALIDDATA;
+	if (semioctet) {
+		*field_size = 2 + ((size_t)packed_length + 1) / 2;
+	} else {
+		*field_size = 1 + (size_t)packed_length;
+	}
+	return ERR_NONE;
+}
+
+static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms,
+				       unsigned char *req, size_t req_size,
+				       GSM_SMSMessageLayout *Layout, int *length)
 {
 	int			count = 0;
 	GSM_Error		error;
+	size_t			field_size;
 
 	memset(Layout,255,sizeof(GSM_SMSMessageLayout));
 
@@ -512,10 +532,13 @@ static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms
 	/*  smsc number is semi-octet */
 	Layout->SMSCNumber 	 = count;
 	smprintf(s, "SMSCNumber: %d\n", count );
-	if( UnicodeLength(sms->SMSC.Number) == 0 )
-		count += (UnicodeLength(sms->SMSC.Number) / 2) + 1;
-	else
-		count += ((UnicodeLength(sms->SMSC.Number) + 1 ) / 2) + 1;
+	error = GNAPGEN_GetSMSAddressFieldSize(sms->SMSC.Number, FALSE,
+						&field_size);
+	if (error != ERR_NONE || count > 255 ||
+	    field_size > (size_t)(255 - count)) {
+		return ERR_INVALIDDATA;
+	}
+	count += field_size;
 
 	/*  firstbyte set in SMS Layout */
 	Layout->firstbyte 	 = count;
@@ -531,11 +554,12 @@ static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms
 	/*  Phone number */
 	Layout->Number 		 = count;
 	smprintf(s, "Number: %d\n", count);
-
-	if( UnicodeLength(sms->Number) == 0 )
-		count += (UnicodeLength(sms->Number) / 2) + 1;
-	else
-		count += ((UnicodeLength(sms->Number) + 1 ) / 2) + 1;
+	error = GNAPGEN_GetSMSAddressFieldSize(sms->Number, TRUE, &field_size);
+	if (error != ERR_NONE || count > 255 ||
+	    field_size > (size_t)(255 - count)) {
+		return ERR_INVALIDDATA;
+	}
+	count += field_size;
 
 
 	Layout->TPPID	 = count;
@@ -563,6 +587,10 @@ static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms
 
 	Layout->Text 		 = count;
 	smprintf(s, "Text: %d\n", count);
+	if (count > 255 || (size_t)count > req_size ||
+	    (size_t)GSM_MAX_8BIT_SMS_LENGTH > req_size - (size_t)count) {
+		return ERR_INVALIDDATA;
+	}
 
 	error = PHONE_EncodeSMSFrame(s,sms,req,*Layout,length,FALSE);
 	if (error != ERR_NONE) return error;
@@ -585,7 +613,8 @@ static GSM_Error GNAPGEN_SendSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms
 
 	if (sms->PDU == SMS_Deliver) sms->PDU = SMS_Submit;
 	memset(req+2,0x00,sizeof(req) - 2);
-	error=GNAPGEN_EncodeSMSFrame(s, sms, req + 2, &Layout, &length);
+	error=GNAPGEN_EncodeSMSFrame(s, sms, req + 2, sizeof(req) - 2,
+				     &Layout, &length);
 	if (error != ERR_NONE) return error;
 	DumpMessage(&s->di, req, length+1);
 	/* return ERR_NONE; */
@@ -620,7 +649,8 @@ static GSM_Error GNAPGEN_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *
 
 	memset(req+8,0x00,300-8);
 
-	error = GNAPGEN_EncodeSMSFrame( s, sms, req + 10, &Layout, &length );
+	error = GNAPGEN_EncodeSMSFrame(s, sms, req + 10, sizeof(req) - 10,
+				      &Layout, &length);
 	if (error != ERR_NONE) return error;
 	req[9] = length;
 
