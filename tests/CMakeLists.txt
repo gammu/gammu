@@ -152,6 +152,13 @@ add_coverage(debug)
 target_link_libraries(debug libGammu ${LIBINTL_LIBRARIES})
 add_test(debug "${GAMMU_TEST_PATH}/debug${CMAKE_EXECUTABLE_SUFFIX}")
 
+if (WIN32)
+    add_executable(os-error os-error.c)
+    add_coverage(os-error)
+    target_link_libraries(os-error libGammu ${LIBINTL_LIBRARIES})
+    add_test(os-error "${GAMMU_TEST_PATH}/os-error${CMAKE_EXECUTABLE_SUFFIX}")
+endif (WIN32)
+
 # Check error code  descriptions
 add_executable(dump-error-codes dump-error-codes.c)
 add_coverage(dump-error-codes)

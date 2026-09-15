@@ -1802,42 +1802,64 @@ void GSM_DumpMessageBinaryRecv(GSM_StateMachine *s, const unsigned char *message
 void GSM_OSErrorInfo(GSM_StateMachine *s, const char *description)
 {
 #ifdef WIN32
-	int 		i=0;
-	unsigned char 	*lpMsgBuf = NULL;
+	DWORD error = GetLastError();
+	DWORD length;
+	LPWSTR message = NULL;
+	char *utf8 = NULL;
+	int size;
+	DWORD i;
 #endif
 	GSM_Debug_Info *curdi;
 
 	curdi = GSM_GetDI(s);
 
 #ifdef WIN32
-	/* We don't use errno in win32 - GetLastError gives better info */
-	if (GetLastError() != 0) {
+	/* Capture the error before formatting or logging can overwrite it. */
+	if (error != ERROR_SUCCESS) {
 		if (curdi->dl == DL_TEXTERROR ||
 				curdi->dl == DL_TEXT ||
 				curdi->dl == DL_TEXTALL ||
 				curdi->dl == DL_TEXTERRORDATE ||
 				curdi->dl == DL_TEXTDATE ||
 				curdi->dl == DL_TEXTALLDATE) {
-			FormatMessage(
+			length = FormatMessageW(
 				FORMAT_MESSAGE_ALLOCATE_BUFFER |
 				FORMAT_MESSAGE_FROM_SYSTEM |
 				FORMAT_MESSAGE_IGNORE_INSERTS,
-				NULL,
-				GetLastError(),
-				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
-				(LPTSTR) &lpMsgBuf,
-				0,
-				NULL
-			);
-			for (i=0;i<(int)strlen(lpMsgBuf);i++) {
-				if (lpMsgBuf[i] == 13 || lpMsgBuf[i] == 10) {
-					lpMsgBuf[i] = ' ';
+				NULL, error, 0, (LPWSTR)&message, 0, NULL);
+			if (length != 0) {
+				/* Keep each diagnostic on one line without trailing whitespace. */
+				while (length > 0 && (message[length - 1] == L'\r' ||
+						message[length - 1] == L'\n' ||
+						message[length - 1] == L' ' ||
+						message[length - 1] == L'\t')) {
+					message[--length] = L'\0';
+				}
+				for (i = 0; i < length; i++) {
+					if (message[i] == L'\r' || message[i] == L'\n') {
+						message[i] = L' ';
+					}
+				}
+				/* Debug logs must not depend on the Windows ANSI code page. */
+				size = WideCharToMultiByte(CP_UTF8, 0, message, -1,
+					NULL, 0, NULL, NULL);
+				if (size > 0) {
+					utf8 = malloc(size);
+					if (utf8 != NULL && WideCharToMultiByte(CP_UTF8, 0,
+							message, -1, utf8, size, NULL, NULL) == 0) {
+						free(utf8);
+						utf8 = NULL;
+					}
 				}
 			}
-			smprintf(s,"[System error     - %s, %i, \"%s\"]\n", description, (int)GetLastError(), (LPCTSTR)lpMsgBuf);
-			LocalFree(lpMsgBuf);
+			smprintf(s, "[System error     - %s, %lu, \"%s\"]\n",
+				description, (unsigned long)error,
+				utf8 != NULL ? utf8 : "System error message unavailable");
+			free(utf8);
+			if (message != NULL) LocalFree(message);
 		}
 	}
+	SetLastError(error);
 #else
 
 	if (errno!=-1) {
