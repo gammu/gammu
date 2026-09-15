@@ -255,7 +255,25 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 
 	    	/* Initialise the port settings */
 		if (SetCommState(d->hPhone, &dcb)==0) {
+			err = GetLastError();
 			GSM_OSErrorInfo(s, "SetCommState in serial_open");
+			smprintf(s, "Serial port opened, but Windows rejected its configuration before modem initialization.\n");
+			smprintf(s, "Requested serial settings: BaudRate=%lu, ByteSize=%u, Parity=%u, StopBits=%u\n",
+				(unsigned long)dcb.BaudRate, (unsigned int)dcb.ByteSize,
+				(unsigned int)dcb.Parity, (unsigned int)dcb.StopBits);
+			smprintf(s, "Flow control: fBinary=%u, fParity=%u, fOutxCtsFlow=%u, fOutxDsrFlow=%u, fDtrControl=%u, fRtsControl=%u, fInX=%u, fOutX=%u, XonChar=0x%02x, XoffChar=0x%02x\n",
+				(unsigned int)dcb.fBinary, (unsigned int)dcb.fParity,
+				(unsigned int)dcb.fOutxCtsFlow, (unsigned int)dcb.fOutxDsrFlow,
+				(unsigned int)dcb.fDtrControl, (unsigned int)dcb.fRtsControl,
+				(unsigned int)dcb.fInX, (unsigned int)dcb.fOutX,
+				(unsigned int)(unsigned char)dcb.XonChar,
+				(unsigned int)(unsigned char)dcb.XoffChar);
+			if (err == ERROR_INVALID_PARAMETER) {
+				smprintf(s, "ERROR_INVALID_PARAMETER: the serial driver rejected one or more settings. Baud rate and flow control above are inherited from the driver.\n");
+				if (dcb.XonChar == dcb.XoffChar) {
+					smprintf(s, "Invalid serial settings: XonChar and XoffChar must differ.\n");
+				}
+			}
 			return ERR_DEVICEOPENERROR;
 		}
 	}
