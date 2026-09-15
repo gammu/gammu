@@ -82,7 +82,12 @@ typedef enum {
 	AT_Qualcomm,
 	AT_Telit,
 	AT_ZTE,
-	AT_Unknown
+	AT_Unknown,
+	AT_Quectel,
+	AT_SIMCom,
+	AT_Sierra,
+	AT_UBlox,
+	AT_ITegno
 } GSM_AT_Manufacturer;
 
 /**
@@ -259,10 +264,12 @@ typedef struct {
 	 * Error codes from responses
 	 */
 	int			ErrorCode;
+	/** Whether the last error response contained a recognized numeric or verbose code. */
+	gboolean		ErrorCodeValid;
 	/**
 	 * Error description
 	 */
-    	char			*ErrorText;
+	const char		*ErrorText;
 
 	/**
 	 * Last read PBK memory
