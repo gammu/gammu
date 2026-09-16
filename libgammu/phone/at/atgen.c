@@ -2563,13 +2563,14 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, gboolean set_timezone)
 {
-	char			tz[8] = "";
+	char			tz[16] = "";
 	char			req[128];
 	GSM_Error		error;
 	size_t len;
 
 	if (set_timezone) {
-		sprintf(tz, "%+03i", date_time->Timezone / 3600);
+		/* AT+CCLK expresses the timezone in quarters of an hour. */
+		sprintf(tz, "%+03i", date_time->Timezone / (15 * 60));
 	}
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FOUR_DIGIT_YEAR)) {
