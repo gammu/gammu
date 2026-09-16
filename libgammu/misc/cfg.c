@@ -54,6 +54,10 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 				read_buffer_used = fread(read_buffer,1,1000,f);
 				read_buffer_pos = 0;
 				if (read_buffer_used == 0) {
+					/* Parse the final line even without a line ending. */
+					if (bufferused != 0) {
+						break;
+					}
 					error = ERR_NONE;
 					goto done;
 				}
