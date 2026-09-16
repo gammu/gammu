@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
 
-Unreleased
+20260916 - 1.45.0
 
 [!] * Automatically split ordinary CLI text SMS into linked parts without
       requiring -len (GitHub issue #413). Use -maxsms 1 to require one part.
@@ -28,6 +28,25 @@ Unreleased
       its position relative to length options.
 [-] * Preserve Unicode surrogate pairs and special-message modes when
       limiting SMS text. Reject oversized stdin instead of sending a prefix.
+[+] * Bundle native MySQL support in the Windows installer.
+[-] * Validate SMS PDU encoding inputs.
+[-] * Respect AT modem SMS storage and notification capabilities, handle
+      Quectel and Alcatel notifications, and decode errors by manufacturer.
+[-] * Enable USSD on Huawei E176 and disable bulk SMS listing on Samsung
+      GT-S3600i.
+[-] * Encode AT clock timezones in quarter-hours and report missing command
+      echo during modem initialization.
+[-] * Honor MaxRetries in the SMSD FILES backend and preserve configured
+      database ports when reconnecting.
+[-] * Preserve modem bytes and clean up resources in the proxy transport.
+[-] * Improve Windows serial startup error diagnostics.
+[-] * Fix Nokia filesystem SMS inbox detection and phonebook postal address
+      handling. Skip undocumented phonebook metadata and unsupported date
+      and time commands on RH-99 and RH-105.
+[-] * Reject unsupported note reads over m-OBEX.
+[-] * Fix INI parsing of final lines without a newline.
+[-] * Use the correct language code for Norwegian Bokmal translations.
+[*] * Clarify SMSD RunOnReceive hook documentation for Windows.
 
 20260819 - 1.44.1
 

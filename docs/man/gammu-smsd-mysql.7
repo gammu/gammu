@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "GAMMU-SMSD-MYSQL" "7" "Aug 19, 2026" "1.44.1" "Gammu"
+.TH "GAMMU-SMSD-MYSQL" "7" "Sep 16, 2026" "1.45.0" "Gammu"
 .SH NAME
 gammu-smsd-mysql \- gammu-smsd(1) backend using MySQL database server as a message storage
 .SH DESCRIPTION
@@ -40,6 +40,15 @@ options).
 For tables description see SMSD Database Structure \%<#\:gammu-smsd-tables>\&.
 .sp
 This backend is based on SQL Service \%<#\:gammu-smsd-sql>\&.
+.SH WINDOWS INSTALLERS
+.sp
+The full Windows installer includes MariaDB Connector/C and supports
+\fBdriver = native_mysql\fP with both MySQL and MariaDB servers. You do not
+need to install a separate client connector. You still need a database
+server, a database user, and the SMSD tables described below.
+.sp
+The minimal Windows installer does not include SQL backends. Use the full
+installer when you need native MySQL support.
 .SH CONFIGURATION
 .sp
 Before running gammu\-smsd \%<#\:gammu-smsd> you need to create necessary tables in the
