@@ -868,6 +868,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		    || Block[0] == N7110_PBK_UNKNOWN3
 		    || Block[0] == N3600_PBK_UNKNOWN1
 		    || Block[0] == N6303_PBK_UNKNOWN1
+		    || Block[0] == NC301_PBK_UNKNOWN1
 		    || Block[0] == N6303_PBK_UNKNOWN2) {
 			smprintf(s,"Unknown entry type 0x%02x data length %d\n", Block[0], bs-6);
 			continue;

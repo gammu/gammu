@@ -61,8 +61,17 @@ typedef enum {
 
 	/* Unknown/Other series */
 	N2630_PBK_FAVMESSAGING	 = 0x65,
-	N3600_PBK_UNKNOWN1	 = 0x7b, /* Unknown so far			*/
-	N6303_PBK_UNKNOWN1       = 0x8b,
+	N3600_PBK_UNKNOWN1	 = 0x7b, /* Nokia 3600s, legacy bug #1385 */
+	N6303_PBK_UNKNOWN1       = 0x8b, /* Nokia 6303, legacy bug #1305 */
+	/* Nokia C3-01, gammu/gammu#171: offsets 8 and 12 contain two
+	 * big-endian 32-bit values consistent with seconds since 1980-01-01.
+	 * Possibly modification and creation times, respectively; their meaning
+	 * and timezone are unconfirmed, so do not expose them as contact dates.
+	 */
+	NC301_PBK_UNKNOWN1       = 0x8d,
+	/* Nokia 112, gammu/gammu#9: reporter suspects information numbers
+	 * associated with the second SIM. Skipping does not decode these numbers.
+	 */
 	N6303_PBK_UNKNOWN2       = 0x8e,
 } GSM_71_65_Phonebook_Entries_Types;
 
