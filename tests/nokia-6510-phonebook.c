@@ -1,0 +1,116 @@
+/* Test skipping reported undocumented Nokia phonebook blocks. */
+
+#include <gammu.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "common.h"
+#include "../libgammu/gsmstate.h"
+#include "../libgammu/gsmphones.h"
+#include "../libgammu/phone/nokia/dct4s40/6510/n6510.h"
+
+static GSM_Error decode(GSM_StateMachine *s, GSM_MemoryEntry *entry,
+			unsigned char *buffer, size_t length)
+{
+	GSM_Protocol_Message msg = {0};
+
+	memset(entry, 0, sizeof(*entry));
+	entry->MemoryType = MEM_ME;
+	entry->Location = 1;
+	s->Phone.Data.Memory = entry;
+	msg.Type = 0x03;
+	msg.Buffer = buffer;
+	msg.Length = length;
+	s->Phone.Data.RequestID = ID_GetMemory;
+	s->Phone.Data.RequestMsg = &msg;
+	return GSM_DispatchMessage(s);
+}
+
+int main(int argc UNUSED, char **argv UNUSED)
+{
+	/* gammu/gammu#171: real C3-01 response with name and number replaced.
+	 * Block layout and the possible timestamps are unchanged.
+	 */
+	unsigned char response[] = {
+		0x01, 0x83, 0x00, 0x08, 0x00, 0x01, 0x01, 0x00,
+		0x00, 0x10, 0x00, 0x05, 0x00, 0x01, 0x00, 0x00,
+		0x05, 0x5C, 0x00, 0x00, 0x00, 0x08, 0x0B, 0x00,
+		0x00, 0x28, 0x01, 0x03, 0x00, 0x00, 0x00, 0x1C,
+		0x00, 0x2B, 0x00, 0x31, 0x00, 0x32, 0x00, 0x33,
+		0x00, 0x34, 0x00, 0x35, 0x00, 0x36, 0x00, 0x37,
+		0x00, 0x38, 0x00, 0x39, 0x00, 0x30, 0x00, 0x31,
+		0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x33, 0x00,
+		0x00, 0x10, 0x04, 0x00, 0x00, 0x00, 0x10, 0x00,
+		0x00, 0x82, 0x00, 0x00, 0x00, 0x01, 0x07, 0x00,
+		0x00, 0x18, 0x3F, 0x10, 0x00, 0x45, 0x00, 0x78,
+		0x00, 0x61, 0x00, 0x6D, 0x00, 0x70, 0x00, 0x6C,
+		0x00, 0x65, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x00,
+		0x00, 0x08, 0x7E, 0x00, 0xFF, 0xFF, 0x8D, 0x00,
+		0x00, 0x10, 0x05, 0x00, 0x00, 0x00, 0x43, 0xBA,
+		0x66, 0xB8, 0x43, 0x9E, 0xC2, 0x03, 0x46, 0x00,
+		0x00, 0x18, 0x03, 0x10, 0x00, 0x45, 0x00, 0x78,
+		0x00, 0x61, 0x00, 0x6D, 0x00, 0x70, 0x00, 0x6C,
+		0x00, 0x65, 0x00, 0x00, 0x00, 0x00, 0x43, 0x00,
+		0x00, 0x08, 0x02, 0x00, 0x00, 0x01, 0x7E, 0x00,
+		0x00, 0x08, 0x00, 0x00, 0x02, 0xC7,
+	};
+	/* Synthetic blocks between a name and caller group. The #9 response
+	 * is redacted, so this is not a replay of that packet.
+	 */
+	unsigned char synthetic[] = {
+		0x01, 0x83, 0x00, 0x08, 0x00, 0x01, 0x01, 0x00,
+		0x00, 0x10, 0x00, 0x05, 0x00, 0x01, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x03,
+		/* Name: A */
+		0x07, 0x00, 0x00, 0x0C, 0x01, 0x04,
+		0x00, 0x41, 0x00, 0x00, 0x00, 0x00,
+		/* Undocumented block; type substituted below. */
+		0x00, 0x00, 0x00, 0x08, 0x02, 0x00, 0x00, 0x00,
+		/* Caller group: 1 */
+		0x43, 0x00, 0x00, 0x08, 0x03, 0x00, 0x00, 0x01
+	};
+	const unsigned char skipped[] = {0x1F, 0x7E, 0x7B, 0x8B, 0x8D, 0x8E};
+	GSM_StateMachine *s;
+	GSM_MemoryEntry entry;
+	GSM_Error error;
+	size_t i;
+
+	s = GSM_AllocStateMachine();
+	test_result(s != NULL);
+	s->Phone.Functions = &N6510Phone;
+	s->Phone.Data.ModelInfo = GetModelData(NULL, NULL, "unknown", NULL);
+
+	error = decode(s, &entry, response, sizeof(response));
+	gammu_test_result(error, "C3-01 phonebook response");
+	/* Exact types/count also ensure we have not invented date fields. */
+	test_result(entry.EntriesNum == 4);
+	test_result(entry.Entries[0].EntryType == PBK_Text_FirstName);
+	test_result(strcmp(DecodeUnicodeString(entry.Entries[0].Text), "Example") == 0);
+	test_result(entry.Entries[1].EntryType == PBK_Number_Mobile);
+	test_result(strcmp(DecodeUnicodeString(entry.Entries[1].Text), "+123456789012") == 0);
+	test_result(entry.Entries[2].EntryType == PBK_PictureID);
+	test_result(entry.Entries[2].Number == 130);
+	test_result(entry.Entries[3].EntryType == PBK_Caller_Group);
+	test_result(entry.Entries[3].Number == 1);
+
+	for (i = 0; i < sizeof(skipped) / sizeof(skipped[0]); i++) {
+		synthetic[34] = skipped[i];
+		error = decode(s, &entry, synthetic, sizeof(synthetic));
+		gammu_test_result(error, "Reported undocumented phonebook block");
+		test_result(entry.EntriesNum == 2);
+		test_result(entry.Entries[0].EntryType == PBK_Text_Name);
+		test_result(strcmp(DecodeUnicodeString(entry.Entries[0].Text), "A") == 0);
+		test_result(entry.Entries[1].EntryType == PBK_Caller_Group);
+		test_result(entry.Entries[1].Number == 1);
+	}
+
+	/* #9's title says 0x83, but its actual error identifies 0x8e.
+	 * Do not silently accept an unreported type based on that title.
+	 */
+	synthetic[34] = 0x83;
+	error = decode(s, &entry, synthetic, sizeof(synthetic));
+	gammu_test_result_code(error, "Unlisted phonebook block", ERR_UNKNOWNRESPONSE);
+
+	GSM_FreeStateMachine(s);
+	return 0;
+}
