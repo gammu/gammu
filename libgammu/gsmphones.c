@@ -132,6 +132,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"USSD_GSM_CHARSET", F_USSD_GSM_CHARSET},
 	{"SMS_SR", F_SMS_SR},
 	{"SMS_NO_SR", F_SMS_NO_SR},
+	{"NODATETIME", F_NODATETIME},
 	{"", 0},
 };
 
@@ -270,9 +271,11 @@ GSM_PhoneModel allmodels[] = {
 #if defined(GSM_ENABLE_NOKIA6510) || defined(GSM_ENABLE_ATGEN)
 	{"1110i","RM-93" ,"Nokia 1110i",{F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,0}},/* guess */
 	{"1112", "RH-93" ,"Nokia 1112", {F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,0}},/* guess */
-	{"1200", "RH-99" ,"Nokia 1200", {F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,0}},/* guess */
-	{"1208", "RH-105","Nokia 1208", {F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,0}},/* guess */
-	{"1209", "RH-105","Nokia 1209", {F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,0}},/* guess */
+	/* Date/time requests are acknowledged without a reply, followed by
+	 * communication failures: gammu/gammu#90 and gammu/wammu#57. */
+	{"1200", "RH-99" ,"Nokia 1200", {F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,F_NODATETIME,0}},/* other features guessed */
+	{"1208", "RH-105","Nokia 1208", {F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,F_NODATETIME,0}},/* other features guessed */
+	{"1209", "RH-105","Nokia 1209", {F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,F_NODATETIME,0}},/* other features guessed */
 	{"2125i","RH-71" ,"Nokia 2125i",{F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,0}},/* guess */
 	{"1600", "RH-64" ,"Nokia 1600",{F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,0}},/* guess */
 	{"1650", "RM-305","Nokia 1650",{F_SERIES40_30,F_FILES2,F_TODO66,F_RADIO,F_NOTES,F_SMS_FILES,F_PBKNOPOSTAL,0}},/* guess */

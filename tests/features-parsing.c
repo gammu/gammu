@@ -31,6 +31,7 @@ int main(int argc, char **argv)
 	GSM_SetDebugLevel("textall", debug_info);
 
 	rc |= single_test("CAL33, CAL52,SQWE", ERR_NONE);
+	rc |= single_test("NODATETIME", ERR_NONE);
 	rc |= single_test("CAL33, FOO,SQWE", ERR_BADFEATURE);
 	rc |= single_test("CAL33, NO_ATOBEX ,SQWE", ERR_NONE);
 	rc |=

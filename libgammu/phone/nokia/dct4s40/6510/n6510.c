@@ -2998,6 +2998,8 @@ static GSM_Error N6510_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x0A, 0x00, 0x00};
 
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NODATETIME)) return ERR_NOTSUPPORTED;
+
 	s->Phone.Data.DateTime=date_time;
 	smprintf(s, "Getting date & time\n");
 	return GSM_WaitFor (s, req, 6, 0x19, s->Phone.Data.Priv.N6510.Timeout, ID_GetDateTime);
@@ -3018,6 +3020,8 @@ static GSM_Error N6510_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 				0x15, 0x1f,	/* Hours & Minutes */
 				0x2b,		/* Second ? */
 				0x00};
+
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NODATETIME)) return ERR_NOTSUPPORTED;
 
 	NOKIA_EncodeDateTime(s, req+10, date_time);
 	req[16] = date_time->Second;
@@ -3845,19 +3849,15 @@ static GSM_Error N6510_ShowStartInfo(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 
+	/* Use the UI backlight only. The torch can otherwise stay on for minutes
+	 * while requests time out before StartInfoCounter reaches zero. */
 	if (enable) {
 		error=N6510_SetLight(s,N6510_LIGHT_DISPLAY,TRUE);
-		if (error != ERR_NONE) return error;
-
-		error=N6510_SetLight(s,N6510_LIGHT_TORCH,TRUE);
 		if (error != ERR_NONE) return error;
 
 		return N6510_SetLight(s,N6510_LIGHT_KEYPAD,TRUE);
 	} else {
 		error=N6510_SetLight(s,N6510_LIGHT_DISPLAY,FALSE);
-		if (error != ERR_NONE) return error;
-
-		error=N6510_SetLight(s,N6510_LIGHT_TORCH,FALSE);
 		if (error != ERR_NONE) return error;
 
 		return N6510_SetLight(s,N6510_LIGHT_KEYPAD,FALSE);
