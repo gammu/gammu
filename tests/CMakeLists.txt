@@ -460,6 +460,12 @@ if (WITH_NOKIA6510)
     target_link_libraries(nokia-6510-netstatus libGammu ${LIBINTL_LIBRARIES})
     add_test(nokia-6510-netstatus
         "${GAMMU_TEST_PATH}/nokia-6510-netstatus${CMAKE_EXECUTABLE_SUFFIX}")
+
+    add_executable(nokia-phonebook-postal nokia-phonebook-postal.c)
+    add_coverage(nokia-phonebook-postal)
+    target_link_libraries(nokia-phonebook-postal libGammu ${LIBINTL_LIBRARIES})
+    add_test(nokia-phonebook-postal
+        "${GAMMU_TEST_PATH}/nokia-phonebook-postal${CMAKE_EXECUTABLE_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6110)

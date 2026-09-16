@@ -189,7 +189,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 		smprintf(s, "entry num %i %i\n",i,entry->EntriesNum);
 		if (entry->Entries[i].EntryType == PBK_Text_Note)   type = N7110_PBK_NOTE;
 		if (entry->Entries[i].EntryType == PBK_Text_Postal) {
-			if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKNOPOSTAL)) {
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKNOPOSTAL)) {
 				continue;
 			}
 			type = N7110_PBK_POSTAL;
