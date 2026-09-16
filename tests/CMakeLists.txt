@@ -1181,6 +1181,11 @@ endforeach(TESTCONFIG $CONFIGS)
 
 
 # INI file parsing
+add_executable(inifile-eof inifile-eof.c)
+add_coverage(inifile-eof)
+target_link_libraries(inifile-eof libGammu ${LIBINTL_LIBRARIES})
+add_test(inifile-eof "${GAMMU_TEST_PATH}/inifile-eof${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/inifile-eof.ini")
+
 add_executable(inifile inifile.c)
 add_coverage(inifile)
 target_link_libraries(inifile libGammu ${LIBINTL_LIBRARIES})
