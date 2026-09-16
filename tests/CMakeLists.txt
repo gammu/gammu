@@ -322,6 +322,12 @@ if (WITH_NOKIA6110)
 endif (WITH_NOKIA6110)
 
 if (WITH_NOKIA6510)
+    add_executable(nokia-6510-datetime nokia-6510-datetime.c)
+    add_coverage(nokia-6510-datetime)
+    target_link_libraries(nokia-6510-datetime libGammu ${LIBINTL_LIBRARIES})
+    add_test(nokia-6510-datetime
+        "${GAMMU_TEST_PATH}/nokia-6510-datetime${CMAKE_EXECUTABLE_SUFFIX}")
+
     add_executable(sms-nokia-02 sms-nokia-02.c)
     add_coverage(sms-nokia-02)
     target_link_libraries(sms-nokia-02 libGammu ${LIBINTL_LIBRARIES})
