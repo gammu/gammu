@@ -68,7 +68,7 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@0b35c9ecc4f0529d0eb674914510c22f85b196b4 # v7
+    - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7
   mssql-odbc:
     runs-on: ubuntu-24.04
     env:
@@ -259,7 +259,7 @@ jobs:
           sc.exe delete GammuSQLTest
           if ($LASTEXITCODE -ne 0) { throw 'Database service removal failed' }
         }
-    - uses: codecov/codecov-action@0b35c9ecc4f0529d0eb674914510c22f85b196b4 # v7
+    - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7
   windows-minimal:
     runs-on: windows-latest
     steps:
@@ -317,4 +317,4 @@ jobs:
       run: make -C _build test
     - name: coverage
       run: make -C _build gcov
-    - uses: codecov/codecov-action@0b35c9ecc4f0529d0eb674914510c22f85b196b4 # v7
+    - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7
