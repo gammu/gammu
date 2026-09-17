@@ -125,7 +125,7 @@ jobs:
   oracle-odbc:
     runs-on: ubuntu-24.04
     container:
-      image: container-registry.oracle.com/os/oraclelinux:9@sha256:5a5876c31b2c5ee4d77165ba0b51e767ecd59e04d54ccaa1288219049632dac3
+      image: container-registry.oracle.com/os/oraclelinux:9@sha256:06b1649ed7ddac2ac63ee5fb30bc39ec676917f29084a04c78e806a9bada7098
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
       ORACLE_PASSWORD: GammuOracle2026
