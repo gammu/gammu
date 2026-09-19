@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   linux:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         args: ['']
@@ -70,7 +70,7 @@ jobs:
       run: make -C _build gcov
     - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7
   mssql-odbc:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
       MSSQL_SA_PASSWORD: GammuODBC2026
@@ -123,7 +123,7 @@ jobs:
     - name: Test ODBC with Microsoft SQL Server
       run: ctest --test-dir _build-mssql --output-on-failure -R '^smsd-odbc-mssql$'
   oracle-odbc:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     container:
       image: container-registry.oracle.com/os/oraclelinux:9@sha256:8e98f95b32f254866f8e65b25b0732f9a38549dc9ef67108aa9cd14c30674c88
     env:
