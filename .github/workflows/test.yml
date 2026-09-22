@@ -93,8 +93,10 @@ jobs:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
     - name: Install Microsoft ODBC tools
       run: |
-        curl -sSL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb
-        sudo dpkg -i /tmp/packages-microsoft-prod.deb
+        source /etc/os-release
+        curl -fsSL -o /tmp/packages-microsoft-prod.deb "https://packages.microsoft.com/config/ubuntu/${VERSION_ID}/packages-microsoft-prod.deb"
+        # Restore repository configuration and signing keys removed or changed by the runner image.
+        sudo dpkg --force-confnew --force-confmiss -i /tmp/packages-microsoft-prod.deb
         sudo apt-get update
         sudo ACCEPT_EULA=Y apt-get install -y cmake cmake-data msodbcsql18 mssql-tools18 unixodbc-dev
     - name: Configure ODBC
