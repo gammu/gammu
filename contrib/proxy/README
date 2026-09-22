@@ -20,7 +20,9 @@ Example Gammu configuration:
     connection = proxyat
 
 Append a baud rate to the device command if the modem needs another speed, for
-example `/dev/ttyUSB0 19200`. Unsupported speeds are rejected by socat.
+example `/dev/ttyUSB0 19200`. Supported speeds are those listed as `bNNN` options
+in `socat -hh`. The helper probes a temporary pseudo-terminal to select compatible
+baud-rate options for the installed socat and C library.
 
 Configure SSH keys and known hosts for the account running Gammu or SMSD. Test
 SSH access as that account before starting the service. The -T option disables

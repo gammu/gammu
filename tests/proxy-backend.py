@@ -111,6 +111,25 @@ class BackendTest(unittest.TestCase):
                 process.send_signal(sig)
                 process.wait(timeout=3)
 
+    def test_unsupported_baud(self):
+        master, slave = pty.openpty()
+        try:
+            settings = termios.tcgetattr(slave)
+            result = subprocess.run(  # noqa: S603
+                ["/bin/sh", BACKEND, os.ttyname(slave), "12345"],
+                capture_output=True,
+                env=ENV,
+                timeout=3,
+                check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(result.stdout, b"")
+            self.assertTrue(result.stderr)
+            self.assertEqual(termios.tcgetattr(slave), settings)
+        finally:
+            os.close(master)
+            os.close(slave)
+
     def test_missing_socat(self):
         result = subprocess.run(  # noqa: S603
             ["/bin/sh", BACKEND, "/dev/null"],
