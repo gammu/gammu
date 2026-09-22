@@ -37,4 +37,21 @@ if socat -S0 -h >/dev/null 2>&1; then
 else
     set --
 fi
-exec socat "$@" STDIO "FILE:$device,raw,echo=0,b$baud,cs8,parenb=0,cstopb=0,cread=1,clocal=1,ixon=0,ixoff=0,crtscts=0"
+
+# Glibc 2.42 changed speed_t from encoded constants to numeric baud rates.
+# Socat's bNNN options write those constants directly into terminal flags.
+# Probe a disposable PTY so the modem and protocol input remain untouched.
+if socat "$@" -u OPEN:/dev/null PTY,ispeed=19200,ospeed=19200 >/dev/null 2>&1; then
+    # Numeric speeds accept arbitrary values; retain the supported bNNN set.
+    case "$(socat -hh)" in
+        *" b$baud"[[:space:]]*) ;;
+        *)
+            echo "Unsupported baud rate: $baud" >&2
+            exit 1
+            ;;
+    esac
+    speed_options="ispeed=$baud,ospeed=$baud"
+else
+    speed_options="b$baud"
+fi
+exec socat "$@" STDIO "FILE:$device,raw,echo=0,$speed_options,cs8,parenb=0,cstopb=0,cread=1,clocal=1,ixon=0,ixoff=0,crtscts=0"
