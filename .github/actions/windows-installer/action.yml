@@ -20,10 +20,6 @@ runs:
     shell: pwsh
     run: choco install nsis
 
-  - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756   # v1
-    with:
-      arch: x64
-
   - name: Provision MariaDB Connector/C
     if: inputs.minimal-build != 'true'
     shell: pwsh
@@ -32,7 +28,7 @@ runs:
   - name: cmake
     shell: pwsh
     run: |
-      $cmakeArgs = "-S . -B _build -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}"
+      $cmakeArgs = "-S . -B _build -A x64 -DCMAKE_BUILD_TYPE=${{ inputs.build-type }}"
       if ('${{ inputs.enable-testing }}' -eq 'true') {
         $cmakeArgs += " -DENABLE_COVERAGE=ON -DONLINE_TESTING=ON -DPSQL_TESTING=ON -DMYSQL_TESTING=ON"
         $cmakeArgs += " -DMYSQL_BIN=`"$env:MYSQL_BIN`""
