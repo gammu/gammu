@@ -19,6 +19,12 @@ the issue.
 ChangeLog
 =========
 
+20261019 - 1.45.1
+
+[-] * Bound ringtone names and BMP palette offsets to prevent buffer overflows
+      when parsing crafted files and Siemens modem responses.
+[-] * Probe socat for supported baud rates in the proxy backend.
+
 20260916 - 1.45.0
 
 [!] * Automatically split ordinary CLI text SMS into linked parts without
