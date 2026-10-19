@@ -28,7 +28,7 @@ void GSM_ReverseBitmap(GSM_Bitmap * Bitmap);
 size_t GSM_GetBitmapSize(GSM_Bitmap * bmp);
 
 
-GSM_Error BMP2Bitmap            (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
+GSM_Error BMP2Bitmap            (const unsigned char *buffer, size_t buffer_length, FILE *file,GSM_Bitmap *bitmap);
 GSM_Error Bitmap2BMP            (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
 
 void PHONE_GetBitmapWidthHeight	(GSM_Phone_Bitmap_Types Type, size_t *width, size_t *height);

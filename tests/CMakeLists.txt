@@ -19,6 +19,11 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}/../include")
 # ATGEN function tests
 add_subdirectory(atgen)
 
+add_executable(parser-security parser-security.c)
+add_coverage(parser-security)
+target_link_libraries(parser-security libGammu ${LIBINTL_LIBRARIES})
+add_test(parser-security "${GAMMU_TEST_PATH}/parser-security${CMAKE_EXECUTABLE_SUFFIX}")
+
 # Basic check for statemachine allocation
 add_executable(statemachine-alloc statemachine-alloc.c)
 add_coverage(statemachine-alloc)

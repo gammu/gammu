@@ -754,11 +754,11 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	return error;
 }
 
-GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
+GSM_Error BMP2Bitmap(const unsigned char *buffer, size_t buffer_length, FILE *file,GSM_Bitmap *bitmap)
 {
 	gboolean		first_white,isfile=FALSE;
 	unsigned char 	buff[60];
-	size_t		w,h,x,i,buffpos=0;
+	size_t		w,h,x,i,buffpos=0,palette_size;
 	ssize_t		y, pos;
 	size_t		readbytes;
 #ifdef DEBUG
@@ -773,8 +773,12 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 		readbytes = fread(buff, 1, 54, file);
 		if (readbytes != 54) return ERR_FILENOTSUPPORTED;
 	} else {
+		if (buffer == NULL || buffer_length < 54) return ERR_FILENOTSUPPORTED;
 		memcpy(buff,buffer,54);
 	}
+	if (buff[10] < 54 + 8 || buff[10] > 54 + sizeof(buff)) return ERR_FILENOTSUPPORTED;
+	palette_size = buff[10] - 54;
+	if (!isfile && buffer_length < buff[10]) return ERR_FILENOTSUPPORTED;
 
 	/* height and width of image in the file */
 	h=buff[22]+256*buff[21];
@@ -823,13 +827,11 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 
 	/* Read palette */
 	if (isfile) {
-		pos=buff[10]-54;
-		readbytes = fread(buff, 1, pos, file);
-		if (readbytes != (size_t)pos) return ERR_FILENOTSUPPORTED;
+		readbytes = fread(buff, 1, palette_size, file);
+		if (readbytes != palette_size) return ERR_FILENOTSUPPORTED;
 	} else {
-		pos=buff[10]-54;
 		buffpos=buff[10];
-		memcpy (buff,buffer+54,pos);
+		memcpy (buff,buffer+54,palette_size);
 	}
 
 	first_white = ((buff[6] * buff[5] * buff[4]) > (buff[2] * buff[1] * buff[0]));
@@ -855,6 +857,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 					readbytes = fread(buff, 1, 1, file);
 					if (readbytes != 1) return ERR_FILENOTSUPPORTED;
 				} else {
+					if (buffpos >= buffer_length) return ERR_FILENOTSUPPORTED;
 					memcpy (buff,buffer+buffpos,1);
 					buffpos++;
 				}
@@ -886,6 +889,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 					readbytes = fread(buff, 1, 1, file);
 					if (readbytes != 1) return ERR_FILENOTSUPPORTED;
 				} else {
+					if (buffpos >= buffer_length) return ERR_FILENOTSUPPORTED;
 					memcpy (buff,buffer+buffpos,1);
 					buffpos++;
 				}
@@ -906,7 +910,7 @@ static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 {
 	GSM_Error error;
 
-	error=BMP2Bitmap(NULL,file,&bitmap->Bitmap[0]);
+	error=BMP2Bitmap(NULL,0,file,&bitmap->Bitmap[0]);
 	bitmap->Number = 1;
 	return error;
 }
