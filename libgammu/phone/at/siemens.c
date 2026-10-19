@@ -19,11 +19,13 @@
 
 
 static GSM_Error GetSiemensFrame(GSM_Protocol_Message *msg, GSM_StateMachine *s, const char *templ,
-			    unsigned char *buffer, size_t *len)
+			    unsigned char *buffer, size_t capacity, size_t *len)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	int			i=2, pos=0, length=0;
+	int			i=2;
+	size_t			pos=0, length;
 	unsigned char 		buf[512];
+	const char		*line;
 
 	if (strstr(GetLineString(msg->Buffer,&Priv->Lines,2), "OK")) {
 		return ERR_EMPTY;
@@ -36,14 +38,23 @@ static GSM_Error GetSiemensFrame(GSM_Protocol_Message *msg, GSM_StateMachine *s,
 		if (Priv->Lines.numbers[i*2+1]==0) break;
 		if ((!strstr(GetLineString(msg->Buffer, &Priv->Lines, i + 1), templ)) &&
 				(strstr(GetLineString(msg->Buffer, &Priv->Lines, i), templ))){
-			length = strlen(GetLineString(msg->Buffer, &Priv->Lines, i + 1));
-			DecodeHexBin(buf, GetLineString(msg->Buffer, &Priv->Lines, i + 1),length);
-			length = length / 2;
+			line = GetLineString(msg->Buffer, &Priv->Lines, i + 1);
+			length = strlen(line);
+			if (length % 2 != 0 || length / 2 >= sizeof(buf) ||
+			    pos >= capacity || length / 2 >= capacity - pos) {
+				return ERR_UNKNOWNRESPONSE;
+			}
+			if (!DecodeHexBin(buf, (const unsigned char *)line, length)) {
+				return ERR_UNKNOWNRESPONSE;
+			}
+			length /= 2;
 			memcpy (buffer+pos,buf,length);
 			pos+=length;
 		}
 		i++;
 	}
+	if (pos >= capacity) return ERR_UNKNOWNRESPONSE;
+	buffer[pos] = 0;
 	*len = pos;
 	return ERR_NONE;
 }
@@ -121,10 +132,10 @@ GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	size_t			length;
 	GSM_Error		error;
 
-	error = GetSiemensFrame(msg,s,"bmp",buffer,&length);
+	error = GetSiemensFrame(msg,s,"bmp",buffer,sizeof(buffer),&length);
 	if (error!=ERR_NONE) return error;
 	smprintf(s, "Operator logo received lenght=%ld\n", (long)length);
-	error = BMP2Bitmap (buffer,NULL,s->Phone.Data.Bitmap);
+	error = BMP2Bitmap (buffer,length,NULL,s->Phone.Data.Bitmap);
 	if (error==ERR_NONE) return error;
 	else return ERR_UNKNOWN;
 }
@@ -187,7 +198,8 @@ GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message *msg, GSM_StateMachine *
 	size_t			length;
 	GSM_Error		error;
 
-        error = GetSiemensFrame(msg,s,"mid",s->Phone.Data.Ringtone->NokiaBinary.Frame,&length);
+        error = GetSiemensFrame(msg,s,"mid",s->Phone.Data.Ringtone->NokiaBinary.Frame,
+			sizeof(s->Phone.Data.Ringtone->NokiaBinary.Frame),&length);
 	if (error!=ERR_NONE) return error;
 	smprintf(s, "Midi ringtone received\n");
 
@@ -240,7 +252,7 @@ GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message *msg, GSM_StateMachi
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "Calendar entry received\n");
-		error = GetSiemensFrame(msg, s, "vcs", buffer, &len);
+		error = GetSiemensFrame(msg, s, "vcs", buffer, sizeof(buffer), &len);
 		if (error != ERR_NONE) return error;
 		return GSM_DecodeVCALENDAR_VTODO(&(s->di), buffer,&pos,Calendar,&ToDo,Siemens_VCalendar,0);
 	case AT_Reply_Error:
@@ -412,7 +424,7 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
-		error = GetSiemensFrame(msg,s,"vcf", buffer, &length);
+		error = GetSiemensFrame(msg,s,"vcf", (unsigned char *)buffer,sizeof(buffer),&length);
 		if (error != ERR_NONE) return error;
  		Memory->EntriesNum = 0;
 		length = 0;
