@@ -137,6 +137,15 @@ if (WITH_BACKUP)
     endforeach(TESTBACKUP $BACKUPS)
 endif (WITH_BACKUP)
 
+if (WITH_BACKUP)
+    add_executable(backup-checksum backup-checksum.c)
+    add_coverage(backup-checksum)
+    target_link_libraries(backup-checksum libGammu ${LIBINTL_LIBRARIES})
+    add_test(backup-checksum
+        "${GAMMU_TEST_PATH}/backup-checksum${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_CURRENT_BINARY_DIR}/backup-checksum.backup")
+endif (WITH_BACKUP)
+
 # Basic check for statemachine functionality
 add_executable(statemachine-init statemachine-init.c)
 add_coverage(statemachine-init)

@@ -3279,7 +3279,15 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 	sprintf(buffer,"Checksum");
 	if (UseUnicode) EncodeUnicode(buffer,"Checksum",8);
 	readvalue = ReadCFGText(file_info, buffer, "MD5", UseUnicode);
-	if (readvalue!=NULL) strcpy(backup->MD5Original,readvalue);
+	if (readvalue != NULL) {
+		/* An MD5 digest is exactly 32 hexadecimal characters. */
+		if (strlen(readvalue) != 32 ||
+		    strspn(readvalue, "0123456789abcdefABCDEF") != 32) {
+			error = ERR_CORRUPTED;
+			goto fail_error;
+		}
+		memcpy(backup->MD5Original, readvalue, 33);
+	}
 
 	num = 0;
         for (h = file_info; h != NULL; h = h->Next) {
