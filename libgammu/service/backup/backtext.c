@@ -164,6 +164,8 @@ static GSM_Error SaveBackupText(FILE *file, const char *myname, const char *myva
 {
 	char buffer[10000]={0};
 	unsigned char buffer2[10000]={0};
+	char *hexbuffer;
+	size_t text_length;
 
 	if (myname[0] == 0x00) {
 		if (UseUnicode) {
@@ -186,8 +188,13 @@ static GSM_Error SaveBackupText(FILE *file, const char *myname, const char *myva
 		} else {
 			EncodeSpecialChars(buffer, DecodeUnicodeString(myvalue));
 			fprintf(file, "%s = \"%s\"%c%c", myname, buffer, 13, 10);
-			EncodeHexBin(buffer, myvalue, UnicodeLength(myvalue) * 2);
-			fprintf(file, "%sUnicode = %s%c%c", myname, buffer, 13, 10);
+			text_length = UnicodeLength(myvalue);
+			if (text_length > ((size_t)-1 - 1) / 4) return ERR_MOREMEMORY;
+			hexbuffer = malloc(text_length * 4 + 1);
+			if (hexbuffer == NULL) return ERR_MOREMEMORY;
+			EncodeHexBin(hexbuffer, myvalue, text_length * 2);
+			fprintf(file, "%sUnicode = %s%c%c", myname, hexbuffer, 13, 10);
+			free(hexbuffer);
 		}
 	}
 	return ERR_NONE;
