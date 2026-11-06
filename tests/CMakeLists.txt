@@ -135,15 +135,21 @@ if (WITH_BACKUP)
             "${GAMMU_TEST_PATH}/read-backup${CMAKE_EXECUTABLE_SUFFIX}"
             "${Gammu_SOURCE_DIR}/tests/backups/${TESTBACKUP}")
     endforeach(TESTBACKUP $BACKUPS)
-endif (WITH_BACKUP)
 
-if (WITH_BACKUP)
     add_executable(backup-checksum backup-checksum.c)
     add_coverage(backup-checksum)
     target_link_libraries(backup-checksum libGammu ${LIBINTL_LIBRARIES})
     add_test(backup-checksum
         "${GAMMU_TEST_PATH}/backup-checksum${CMAKE_EXECUTABLE_SUFFIX}"
         "${CMAKE_CURRENT_BINARY_DIR}/backup-checksum.backup")
+
+    add_executable(backup-text-hex backup-text-hex.c)
+    add_coverage(backup-text-hex)
+    target_link_libraries(backup-text-hex libGammu ${LIBINTL_LIBRARIES})
+    add_test(backup-text-hex
+        "${GAMMU_TEST_PATH}/backup-text-hex${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_CURRENT_BINARY_DIR}/backup-text-hex-input.backup"
+        "${CMAKE_CURRENT_BINARY_DIR}/backup-text-hex-output.backup")
 endif (WITH_BACKUP)
 
 # Basic check for statemachine functionality
