@@ -864,16 +864,22 @@ static void ALCATEL_DecodeString(GSM_StateMachine *s, const unsigned char *buffe
 	}
 }
 
-static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, const unsigned char *buffer, unsigned char *target, GSM_Alcatel_FieldType type)
+/* A 200-byte create-field buffer starts the encoded value at offset 11. */
+#define ALCATEL_MAX_FIELD_BYTES 187
+
+GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, const unsigned char *buffer, unsigned char *target, GSM_Alcatel_FieldType type)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	size_t			len;
+	size_t			input_length;
 	size_t			maxlen = 0;
 	gboolean			unicode = FALSE;
 	unsigned char		text[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		utext[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 
-	len = UnicodeLength(buffer);
+	input_length = UnicodeLength(buffer);
+	if (input_length > GSM_PHONEBOOK_TEXT_LENGTH) return ERR_INVALIDDATA;
+	len = input_length;
 	/* Maximal length is item and phone dependant, we use it only for guessing as phone will report too big entry correctly. */
 	if (type == Alcatel_string) {
 		if (Priv->ProtocolVersion == V_1_1) {
@@ -898,20 +904,25 @@ static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, const unsigned char *
 		 * unicode */
 		EncodeDefault(text, buffer, &len, TRUE, GSM_AlcatelAlphabet);
 		DecodeDefault(utext, text, len, TRUE, GSM_AlcatelAlphabet);
-		if (!mywstrncmp(utext, buffer, len)) {
+		if (!mywstrncmp(utext, buffer, input_length)) {
 			/* Use unicode only when we have enough space */
-			unicode = ((len * 2) < maxlen);
+			unicode = ((input_length * 2) < maxlen);
 		}
 	}
 
 	if (unicode) {
 		/* UCS-2-BE string */
+		if (input_length > (ALCATEL_MAX_FIELD_BYTES - 2) / 2) return ERR_INVALIDDATA;
+		len = input_length;
 		target[0] = len * 2 + 3;
 		target[1] = ALCATEL_UNICODE_FLAG;
 		memcpy(target + 2, buffer, len * 2 + 2);
 	} else {
 		/* Alcatel alphabet string */
-		EncodeDefault(target + 1, buffer, &len, TRUE, GSM_AlcatelAlphabet);
+		len = input_length;
+		EncodeDefault(text, buffer, &len, TRUE, GSM_AlcatelAlphabet);
+		if (len > ALCATEL_MAX_FIELD_BYTES) return ERR_INVALIDDATA;
+		memcpy(target + 1, text, len);
 		target[0] = len;
 		target[len + 1] = 0;
 	}
@@ -1119,7 +1130,8 @@ static GSM_Error ALCATEL_AddCategoryText(GSM_StateMachine *s, const unsigned cha
 
 
 	smprintf(s,"Creating category\n");
-	ALCATEL_EncodeString(s, str, buffer + 7, 0);
+	error = ALCATEL_EncodeString(s, str, buffer + 7, 0);
+	if (error != ERR_NONE) return error;
 	buffer[6] = buffer[7] + 1;
 
 	switch (Priv->BinaryType) {
