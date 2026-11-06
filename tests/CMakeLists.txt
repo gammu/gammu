@@ -136,6 +136,13 @@ if (WITH_BACKUP)
             "${Gammu_SOURCE_DIR}/tests/backups/${TESTBACKUP}")
     endforeach(TESTBACKUP $BACKUPS)
 
+    add_executable(backup-wap-settings backup-wap-settings.c)
+    add_coverage(backup-wap-settings)
+    target_link_libraries(backup-wap-settings libGammu ${LIBINTL_LIBRARIES})
+    add_test(backup-wap-settings
+        "${GAMMU_TEST_PATH}/backup-wap-settings${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_CURRENT_BINARY_DIR}/backup-wap-settings.backup")
+
     add_executable(backup-checksum backup-checksum.c)
     add_coverage(backup-checksum)
     target_link_libraries(backup-checksum libGammu ${LIBINTL_LIBRARIES})
