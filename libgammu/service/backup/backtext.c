@@ -238,28 +238,27 @@ static GSM_Error SaveBackupBase64(FILE *file, char *myname, unsigned char *data,
 
 static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, const char *myname, char *myvalue, const size_t maxlen, const gboolean UseUnicode)
 {
-	unsigned char paramname[10000],*readvalue, decodedvalue[10000];
+	unsigned char paramname[10000], *readvalue, *decodedvalue = NULL, *converted = NULL;
+	size_t source_length, decoded_length, converted_length;
 	gboolean ret = TRUE;
 
 	if (UseUnicode) {
 		EncodeUnicode(paramname,myname,strlen(myname));
 		readvalue = INI_GetValue(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			/* Decoding cannot increase the number of characters. */
-			if (UnicodeLength(readvalue + 2) >= sizeof(decodedvalue) / 2) {
-				myvalue[0] = myvalue[1] = 0;
-				return FALSE;
-			}
+			source_length = UnicodeLength(readvalue + 2);
+			if (source_length > ((size_t)-1) / 2 - 1) goto invalid_text;
+			decodedvalue = malloc((source_length + 1) * 2);
+			if (decodedvalue == NULL) goto invalid_text;
 			DecodeUnicodeSpecialChars(decodedvalue, readvalue+2);
-			if ((UnicodeLength(decodedvalue) + 1) * 2 >= maxlen) {
-				decodedvalue[maxlen - 1] = 0;
-				decodedvalue[maxlen - 2] = 0;
-				dbgprintf(NULL, "String too long!\n");
-				ret = FALSE;
-			}
+			decoded_length = UnicodeLength(decodedvalue);
+			/* The decoded string still includes the closing quote. */
+			if (decoded_length == 0 || decoded_length > maxlen / 2) goto invalid_text;
+			decodedvalue[(decoded_length - 1) * 2] = 0;
+			decodedvalue[(decoded_length - 1) * 2 + 1] = 0;
 			CopyUnicodeString(myvalue, decodedvalue);
-			myvalue[UnicodeLength(myvalue)*2-2]=0;
-			myvalue[UnicodeLength(myvalue)*2-1]=0;
+			free(decodedvalue);
+			decodedvalue = NULL;
 
 			dbgprintf(NULL, "Cfg read: %s\n",DecodeUnicodeString(readvalue));
 		} else {
@@ -285,19 +284,23 @@ static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, c
 			strcpy(paramname,myname);
 			readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 			if (readvalue!=NULL) {
-				size_t decoded_length;
-				if (strlen(readvalue + 1) >= sizeof(decodedvalue)) {
-					myvalue[0] = myvalue[1] = 0;
-					return FALSE;
-				}
+				source_length = strlen(readvalue + 1);
+				if (source_length == (size_t)-1) goto invalid_text;
+				decodedvalue = malloc(source_length + 1);
+				if (decodedvalue == NULL) goto invalid_text;
 				DecodeSpecialChars(decodedvalue, readvalue + 1);
 				decoded_length = strlen(decodedvalue);
 				/* The decoded string includes a closing quote. */
-				if (decoded_length == 0 || decoded_length - 1 >= maxlen / 2) {
-					myvalue[0] = myvalue[1] = 0;
-					return FALSE;
-				}
-				EncodeUnicode(myvalue, decodedvalue, decoded_length - 1);
+				if (decoded_length == 0 || decoded_length > ((size_t)-1) / 2 - 1) goto invalid_text;
+				converted = malloc((decoded_length + 1) * 2);
+				if (converted == NULL) goto invalid_text;
+				EncodeUnicode(converted, decodedvalue, decoded_length - 1);
+				converted_length = UnicodeLength(converted);
+				if (converted_length >= maxlen / 2) goto invalid_text;
+				memcpy(myvalue, converted, (converted_length + 1) * 2);
+				free(decodedvalue);
+				free(converted);
+				decodedvalue = converted = NULL;
 			} else {
 				myvalue[0]=0;
 				myvalue[1]=0;
@@ -306,6 +309,11 @@ static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, c
 		}
 	}
 	return ret;
+invalid_text:
+	free(decodedvalue);
+	free(converted);
+	myvalue[0] = myvalue[1] = 0;
+	return FALSE;
 }
 
 static GSM_Error SaveVCalDateTime(FILE *file, GSM_DateTime *dt, gboolean UseUnicode)

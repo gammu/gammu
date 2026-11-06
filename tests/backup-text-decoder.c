@@ -1,6 +1,7 @@
 #include <gammu.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -50,7 +51,8 @@ static void check_text(const char *path, int unicode, size_t length,
 	}
 	put_text(file, "[Backup]\r\nFormat=1.04\r\n[Calendar001]\r\nLocation=1\r\nType=Memo\r\nText=\"", unicode);
 	for (i = 0; i < length; i++) {
-		put_text(file, escaped ? "\\n" : "A", unicode);
+		put_text(file, escaped == 1 ? "\\n" :
+				  escaped == 2 ? "\xc3\xa9" : "A", unicode);
 	}
 	put_text(file, "\"\r\n", unicode);
 	test_result(fclose(file) == 0);
@@ -60,6 +62,14 @@ static void check_text(const char *path, int unicode, size_t length,
 	if (accepted) {
 		test_result(backup->Calendar[0]->EntriesNum > 0);
 		test_result(UnicodeLength(backup->Calendar[0]->Entries[0].Text) == length);
+		if (escaped == 1) {
+			test_result(backup->Calendar[0]->Entries[0].Text[0] == 0);
+			test_result(backup->Calendar[0]->Entries[0].Text[1] == '\n');
+		}
+		if (escaped == 2) {
+			test_result(backup->Calendar[0]->Entries[0].Text[0] == 0);
+			test_result(backup->Calendar[0]->Entries[0].Text[1] == 0xe9);
+		}
 	} else {
 		test_result(backup->Calendar[0]->EntriesNum == 0);
 	}
@@ -77,6 +87,11 @@ int main(int argc, char **argv)
 	check_text(argv[1], 0, 4097, 0, 0);
 	check_text(argv[1], 0, 20000, 0, 0);
 	check_text(argv[1], 1, 128, 0, 1);
+	check_text(argv[1], 1, 3000, 1, 1);
+	check_text(argv[1], 1, 4096, 0, 1);
 	check_text(argv[1], 1, 9990, 0, 0);
+	if (setlocale(LC_CTYPE, "C.UTF-8") != NULL) {
+		check_text(argv[1], 0, 3000, 2, 1);
+	}
 	return 0;
 }
