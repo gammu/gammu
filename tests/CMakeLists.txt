@@ -24,6 +24,14 @@ add_coverage(parser-security)
 target_link_libraries(parser-security libGammu ${LIBINTL_LIBRARIES})
 add_test(parser-security "${GAMMU_TEST_PATH}/parser-security${CMAKE_EXECUTABLE_SUFFIX}")
 
+if (WITH_ALCATEL)
+    add_executable(alcatel-encode-bounds alcatel-encode-bounds.c)
+    add_coverage(alcatel-encode-bounds)
+    target_link_libraries(alcatel-encode-bounds libGammu ${LIBINTL_LIBRARIES})
+    add_test(alcatel-encode-bounds
+        "${GAMMU_TEST_PATH}/alcatel-encode-bounds${CMAKE_EXECUTABLE_SUFFIX}")
+endif (WITH_ALCATEL)
+
 # Basic check for statemachine allocation
 add_executable(statemachine-alloc statemachine-alloc.c)
 add_coverage(statemachine-alloc)
