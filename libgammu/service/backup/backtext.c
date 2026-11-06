@@ -2750,7 +2750,7 @@ static void ReadSMSCEntry(INI_Section *file_info, char *section, GSM_SMSC *SMSC,
 	}
 }
 
-static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_MultiWAPSettings *settings, gboolean UseUnicode)
+static GSM_Error ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_MultiWAPSettings *settings, gboolean UseUnicode)
 {
 	unsigned char		buffer[10000]={0}, *readvalue=NULL;
 	int			num=0;
@@ -2810,6 +2810,9 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 		}
 		e = e->Prev;
 		if (num != -1) {
+			if (settings->Number >= sizeof(settings->Settings) / sizeof(settings->Settings[0])) {
+				return ERR_CORRUPTED;
+			}
 			sprintf(buffer,"Title%02i",num);
 			ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Title,UseUnicode);
 			sprintf(buffer,"HomePage%02i",num);
@@ -2896,6 +2899,7 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 			settings->Number++;
 		}
 	}
+	return ERR_NONE;
 }
 
 static void ReadRingtoneEntry(INI_Section *file_info, char *section, GSM_Ringtone *ringtone, gboolean UseUnicode)
@@ -3521,7 +3525,8 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			}
 			backup->WAPSettings[num]->Location = num + 1;
 			dbgprintf(NULL, "reading wap settings\n");
-			ReadWAPSettingsEntry(file_info, h->SectionName, backup->WAPSettings[num],UseUnicode);
+			error = ReadWAPSettingsEntry(file_info, h->SectionName, backup->WAPSettings[num],UseUnicode);
+			if (error != ERR_NONE) goto fail_error;
 			num++;
                 }
         }
@@ -3549,7 +3554,8 @@ GSM_Error LoadBackup(const char *FileName, GSM_Backup *backup)
 			}
 			backup->MMSSettings[num]->Location = num + 1;
 			dbgprintf(NULL, "reading mms settings\n");
-			ReadWAPSettingsEntry(file_info, h->SectionName, backup->MMSSettings[num],UseUnicode);
+			error = ReadWAPSettingsEntry(file_info, h->SectionName, backup->MMSSettings[num],UseUnicode);
+			if (error != ERR_NONE) goto fail_error;
 			num++;
                 }
         }
