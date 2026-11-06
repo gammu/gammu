@@ -143,6 +143,13 @@ if (WITH_BACKUP)
         "${GAMMU_TEST_PATH}/backup-wap-settings${CMAKE_EXECUTABLE_SUFFIX}"
         "${CMAKE_CURRENT_BINARY_DIR}/backup-wap-settings.backup")
 
+    add_executable(backup-text-decoder backup-text-decoder.c)
+    add_coverage(backup-text-decoder)
+    target_link_libraries(backup-text-decoder libGammu ${LIBINTL_LIBRARIES})
+    add_test(backup-text-decoder
+        "${GAMMU_TEST_PATH}/backup-text-decoder${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_CURRENT_BINARY_DIR}/backup-text-decoder.backup")
+
     add_executable(backup-checksum backup-checksum.c)
     add_coverage(backup-checksum)
     target_link_libraries(backup-checksum libGammu ${LIBINTL_LIBRARIES})

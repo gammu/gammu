@@ -245,6 +245,11 @@ static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, c
 		EncodeUnicode(paramname,myname,strlen(myname));
 		readvalue = INI_GetValue(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
+			/* Decoding cannot increase the number of characters. */
+			if (UnicodeLength(readvalue + 2) >= sizeof(decodedvalue) / 2) {
+				myvalue[0] = myvalue[1] = 0;
+				return FALSE;
+			}
 			DecodeUnicodeSpecialChars(decodedvalue, readvalue+2);
 			if ((UnicodeLength(decodedvalue) + 1) * 2 >= maxlen) {
 				decodedvalue[maxlen - 1] = 0;
@@ -280,8 +285,19 @@ static gboolean ReadBackupTextLen(INI_Section *file_info, const char *section, c
 			strcpy(paramname,myname);
 			readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 			if (readvalue!=NULL) {
+				size_t decoded_length;
+				if (strlen(readvalue + 1) >= sizeof(decodedvalue)) {
+					myvalue[0] = myvalue[1] = 0;
+					return FALSE;
+				}
 				DecodeSpecialChars(decodedvalue, readvalue + 1);
-				EncodeUnicode(myvalue, decodedvalue, strlen(decodedvalue) - 1);
+				decoded_length = strlen(decodedvalue);
+				/* The decoded string includes a closing quote. */
+				if (decoded_length == 0 || decoded_length - 1 >= maxlen / 2) {
+					myvalue[0] = myvalue[1] = 0;
+					return FALSE;
+				}
+				EncodeUnicode(myvalue, decodedvalue, decoded_length - 1);
 			} else {
 				myvalue[0]=0;
 				myvalue[1]=0;
