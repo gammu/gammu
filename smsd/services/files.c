@@ -101,6 +101,33 @@ static GSM_Error SMSDFiles_BuildPath(char *result, size_t result_size,
 	return ERR_NONE;
 }
 
+static FILE *SMSDFiles_OpenPrivateFile(const char *path)
+{
+	int fd;
+	FILE *file;
+
+#ifdef WIN32
+	fd = _open(path, _O_WRONLY | _O_CREAT | _O_TRUNC | _O_BINARY, 0600);
+#else
+	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+#endif
+	if (fd < 0) {
+		return NULL;
+	}
+
+	file = fdopen(fd, "wb");
+	if (file == NULL) {
+		int saved_errno = errno;
+#ifdef WIN32
+		_close(fd);
+#else
+		close(fd);
+#endif
+		errno = saved_errno;
+	}
+	return file;
+}
+
 /* Retry state belongs to the daemon, not to the user-provided spool files. */
 struct SMSDFilesRetry {
 	char ID[GSM_MAX_FILENAME_LENGTH + 1];
@@ -275,7 +302,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 				free(backup);
 #endif
 			} else {
-				file = fopen(FullName, "wb");
+				file = SMSDFiles_OpenPrivateFile((const char *)FullName);
 				if (file == NULL) {
 					SMSD_LogErrno(Config, "Cannot save file!");
 					return ERR_CANTOPENFILE;
