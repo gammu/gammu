@@ -1,6 +1,7 @@
 #include "../helper/locales.h"
 
 #include <gammu.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -325,6 +326,20 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 	return ERR_NONE;
 }
 
+static void AppendBackupModel(char *dest, size_t size, const char *text)
+{
+	size_t used, available, length;
+
+	if (size == 0) return;
+	dest[size - 1] = 0;
+	used = strlen(dest);
+	available = size - used - 1;
+	length = strlen(text);
+	if (length > available) length = available;
+	memcpy(dest + used, text, length);
+	dest[used + length] = 0;
+}
+
 void DoBackup(int argc, char *argv[])
 {
 	GSM_Error error = ERR_NONE;
@@ -384,17 +399,17 @@ void DoBackup(int argc, char *argv[])
 	if (Info.Model) {
 		error=GSM_GetManufacturer(gsm, Backup.Model);
 		Print_Error(error);
-		strcat(Backup.Model," ");
+		AppendBackupModel(Backup.Model, sizeof(Backup.Model), " ");
 		error=GSM_GetModel(gsm, buffer);
-		strcat(Backup.Model, buffer);
+		AppendBackupModel(Backup.Model, sizeof(Backup.Model), buffer);
 		if (GSM_GetModelInfo(gsm)->model[0]!=0) {
-			strcat(Backup.Model," (");
-			strcat(Backup.Model,GSM_GetModelInfo(gsm)->model);
-			strcat(Backup.Model,")");
+			AppendBackupModel(Backup.Model, sizeof(Backup.Model), " (");
+			AppendBackupModel(Backup.Model, sizeof(Backup.Model), GSM_GetModelInfo(gsm)->model);
+			AppendBackupModel(Backup.Model, sizeof(Backup.Model), ")");
 		}
-		strcat(Backup.Model," ");
+		AppendBackupModel(Backup.Model, sizeof(Backup.Model), " ");
 		error=GSM_GetFirmware(gsm, buffer, NULL, NULL);
-		strcat(Backup.Model,buffer);
+		AppendBackupModel(Backup.Model, sizeof(Backup.Model), buffer);
 	}
 	if (Info.IMEI) {
 		error=GSM_GetIMEI(gsm, Backup.IMEI);
