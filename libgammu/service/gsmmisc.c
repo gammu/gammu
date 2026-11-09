@@ -4,6 +4,9 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
+#include <limits.h>
+#include <stdio.h>
 #include <sys/stat.h>
 
 #include <gammu-keys.h>
@@ -312,23 +315,21 @@ checkdt:
 
 gboolean ReadVCALInt(char *Buffer, const char *Start, int *Value)
 {
-	unsigned char buff[200];
+	size_t start_len = strlen(Start);
+	char *end;
+	long parsed;
 
 	*Value = 0;
 
-	strcpy(buff,Start);
-	strcat(buff,":");
-	if (!strncmp(Buffer,buff,strlen(buff))) {
-		int lstart = strlen(Start);
-		int lvalue = strlen(Buffer)-(lstart+1);
-		strncpy(buff,Buffer+lstart+1,lvalue);
-		strncpy(buff+lvalue,"\0",1);
-		if (sscanf(buff,"%i",Value)) {
-			dbgprintf(NULL, "ReadVCalInt is \"%i\"\n",*Value);
-			return TRUE;
-		}
-	}
-	return FALSE;
+	if (strncmp(Buffer, Start, start_len) != 0 || Buffer[start_len] != ':') return FALSE;
+
+	errno = 0;
+	parsed = strtol(Buffer + start_len + 1, &end, 0);
+	if (end == Buffer + start_len + 1 || errno == ERANGE ||
+	    parsed < INT_MIN || parsed > INT_MAX) return FALSE;
+	*Value = (int)parsed;
+	dbgprintf(NULL, "ReadVCalInt is \"%i\"\n", *Value);
+	return TRUE;
 }
 
 
@@ -336,17 +337,16 @@ gboolean ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, gbool
 {
 	char fullstart[200];
 	unsigned char datestring[200];
+	int length;
 
 	if (!ReadVCALText(Buffer, Start, datestring, FALSE, NULL)) {
-		fullstart[0] = 0;
-		strcat(fullstart, Start);
-		strcat(fullstart, ";VALUE=DATE");
+		length = snprintf(fullstart, sizeof(fullstart), "%s;VALUE=DATE", Start);
+		if (length < 0 || (size_t)length >= sizeof(fullstart)) return FALSE;
 		if (ReadVCALText(Buffer, fullstart, datestring, FALSE, NULL)) {
 			*is_date_only = TRUE;
 		} else {
-			fullstart[0] = 0;
-			strcat(fullstart, Start);
-			strcat(fullstart, ";VALUE=DATE-TIME");
+			length = snprintf(fullstart, sizeof(fullstart), "%s;VALUE=DATE-TIME", Start);
+			if (length < 0 || (size_t)length >= sizeof(fullstart)) return FALSE;
 			if (! ReadVCALText(Buffer, fullstart, datestring, FALSE, NULL)) {
 				return FALSE;
 			}
