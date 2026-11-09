@@ -1222,7 +1222,7 @@ GSM_DeltaTime ReadVCALTriggerTime (unsigned char *Buffer)
 	if (Buffer[pos] == 'P') pos++;
 	if (Buffer[pos] == 'T') pos++;
 
-	if ( !sscanf(Buffer+pos,"%i%c",&val,&unit) ) return dt;
+	if (sscanf(Buffer+pos,"%i%c",&val,&unit) != 2) return dt;
 
 	switch (unit) {
 		case 'D': dt.Day    = sign * val ; break;
