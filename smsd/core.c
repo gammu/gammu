@@ -924,7 +924,20 @@ GSM_Error SMSD_ConfigureLogging(GSM_SMSDConfig *Config, gboolean uselog)
 			Config->log_handle = fdopen(fd, "a");
 			Config->use_stderr = FALSE;
 		} else {
-			Config->log_handle = fopen(Config->logfilename, "a");
+			/* Keep newly created logs private, even with a permissive umask. */
+#ifdef WIN32
+			fd = _open(Config->logfilename, _O_WRONLY | _O_CREAT | _O_APPEND | _O_TEXT, 0600);
+#else
+			fd = open(Config->logfilename, O_WRONLY | O_CREAT | O_APPEND, 0600);
+#endif
+			Config->log_handle = fd < 0 ? NULL : fdopen(fd, "a");
+			if (fd >= 0 && Config->log_handle == NULL) {
+#ifdef WIN32
+				_close(fd);
+#else
+				close(fd);
+#endif
+			}
 			Config->use_stderr = TRUE;
 		}
 		if (Config->log_handle == NULL) {
