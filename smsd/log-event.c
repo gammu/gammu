@@ -27,25 +27,10 @@ gboolean eventlog_register(void)
 	HKEY hKey;
 	DWORD data;
 
-	SECURITY_DESCRIPTOR SD;
-	SECURITY_ATTRIBUTES SA;
-
 	char program_name[MAX_PATH];
 
 	if (GetModuleFileName(NULL, program_name, sizeof(program_name)) == 0)
 		return FALSE;
-
-	if (!InitializeSecurityDescriptor(&SD, SECURITY_DESCRIPTOR_REVISION)) {
-		return FALSE;
-	}
-
-	if(!SetSecurityDescriptorDacl(&SD, TRUE, 0, FALSE)) {
-		return FALSE;
-	}
-
-	SA.nLength = sizeof(SA);
-	SA.lpSecurityDescriptor = &SD;
-	SA.bInheritHandle = FALSE;
 
 	ret = RegCreateKeyEx(
 		HKEY_LOCAL_MACHINE,
@@ -54,7 +39,7 @@ gboolean eventlog_register(void)
 		NULL,
 		REG_OPTION_NON_VOLATILE,
 		KEY_WRITE,
-		&SA,
+		NULL, /* Inherit the parent key's access controls. */
 		&hKey,
 		NULL);
 
