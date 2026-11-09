@@ -18,8 +18,6 @@
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
 #  include <locale.h>
-#  define gmtime_r(x, y) gmtime_s(y, x)
-#  define localtime_r(x, y) localtime_s(y, x)
 #endif
 #ifdef HAVE_SYS_UTSNAME_H
 #  include <sys/utsname.h>
@@ -163,9 +161,14 @@ char *DayOfWeek (unsigned int year, unsigned int month, unsigned int day)
 
 int get_local_timezone_offset(time_t posix_time)
 {
-  struct tm *tm = gmtime(&posix_time);
-  tm->tm_isdst = -1;
-  return posix_time - mktime(tm);
+  struct tm tm;
+#ifdef WIN32
+  if (gmtime_s(&tm, &posix_time) != 0) return 0;
+#else
+  if (gmtime_r(&posix_time, &tm) == NULL) return 0;
+#endif
+  tm.tm_isdst = -1;
+  return posix_time - mktime(&tm);
 }
 
 int GSM_GetLocalTimezoneOffset(void)
@@ -190,15 +193,21 @@ void GSM_DateTimeFromTimestamp(GSM_DateTime *Date, const char *str)
 
 void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 {
-	struct tm *now;
-
-	now  		= localtime(&timet);
-	Date->Year	= now->tm_year + 1900;
-	Date->Month	= now->tm_mon + 1;
-	Date->Day	= now->tm_mday;
-	Date->Hour	= now->tm_hour;
-	Date->Minute	= now->tm_min;
-	Date->Second	= now->tm_sec;
+	struct tm now;
+#ifdef WIN32
+	if (localtime_s(&now, &timet) != 0) {
+#else
+	if (localtime_r(&timet, &now) == NULL) {
+#endif
+		memset(Date, 0, sizeof(*Date));
+		return;
+	}
+	Date->Year	= now.tm_year + 1900;
+	Date->Month	= now.tm_mon + 1;
+	Date->Day	= now.tm_mday;
+	Date->Hour	= now.tm_hour;
+	Date->Minute	= now.tm_min;
+	Date->Second	= now.tm_sec;
 	Date->Timezone	= GSM_GetLocalTimezoneOffset();
 }
 
