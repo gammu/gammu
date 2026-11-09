@@ -1504,17 +1504,19 @@ void GSM_ExpandUserPath(char **string)
 GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args)
 {
   int *params_ptr = out_params;
-  const int *params_end = out_params + num_params * sizeof(int);
+  const int *params_end;
   const char *args_ptr = args;
-  int whitespace_count = 0;
   gboolean expect_comma = 0;
+
+  if (!out_params || num_params < 0)
+    return ERR_INVALIDDATA;
+  params_end = out_params + num_params;
 
   if (!args)
     return ERR_NONE;
 
   while (params_ptr < params_end) {
     while (isspace((unsigned char)*args_ptr)) {
-      ++whitespace_count;
       ++args_ptr;
     }
 
@@ -1525,7 +1527,7 @@ GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
         if (expect_comma) {
-          printf("expected comma but got %c for parameter %d\n", *args_ptr, (int)(++params_ptr - out_params));
+          printf("expected comma but got %c for parameter %d\n", *args_ptr, (int)(params_ptr - out_params + 1));
           return ERR_INVALIDDATA;
         }
         *params_ptr = *args_ptr - '0';
@@ -1538,15 +1540,16 @@ GSM_Error GSM_ReadParams(int *out_params, const int num_params, const char *args
         break;
 
       default: {
-        printf("error parsing parameters, unrecognized token '%c' in position %d\n",
-               *args_ptr, (int)(++params_ptr - --out_params + ++whitespace_count));
+        printf("error parsing parameters, unrecognized token '%c' in position %td\n",
+               *args_ptr, args_ptr - args + 1);
         return ERR_INVALIDDATA; }
     }
 
     ++args_ptr;
   }
 
-  return ERR_NONE;
+  while (isspace((unsigned char)*args_ptr)) ++args_ptr;
+  return *args_ptr ? ERR_INVALIDDATA : ERR_NONE;
 }
 
 GSM_Error GSM_ReadCNMIParams(int out_params[5], const char *args)
