@@ -1,4 +1,5 @@
 #define _GNU_SOURCE /* For strcasestr */
+#include "../libgammu/misc/private-file.h"
 #include <string.h>
 
 #include "../helper/locales.h"
@@ -395,7 +396,7 @@ void Screenshot(int argc UNUSED, char *argv[])
 	strcpy(fname, argv[2]);
 	strcat(fname, ext);
 
-	f = fopen(fname, "w");
+	f = GSM_OpenPrivateFile(fname, "w");
 	if (f == NULL) {
 		printf_err("Failed to open file: %s\n", fname);
 		free(fname);

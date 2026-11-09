@@ -1,5 +1,6 @@
 /* (c) 2003 by Marcin Wiacek */
 
+#include "../../misc/private-file.h"
 #include <string.h>
 #include <ctype.h>
 
@@ -27,7 +28,7 @@ GSM_Error SaveVCard(const char *FileName, GSM_Backup *backup)
 	FILE 		*file;
 	GSM_Error	error;
 
-	file = fopen(FileName, "wb");
+	file = GSM_OpenPrivateFile(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	i=0;

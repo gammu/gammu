@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 
 #include <fcntl.h>
@@ -41,7 +42,7 @@ static void WriteMessage(const char *directory, const char *id, gboolean backup)
 		test_result(FALSE);
 #endif
 	} else {
-		fd = open(path, O_WRONLY | O_CREAT | O_EXCL, 0600);
+		fd = GSM_CreatePrivateFileExclusive(path, 1);
 		test_result(fd >= 0);
 		file = fdopen(fd, "wb");
 		if (file == NULL) {

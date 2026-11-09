@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include "../helper/locales.h"
 
 #include <gammu.h>
@@ -183,7 +184,7 @@ void SaveFile(int argc, char *argv[])
 		Terminate(2);
 	}
 
-	file = fopen(argv[3],"wb");
+	file = GSM_OpenPrivateFile(argv[3], "wb");
 	if (file == NULL) {
 		printf_err("%s", _("Error while opening file for writing!\n"));
 		Terminate(3);

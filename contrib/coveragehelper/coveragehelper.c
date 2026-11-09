@@ -16,8 +16,13 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #ifdef WIN32
 #include <windows.h>
+#include <io.h>
+#else
+#include <unistd.h>
 #endif
 
 #define ROOT_DIR "c:\\projects\\gammu"
@@ -32,6 +37,7 @@ int main(int argc, char *argv[])
     char *logfile = NULL, *separator=NULL, *testnum, *tmp, *command, *commandline;
     char logname[1000];
     FILE *handle;
+    int logfd;
 #ifdef WIN32
 	BOOL result;
 	STARTUPINFO si;
@@ -71,8 +77,19 @@ int main(int argc, char *argv[])
     separator += strlen(ARG_SEPARATOR);
 
     // Create empty file (CTest expects to find it)
-    handle = fopen(logfile, "w");
+#ifdef WIN32
+    logfd = _open(logfile, _O_WRONLY | _O_CREAT | _O_TRUNC | _O_TEXT,
+                  _S_IREAD | _S_IWRITE);
+#else
+    logfd = open(logfile, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+#endif
+    handle = logfd < 0 ? NULL : fdopen(logfd, "w");
     if (handle == NULL) {
+#ifdef WIN32
+        if (logfd >= 0) _close(logfd);
+#else
+        if (logfd >= 0) close(logfd);
+#endif
         printf("FAILED TO CREATE LOG: %s\n", logfile);
         return 1;
     }

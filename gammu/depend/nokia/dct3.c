@@ -1,6 +1,7 @@
 /* (c) 2002-2004 by Marcin Wiacek */
 /* MSID by Walek */
 
+#include "../../../libgammu/misc/private-file.h"
 #include <gammu.h>
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
@@ -106,7 +107,7 @@ void DCT3GetT9(int argc, char *argv[])
 
 	CheckDCT3();
 
-	DCT3T9File = fopen("T9", "w");
+	DCT3T9File = GSM_OpenPrivateFile("T9", "w");
 	if (DCT3T9File == NULL) return;
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions3;

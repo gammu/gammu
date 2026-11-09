@@ -1,5 +1,6 @@
 /* (c) 2003-2004 by Marcin Wiacek */
 
+#include "../../misc/private-file.h"
 #include <string.h>
 #include <ctype.h>
 
@@ -34,7 +35,7 @@ GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 	unsigned char Text[(GSM_PHONEBOOK_TEXT_LENGTH + 1) * 4];
 	size_t pos;
 
-	file = fopen(FileName, "wb");
+	file = GSM_OpenPrivateFile(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	i=0;

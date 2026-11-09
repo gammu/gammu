@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,7 +15,7 @@
 void create_lock(const char *name, const void *lock_data, const size_t lock_data_len)
 {
 	FILE *fd;
-	fd = fopen(name, "w");
+	fd = GSM_OpenPrivateFile(name, "w");
 	test_result(fd != NULL);
 	test_result(fwrite(lock_data, 1, lock_data_len, fd) == lock_data_len);
 	test_result(fclose(fd) == 0);

@@ -1,6 +1,7 @@
 /* (c) 2001-2004 by Marcin Wiacek */
 
 #define _GNU_SOURCE
+#include "../misc/private-file.h"
 #include <string.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -730,7 +731,7 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	FILE		*file;
 	GSM_Error 	error=ERR_NONE;
 
-	file = fopen(FileName, "wb");
+	file = GSM_OpenPrivateFile(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	/* Attempt to identify filetype */

@@ -1,5 +1,6 @@
 /* Test for encoding SMS using AT driver */
 
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -138,7 +139,7 @@ int main(int argc, char **argv)
 	/* Display message */
 	if (generate) {
 		/* Open file */
-		f = fopen(argv[2], "w");
+		f = GSM_OpenPrivateFile(argv[2], "w");
 		if (f == NULL) {
 			printf("Could not open %s\n", argv[2]);
 			return 1;

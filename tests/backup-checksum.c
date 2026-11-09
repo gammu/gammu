@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +10,7 @@ static void check_checksum(const char *path, size_t length, int invalid_hex,
 			   GSM_Error expected)
 {
 	GSM_Backup *backup = malloc(sizeof(*backup));
-	FILE *file = fopen(path, "wb");
+	FILE *file = GSM_OpenPrivateFile(path, "wb");
 	size_t i;
 
 	test_result(backup != NULL);

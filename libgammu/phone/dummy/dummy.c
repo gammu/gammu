@@ -27,6 +27,7 @@
  * @{
  */
 
+#include "../../misc/private-file.h"
 #include "../../gsmstate.h"
 
 #include <string.h>
@@ -311,7 +312,7 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 		Priv->dir[i] = NULL;
 	}
 	Priv->fs_depth = 0;
-	Priv->log_file = fopen(log_file, "w");
+	Priv->log_file = GSM_OpenPrivateFile(log_file, "w");
 	free(log_file);
 	log_file=NULL;
 
@@ -1117,7 +1118,7 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, size_t *Pos, in
 
 	path = DUMMY_GetFSFilePath(s, File->ID_FullName);
 
-	file = fopen(path, "w");
+	file = GSM_OpenPrivateFile(path, "w");
 	if (file == NULL) {
 		error = DUMMY_Error(s, "fopen(w) failed", path);
 		free(path);

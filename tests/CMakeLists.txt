@@ -24,6 +24,15 @@ add_coverage(parser-security)
 target_link_libraries(parser-security libGammu ${LIBINTL_LIBRARIES})
 add_test(parser-security "${GAMMU_TEST_PATH}/parser-security${CMAKE_EXECUTABLE_SUFFIX}")
 
+if (NOT WIN32)
+    add_executable(private-file private-file.c)
+    add_coverage(private-file)
+    target_link_libraries(private-file libGammu)
+    add_test(private-file
+        "${GAMMU_TEST_PATH}/private-file${CMAKE_EXECUTABLE_SUFFIX}"
+        "${CMAKE_CURRENT_BINARY_DIR}")
+endif (NOT WIN32)
+
 if (WITH_ALCATEL)
     add_executable(alcatel-encode-bounds alcatel-encode-bounds.c)
     add_coverage(alcatel-encode-bounds)

@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -86,7 +87,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 2 - global /dev/null, local tempfile, do not use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_global);
@@ -102,7 +103,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 3 - global /dev/null, local tempfile, use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_global);
@@ -118,7 +119,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 4 - global tempfile, local /dev/null, use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_sm);
@@ -134,7 +135,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 5 - global tempfile, local /dev/null, do not use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_sm);
@@ -150,7 +151,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 6 - global /dev/null, local tempfile, do not use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_global);
@@ -167,7 +168,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 7 - global /dev/null, local tempfile, use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_global);
@@ -184,7 +185,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 8 - global tempfile, local /dev/null, use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(FALSE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_sm);
@@ -201,7 +202,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 9 - global tempfile, local /dev/null, do not use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_sm);
@@ -218,7 +219,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 10 - functional logging, do not use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_sm);
@@ -237,7 +238,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 11 - functional logging, use global
 	 */
-	debug_file = fopen(debug_filename, "w+");
+	debug_file = GSM_OpenPrivateFile(debug_filename, "w+");
 	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(TRUE, di_sm) == TRUE);
 	error = GSM_SetDebugFile(NONE_LOG, di_global);

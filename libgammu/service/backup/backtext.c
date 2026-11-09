@@ -1,5 +1,6 @@
 /* (c) 2002-2005 by Marcin Wiacek, Walek and Michal Cihar */
 
+#include "../../misc/private-file.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -1644,7 +1645,7 @@ GSM_Error SaveBackup(const char *FileName, GSM_Backup *backup, gboolean UseUnico
 	FILE 		*file;
 	GSM_Error error;
 
-	file = fopen(FileName, "wb");
+	file = GSM_OpenPrivateFile(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	if (UseUnicode) {
@@ -1844,7 +1845,7 @@ GSM_Error SaveBackup(const char *FileName, GSM_Backup *backup, gboolean UseUnico
 
 	FindBackupChecksum(FileName, UseUnicode, checksum);
 
-	file = fopen(FileName, "ab");
+	file = GSM_OpenPrivateFile(FileName, "ab");
 	if (file == NULL) return ERR_CANTOPENFILE;
 	sprintf(buffer,"[Checksum]%c%c",13,10);
 	error = SaveBackupText(file, "", buffer, UseUnicode);
@@ -4217,7 +4218,7 @@ GSM_Error GSM_AddSMSBackupFile(const char *FileName, GSM_SMS_Backup *backup)
 {
 	FILE *file;
 
-	file = fopen(FileName, "ab");
+	file = GSM_OpenPrivateFile(FileName, "ab");
 
 	if (file == NULL) return(ERR_CANTOPENFILE);
 

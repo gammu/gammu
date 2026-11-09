@@ -14,6 +14,7 @@
  * to publish their code under.
  */
 
+#include "../misc/private-file.h"
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -497,7 +498,7 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 	GSM_Error error = ERR_UNKNOWN;;
 
 
-	file = fopen(FileName, "wb");
+	file = GSM_OpenPrivateFile(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	switch (ringtone->Format) {

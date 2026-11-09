@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,7 +20,7 @@ static void check_text(const char *input, const char *output, size_t length)
 		"[Backup]\r\nFormat = 1.04\r\n"
 		"[Calendar001]\r\nLocation = 1\r\nType = Memo\r\nText = \"";
 	GSM_Backup *backup = malloc(sizeof(*backup));
-	FILE *file = fopen(input, "wb");
+	FILE *file = GSM_OpenPrivateFile(input, "wb");
 	char line[20000];
 	size_t i;
 	int found = 0;
