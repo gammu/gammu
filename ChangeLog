@@ -19,6 +19,20 @@ the issue.
 ChangeLog
 =========
 
+20261109 - 1.45.2
+
+[-] * Create backups, logs, SMSD inbox messages, and other files containing
+      private data with owner-only permissions on POSIX systems.
+[-] * Validate text backup checksums, field lengths, WAP settings counts,
+      and model metadata before copying or decoding them.
+[-] * Bound MMS header and vCalendar field parsing, and reject incomplete
+      vCalendar trigger durations.
+[-] * Bound Alcatel field encoding, Nokia SMS reply sub-frames, AT modem
+      notification parameter parsing, and HOME path expansion.
+[-] * Use thread-safe calendar time conversions.
+[-] * Inherit registry permissions for the Windows SMSD event log key.
+[-] * Fix Windows SDK and compiler toolchain selection in installer builds.
+
 20261019 - 1.45.1
 
 [-] * Bound ringtone names and BMP palette offsets to prevent buffer overflows
