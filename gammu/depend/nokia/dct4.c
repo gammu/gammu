@@ -1,5 +1,6 @@
 /* (c) 2002-2004 by Marcin Wiacek */
 
+#include "../../../libgammu/misc/private-file.h"
 #include "../../../libgammu/gsmstate.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT4
@@ -709,7 +710,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	TokenLocation 			= Buffer[0] * 256 + Buffer[1];
 	Token				= Buffer[2];
 
-	WAVFile = fopen(FileName, "wb");
+	WAVFile = GSM_OpenPrivateFile(FileName, "wb");
 	if (WAVFile == NULL) {
 		goto failnofile;
 	}
@@ -915,7 +916,7 @@ void DCT4GetT9(int argc, char *argv[])
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
-	T9File = fopen("T9", "w");
+	T9File = GSM_OpenPrivateFile("T9", "w");
 	if (T9File == NULL) return;
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions4;

@@ -1,14 +1,11 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <errno.h>
-#include <fcntl.h>
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/stat.h>
 #ifdef _WIN32
 #include <io.h>
-#else
-#include <unistd.h>
 #endif
 
 #include "common.h"
@@ -34,14 +31,11 @@ static void check_text(const char *path, int unicode, size_t length,
 
 	test_result(backup != NULL);
 	test_result(remove(path) == 0 || errno == ENOENT);
-#ifdef _WIN32
-	fd = _open(path, _O_CREAT | _O_EXCL | _O_WRONLY | _O_BINARY,
-		   _S_IREAD | _S_IWRITE);
+	fd = GSM_CreatePrivateFileExclusive(path, 1);
 	test_result(fd >= 0);
+#ifdef _WIN32
 	file = _fdopen(fd, "wb");
 #else
-	fd = open(path, O_CREAT | O_EXCL | O_WRONLY, S_IRUSR | S_IWUSR);
-	test_result(fd >= 0);
 	file = fdopen(fd, "wb");
 #endif
 	test_result(file != NULL);

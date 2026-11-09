@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 
 #include <fcntl.h>
@@ -43,7 +44,7 @@ static char *CreateOutboxFile(const char *outbox_path, const char *filename)
 	snprintf(full_path, full_path_length, "%s%s", outbox_path, filename);
 
 	remove(full_path);
-	fd = open(full_path, O_WRONLY | O_CREAT | O_EXCL, 0600);
+	fd = GSM_CreatePrivateFileExclusive(full_path, 1);
 	if (fd < 0) {
 		fprintf(stderr, "Failed to create outbox file: %s\n", full_path);
 		free(full_path);
@@ -344,7 +345,7 @@ static int TestSentInfo(GSM_StateMachine *state_machine,
 		}
 	}
 #else
-	fd = open(full_path, O_WRONLY | O_CREAT | O_EXCL, 0600);
+	fd = GSM_CreatePrivateFileExclusive(full_path, 1);
 	if (fd < 0) {
 		fprintf(stderr, "Failed to create sent-info file\n");
 		result = 1;

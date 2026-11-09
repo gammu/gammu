@@ -1,4 +1,5 @@
 #define _GNU_SOURCE		/* For strcasestr */
+#include "../libgammu/misc/private-file.h"
 #include <string.h>
 
 #include "../helper/locales.h"
@@ -438,15 +439,15 @@ static void GetOneFile(GSM_File * File, gboolean newtime, int i)
 					DecodeUnicodeConsole(File->Name +
 							     j * 2 + 2));
 			}
-			file = fopen(buffer, "wb");
+			file = GSM_OpenPrivateFile(buffer, "wb");
 			if (file == NULL) {
 				sprintf(buffer, "file%s",
 					DecodeUnicodeString(File->ID_FullName));
-				file = fopen(buffer, "wb");
+				file = GSM_OpenPrivateFile(buffer, "wb");
 			}
 			if (file == NULL) {
 				sprintf(buffer, "file%i", i);
-				file = fopen(buffer, "wb");
+				file = GSM_OpenPrivateFile(buffer, "wb");
 			}
 			if (file == NULL)
 				Print_Error(ERR_CANTOPENFILE);

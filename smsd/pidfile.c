@@ -11,6 +11,7 @@
 #include <stdlib.h>
 
 #include "pidfile.h"
+#include "../libgammu/misc/private-file.h"
 
 /**
  * Check existing PID file if it points to existing application.
@@ -45,7 +46,7 @@ void write_pid(const char *pid_file)
 {
 	FILE *file;
 
-	file = fopen(pid_file, "w");
+	file = GSM_OpenPrivateFile(pid_file, "w");
 	if (file != NULL) {
 		fprintf(file, "%d\n", getpid());
 		fclose(file);

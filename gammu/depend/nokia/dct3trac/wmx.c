@@ -8,6 +8,7 @@
  * (v=verbose)
  */
 
+#include "../../../../libgammu/misc/private-file.h"
 #include "../../../../libgammu/gsmstate.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
@@ -365,7 +366,7 @@ void DCT3SetDebug(int argc, char *argv[])
 
 	gsmdec = GSMDecoder_new();
 	/* Open XML file .. needs to be argument */
-	xout = fopen("out.xml", "w");
+	xout = GSM_OpenPrivateFile("out.xml", "w");
 	if (xout == NULL) {
 		printf_err("Failed to open out.xml for writing!\n");
 		Terminate(3);

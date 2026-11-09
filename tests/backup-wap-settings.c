@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +10,7 @@ static void check_settings(const char *path, const char *kind, int count,
 {
 	GSM_Backup *backup = malloc(sizeof(*backup));
 	GSM_MultiWAPSettings *settings;
-	FILE *file = fopen(path, "wb");
+	FILE *file = GSM_OpenPrivateFile(path, "wb");
 	int i;
 
 	test_result(backup != NULL);

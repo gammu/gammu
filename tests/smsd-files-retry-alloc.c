@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,7 +51,7 @@ int main(int argc, char **argv)
 	config.sentsmspath = argv[1];
 	config.transmitformat = "auto";
 	test_result((size_t)snprintf(path, sizeof(path), "%sOUT12345.txt", argv[1]) < sizeof(path));
-	fd = open(path, O_WRONLY | O_CREAT | O_EXCL, 0600);
+	fd = GSM_CreatePrivateFileExclusive(path, 1);
 	test_result(fd >= 0);
 	file = fdopen(fd, "wb");
 	if (file == NULL) {

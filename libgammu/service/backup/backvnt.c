@@ -4,6 +4,7 @@
 /* Copyright (c) 2009 Michal Cihar <michal@cihar.com> */
 /* Licensend under GNU GPL 2 */
 
+#include "../../misc/private-file.h"
 #include <string.h>
 #include <ctype.h>
 
@@ -32,7 +33,7 @@ GSM_Error SaveVNT(char *FileName, GSM_Backup *backup)
 	FILE 		*file;
 	GSM_Error error;
 
-	file = fopen(FileName, "wb");
+	file = GSM_OpenPrivateFile(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	i=0;

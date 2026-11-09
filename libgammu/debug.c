@@ -2,6 +2,7 @@
 /* Copyright (c) 2008-2009 by Michal Cihar <michal@cihar.com> */
 /* Licensed under GPL2+ */
 
+#include "misc/private-file.h"
 #include "debug.h"
 
 #include <string.h>
@@ -149,21 +150,21 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 
 	switch (privdi->dl) {
 		case DL_BINARY:
-			testfile = fopen(info,"wb" COMMIT_FLAG);
+			testfile = GSM_OpenPrivateFile(info, "wb" COMMIT_FLAG);
 			break;
 		case DL_TEXTERROR:
 		case DL_TEXTERRORDATE:
-			testfile = fopen(info,"a" COMMIT_FLAG);
+			testfile = GSM_OpenPrivateFile(info, "a" COMMIT_FLAG);
 			if (testfile != NULL) {
 				fseek(testfile, 0, SEEK_END);
 				if (ftell(testfile) > 5000000) {
 					fclose(testfile);
-					testfile = fopen(info,"w" COMMIT_FLAG);
+					testfile = GSM_OpenPrivateFile(info, "w" COMMIT_FLAG);
 				}
 			}
 			break;
 		default:
-			testfile = fopen(info,"w" COMMIT_FLAG);
+			testfile = GSM_OpenPrivateFile(info, "w" COMMIT_FLAG);
 	}
 
 	if (testfile == NULL) {

@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -48,7 +49,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 
 	if (num != -1 && answer_yes("%s", _("Do you want to save this MMS file?"))) {
 		sprintf(buff,"%i_0",num);
-		file2 = fopen(buff,"wb");
+		file2 = GSM_OpenPrivateFile(buff, "wb");
 		if (fwrite(file->Buffer, 1, file->Used, file2) != file->Used) {
 			printf_err(_("Error while saving to file %s!\n"), buff);
 		} else {
@@ -129,7 +130,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 		}
 		if (num != -1 && answer_yes("%s", _("Do you want to save this attachment?"))) {
 			sprintf(buff,"%i_%i_%s",num,i+1,DecodeUnicodeString(info.Entries[i].File.Name));
-			file2 = fopen(buff,"wb");
+			file2 = GSM_OpenPrivateFile(buff, "wb");
 			if (fwrite(info.Entries[i].File.Buffer, 1, info.Entries[i].File.Used, file2) != info.Entries[i].File.Used) {
 				printf_err(_("Error while saving to file %s!\n"), buff);
 			} else {

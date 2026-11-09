@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <stdio.h>
 #include <string.h>
@@ -17,7 +18,7 @@ static void check_rttl(const char *data, size_t length, GSM_Error expected)
 {
 	const char path[] = "rttl-security-test.rttl";
 	GSM_Ringtone ringtone = {0};
-	FILE *file = fopen(path, "wb");
+	FILE *file = GSM_OpenPrivateFile(path, "wb");
 
 	test_result(file != NULL);
 	test_result(fwrite(data, 1, length, file) == length);

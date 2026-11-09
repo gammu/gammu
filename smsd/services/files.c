@@ -26,6 +26,7 @@
 #include "../core.h"
 
 #include "../../libgammu/misc/string.h"
+#include "../../libgammu/misc/private-file.h"
 
 #ifndef PATH_MAX
 #ifdef MAX_PATH
@@ -99,33 +100,6 @@ static GSM_Error SMSDFiles_BuildPath(char *result, size_t result_size,
 
 	snprintf(result, result_size, "%s%s", path, name);
 	return ERR_NONE;
-}
-
-static FILE *SMSDFiles_OpenPrivateFile(const char *path)
-{
-	int fd;
-	FILE *file;
-
-#ifdef WIN32
-	fd = _open(path, _O_WRONLY | _O_CREAT | _O_TRUNC | _O_BINARY, 0600);
-#else
-	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-#endif
-	if (fd < 0) {
-		return NULL;
-	}
-
-	file = fdopen(fd, "wb");
-	if (file == NULL) {
-		int saved_errno = errno;
-#ifdef WIN32
-		_close(fd);
-#else
-		close(fd);
-#endif
-		errno = saved_errno;
-	}
-	return file;
 }
 
 /* Retry state belongs to the daemon, not to the user-provided spool files. */
@@ -302,7 +276,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDConfi
 				free(backup);
 #endif
 			} else {
-				file = SMSDFiles_OpenPrivateFile((const char *)FullName);
+				file = GSM_OpenPrivateFile((const char *)FullName, "wb");
 				if (file == NULL) {
 					SMSD_LogErrno(Config, "Cannot save file!");
 					return ERR_CANTOPENFILE;
@@ -755,7 +729,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage * sms UNUSED, GSM_SMSDCon
 		fclose(iFile);
 
 		// Write target file
-		oFile = fopen(ofilename, "w");
+		oFile = GSM_OpenPrivateFile(ofilename, "w");
 		if (oFile == NULL) {
 			SMSD_LogErrno(Config, "Can not open file");
 			return ERR_CANTOPENFILE;
@@ -819,7 +793,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 				1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, buffer2, j, ext);
 			strcpy(FullName, Config->outboxpath);
 			strcat(FullName, FileName);
-			fd = open(FullName, O_CREAT | O_EXCL, 0644);
+			fd = GSM_CreatePrivateFileExclusive((const char *)FullName, FALSE);
 			if (fd >= 0) {
 				close(fd);
 				break;
@@ -858,7 +832,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage * sms, GSM_SMSDCo
 			/* Force leaving the loop */
 			i = sms->Number;
 		} else {
-			file = fopen(FullName, "wb");
+			file = GSM_OpenPrivateFile((const char *)FullName, "wb");
 			if (file == NULL) {
 				SMSD_LogErrno(Config, "Cannot save file!");
 				return ERR_CANTOPENFILE;
@@ -1146,8 +1120,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage * sms UNUSED, GSM_
 		free(GSMFile.Buffer);
 		return ERR_CANTOPENFILE;
 	}
-	fd = _open(TempPath, _O_WRONLY | _O_CREAT | _O_EXCL | _O_BINARY,
-		   _S_IREAD | _S_IWRITE);
+	fd = GSM_CreatePrivateFileExclusive(TempPath, TRUE);
 #else
 	/* Keep the replacement in a private directory and address it through the
 	 * directory descriptor. Submitters with access to the outbox parent can

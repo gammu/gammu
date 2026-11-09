@@ -1,3 +1,4 @@
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <fcntl.h>
 #include <locale.h>
@@ -68,7 +69,7 @@ static void CheckText(const TextTest *test, int source, gboolean options_first,
 	printf("%s: source=%d options_first=%d type=%d\n",
 	       test->name, source, options_first, type);
 	if (source == 0) {
-		fd = open(input_path, O_WRONLY | O_CREAT | O_EXCL | O_BINARY, 0600);
+		fd = GSM_CreatePrivateFileExclusive(input_path, 1);
 		test_result(fd >= 0);
 #ifndef WIN32
 		{

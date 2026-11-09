@@ -2,6 +2,7 @@
  * INI parsing at EOF, with and without a final line ending.
  */
 
+#include "../libgammu/misc/private-file.h"
 #include <gammu.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -44,7 +45,7 @@ static void check_file(const char *path, const char *text, const char *ending,
 	size_t i;
 	int fd;
 
-	fd = open(path, O_WRONLY | O_CREAT | O_EXCL | O_BINARY, 0600);
+	fd = GSM_CreatePrivateFileExclusive(path, 1);
 	test_result(fd >= 0);
 #ifndef WIN32
 	{

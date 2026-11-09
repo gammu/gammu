@@ -12,6 +12,7 @@ set (LIBRARY_SRC
     debug.c
     misc/array.c
     misc/misc.c
+    misc/private-file.c
     misc/cfg.c
     misc/string.c
     misc/coding/coding.c
