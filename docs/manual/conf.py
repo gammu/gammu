@@ -321,27 +321,6 @@ breathe_projects = {
 
 breathe_default_project = "api"
 
-# Doxygen 1.9.7 and newer no longer duplicate the definitions of grouped
-# members into the file compound XML output. Breathe's doxygenfunction
-# directive skips members whose parent compound is a group, expecting to
-# find the duplicated entry under the file compound, so every function
-# lookup fails. Allow group members again; with the new doxygen behavior
-# each function is found exactly once, in its group.
-# See https://github.com/breathe-doc/breathe/issues/934
-import breathe.renderer.filter
-
-
-def _function_and_all_friend_finder_filter(self, namespace, name):
-    return self.create_member_finder_filter(
-        namespace, name, "function"
-    ) | self.create_member_finder_filter(namespace, name, "friend")
-
-
-breathe.renderer.filter.FilterFactory.create_function_and_all_friend_finder_filter = (
-    _function_and_all_friend_finder_filter
-)
-
-
 breathe_domain_by_extension = {
     "h": "c",
 }
