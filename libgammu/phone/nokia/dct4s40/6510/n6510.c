@@ -787,6 +787,10 @@ GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message *msg, GSM_StateMachine *
 				Data->GetSMSMessage->Number=0;
 				i = 14;
 				while (TRUE) {
+					if (Data->GetSMSMessage->Number >= GSM_MAX_MULTI_SMS) {
+						smprintf(s, "Too many SMS sub-frames in reply\n");
+						return ERR_INVALIDDATA;
+					}
 					error = N6510_DecodeSMSFrame(s, &Data->GetSMSMessage->SMS[Data->GetSMSMessage->Number],msg->Buffer+i,&j);
 					if (error != ERR_NONE) return error;
 					NOKIA_DecodeSMSState(s, msg->Buffer[5], &Data->GetSMSMessage->SMS[Data->GetSMSMessage->Number]);
