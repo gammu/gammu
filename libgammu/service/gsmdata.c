@@ -466,9 +466,62 @@ void GSM_AddWAPMIMEType(int type, char *buffer)
 	}
 }
 
+/* Append a NUL-terminated header value without reading beyond its encoded end. */
+static GSM_Error MMSAppendHeaderText(const GSM_File *file, size_t *pos, size_t end,
+				      char *dest, size_t dest_size)
+{
+	size_t used = strlen(dest);
+
+	if (end > file->Used || *pos > end || used >= dest_size) return ERR_CORRUPTED;
+	while (*pos < end && file->Buffer[*pos] != 0x00) {
+		if (used + 1 >= dest_size) return ERR_CORRUPTED;
+		dest[used++] = file->Buffer[(*pos)++];
+	}
+	if (*pos == end) return ERR_CORRUPTED;
+	dest[used] = 0;
+	(*pos)++;
+	return ERR_NONE;
+}
+
+static GSM_Error MMSAppendHeaderLiteral(char *dest, size_t dest_size, const char *text)
+{
+	size_t used = strlen(dest), length = strlen(text);
+
+	if (used >= dest_size || length >= dest_size - used) return ERR_CORRUPTED;
+	memcpy(dest + used, text, length + 1);
+	return ERR_NONE;
+}
+
+static GSM_Error MMSReadContentTypeParams(const GSM_File *file, size_t *pos,
+					  size_t end, char *dest, size_t dest_size)
+{
+	GSM_Error error;
+
+	if (end > file->Used || *pos > end) return ERR_CORRUPTED;
+	while (*pos < end) {
+		switch (file->Buffer[(*pos)++]) {
+		case 0x89:
+			error = MMSAppendHeaderLiteral(dest, dest_size, "; type=");
+			if (error != ERR_NONE) return error;
+			error = MMSAppendHeaderText(file, pos, end, dest, dest_size);
+			if (error != ERR_NONE) return error;
+			break;
+		case 0x8A:
+			error = MMSAppendHeaderLiteral(dest, dest_size, "; start=");
+			if (error != ERR_NONE) return error;
+			error = MMSAppendHeaderText(file, pos, end, dest, dest_size);
+			if (error != ERR_NONE) return error;
+			break;
+		default:
+			break;
+		}
+	}
+	return ERR_NONE;
+}
+
 GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_EncodedMultiPartMMSInfo *info)
 {
-	size_t pos = 0;
+	size_t pos = 0, end;
 	int type=0,parts,j;
 	int		i,len2,len3,value2;
 	long 		value;
@@ -478,7 +531,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 
 	/* header */
 	while(1) {
-		if (pos > file->Used) break;
+		if (pos >= file->Used) break;
 		if (!(file->Buffer[pos] & 0x80)) break;
 		switch (file->Buffer[pos++] & 0x7F) {
 		case 0x01:
@@ -486,12 +539,9 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 			return ERR_FILENOTSUPPORTED;
 		case 0x02:
 			smfprintf(di, "  CC                : ");
-			i = 0;
-			while (file->Buffer[pos]!=0x00) {
-				buff[i++] = file->Buffer[pos++];
-			}
-			buff[i] = 0;
-			pos++;
+			buff[0] = 0;
+			if (MMSAppendHeaderText(file, &pos, file->Used, buff,
+						    sizeof(info->CC) / 2) != ERR_NONE) return ERR_CORRUPTED;
 			if (strstr(buff,"/TYPE=PLMN")!=NULL) {
 				buff[strlen(buff)-10] = 0;
 				info->CCType = MMSADDRESS_PHONE;
@@ -508,74 +558,27 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 		case 0x04:
 			smfprintf(di, "  Content type      : ");
 			buff[0] = 0;
+			if (pos >= file->Used) return ERR_CORRUPTED;
 			if (file->Buffer[pos] <= 0x1E) {
 				len2 = file->Buffer[pos++];
+				if (len2 < 1 || (size_t)len2 > file->Used - pos) return ERR_CORRUPTED;
+				end = pos + len2;
 				type = file->Buffer[pos++] & 0x7f;
 				GSM_AddWAPMIMEType(type, buff);
-				i=0;
-				while (i<len2) {
-					switch (file->Buffer[pos+i]) {
-					case 0x89:
-						strcat(buff, "; type=");
-						i++;
-						while (file->Buffer[pos+i]!=0x00) {
-							buff[strlen(buff)+1] = 0;
-							buff[strlen(buff)]   = file->Buffer[pos+i];
-							i++;
-						}
-						i++;
-						break;
-					case 0x8A:
-						strcat(buff, "; start=");
-						i++;
-						while (file->Buffer[pos+i]!=0x00) {
-							buff[strlen(buff)+1] = 0;
-							buff[strlen(buff)]   = file->Buffer[pos+i];
-							i++;
-						}
-						i++;
-						break;
-					default:
-						i++;
-						break;
-					}
-				}
-				pos+=len2-1;
+				if (MMSReadContentTypeParams(file, &pos, end, buff, sizeof(buff)) != ERR_NONE)
+					return ERR_CORRUPTED;
 			} else if (file->Buffer[pos] == 0x1F) {
 				/* hack from coded files */
+				if (file->Used - pos < 2) return ERR_CORRUPTED;
 				len2 = file->Buffer[pos++];
 				type = file->Buffer[pos++] & 0x7f;
 				type +=2;
+				if ((size_t)len2 + 2 > file->Used - pos) return ERR_CORRUPTED;
+				end = pos + len2;
 				GSM_AddWAPMIMEType(type, buff);
-				i=0;
-				while (i<len2) {
-					switch (file->Buffer[pos+i]) {
-					case 0x89:
-						strcat(buff, "; type=");
-						i++;
-						while (file->Buffer[pos+i]!=0x00) {
-							buff[strlen(buff)+1] = 0;
-							buff[strlen(buff)]   = file->Buffer[pos+i];
-							i++;
-						}
-						i++;
-						break;
-					case 0x8A:
-						strcat(buff, "; start=");
-						i++;
-						while (file->Buffer[pos+i]!=0x00) {
-							buff[strlen(buff)+1] = 0;
-							buff[strlen(buff)]   = file->Buffer[pos+i];
-							i++;
-						}
-						i++;
-						break;
-					default:
-						i++;
-						break;
-					}
-				}
-				pos+=len2+2;
+				if (MMSReadContentTypeParams(file, &pos, end, buff, sizeof(buff)) != ERR_NONE)
+					return ERR_CORRUPTED;
+				pos = end + 2;
 			} else if (file->Buffer[pos] >= 0x20 && file->Buffer[pos] <= 0x7F) {
 				smfprintf(di, "not done yet 2\n");
 				return ERR_FILENOTSUPPORTED;
@@ -632,15 +635,16 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 			pos++; /* expiry */
 			break;
 		case 0x09:
-			pos++;
-			pos++;
-			if (file->Buffer[pos-1] == 128) {
+			if (file->Used - pos < 2) return ERR_CORRUPTED;
+			len2 = file->Buffer[pos] - 1;
+			if (file->Buffer[pos + 1] == 128) {
 				smfprintf(di, "  From              : ");
-				len2=file->Buffer[pos-2]-1;
-				for (i=0;i<len2;i++) {
-					buff[i] = file->Buffer[pos++];
-				}
-				buff[i] = 0;
+				pos += 2;
+				if (len2 < 0 || (size_t)len2 >= sizeof(info->Source) / 2 ||
+				    (size_t)len2 > file->Used - pos) return ERR_CORRUPTED;
+				memcpy(buff, file->Buffer + pos, len2);
+				pos += len2;
+				buff[len2] = 0;
 				if (strstr(buff,"/TYPE=PLMN")!=NULL) {
 					buff[strlen(buff)-10] = 0;
 					info->SourceType = MMSADDRESS_PHONE;
@@ -650,7 +654,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 					smfprintf(di, "%s\n",buff);
 				}
 				EncodeUnicode(info->Source,buff,strlen(buff));
-			}
+			} else pos += 2;
 			break;
 		case 0x0A:
 			smfprintf(di, "  Message class     : ");
@@ -738,25 +742,20 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 			break;
 		case 0x16:
 			smfprintf(di, "  Subject           : ");
-			if (file->Buffer[pos+1]==0xEA) {
+			if (file->Used - pos >= 2 && file->Buffer[pos+1]==0xEA) {
 				pos+=2;
 			}
-			i = 0;
-			while (file->Buffer[pos]!=0x00) {
-				buff[i++] = file->Buffer[pos++];
-			}
-			buff[i] = 0;
+			buff[0] = 0;
+			if (MMSAppendHeaderText(file, &pos, file->Used, buff,
+						    sizeof(info->Subject) / 2) != ERR_NONE) return ERR_CORRUPTED;
 			smfprintf(di, "%s\n",buff);
 			EncodeUnicode(info->Subject,buff,strlen(buff));
-			pos++;
 			break;
 		case 0x17:
 			smfprintf(di, "  To                : ");
-			i = 0;
-			while (file->Buffer[pos]!=0x00) {
-				buff[i++] = file->Buffer[pos++];
-			}
-			buff[i] = 0;
+			buff[0] = 0;
+			if (MMSAppendHeaderText(file, &pos, file->Used, buff,
+						    sizeof(info->Destination) / 2) != ERR_NONE) return ERR_CORRUPTED;
 			if (strstr(buff,"/TYPE=PLMN")!=NULL) {
 				buff[strlen(buff)-10] = 0;
 				info->DestinationType = MMSADDRESS_PHONE;
@@ -766,7 +765,6 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 				smfprintf(di, "%s\n",buff);
 			}
 			EncodeUnicode(info->Destination,buff,strlen(buff));
-			pos++;
 			break;
 		case 0x18:
 			smfprintf(di, "  Transaction ID    : ");
