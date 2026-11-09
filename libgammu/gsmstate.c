@@ -6,6 +6,7 @@
 #include <string.h>
 #include <errno.h>
 #include <limits.h>
+#include <stdint.h>
 #include <assert.h>
 #include <stdio.h>
 #include <time.h>
@@ -1464,6 +1465,7 @@ void GSM_SetConfigNum(GSM_StateMachine *s, int sections)
 void GSM_ExpandUserPath(char **string)
 {
 	char *tmp = NULL, *home = NULL;
+	size_t home_len, path_len;
 
 	/* Is there something to expand */
 	if (*string[0] != '~') return;
@@ -1472,13 +1474,18 @@ void GSM_ExpandUserPath(char **string)
 	home = getenv("HOME");
 	if (home == NULL) return;
 
+	home_len = strlen(home);
+	path_len = strlen(*string);
+	/* The path after '~' needs path_len bytes including its terminator. */
+	if (home_len > SIZE_MAX - path_len) return;
+
 	/* Allocate memory */
-	tmp = (char *)malloc(strlen(home) + strlen(*string) + 2);
+	tmp = (char *)malloc(home_len + path_len);
 	if (tmp == NULL) return;
 
 	/* Create final path */
-	strcpy(tmp, home);
-	strcat(tmp, *string + 1);
+	memcpy(tmp, home, home_len);
+	memcpy(tmp + home_len, *string + 1, path_len);
 
 	/* Free old storage and replace it */
 	free(*string);
