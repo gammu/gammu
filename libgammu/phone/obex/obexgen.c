@@ -1093,8 +1093,8 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolea
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error		error;
-	unsigned char		Line[500],Line2[500],*name,*size;
-	int			i,j,num,pos2;
+	unsigned char		Line[500],Line2[500],*name,*size,*quote;
+	int			i,num,pos2;
 	size_t			Pos;
 
 	/* Go to default service */
@@ -1151,12 +1151,9 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolea
 				name = strstr(Line,"folder name=\"");
 				if (name != NULL) {
 					name += 13;
-					j = 0;
-					while(1) {
-						if (name[j] == '"') break;
-						j++;
-					}
-					name[j] = 0;
+					quote = (unsigned char *)strchr((char *)name, '"');
+					if (quote == NULL) return ERR_INVALIDDATA;
+					*quote = 0;
 
 					if (strcmp(name,".")) num++;
 				}
@@ -1184,16 +1181,14 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolea
 				name = strstr(Line2,"folder name=\"");
 				if (name != NULL) {
 					name += 13;
-					j = 0;
-					while(1) {
-						if (name[j] == '"') break;
-						j++;
-					}
-					name[j] = 0;
+					quote = (unsigned char *)strchr((char *)name, '"');
+					if (quote == NULL) return ERR_INVALIDDATA;
+					*quote = 0;
 					if (strcmp(name,".")) {
 						smprintf(s, "copying folder %s to %i parent %i\n",name,Priv->FilesLocationsCurrent+pos2,Priv->FilesLocationsCurrent);
 						/* Convert filename from UTF-8 */
-						DecodeXMLUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
+						if (!DecodeXMLUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name,
+								sizeof(Priv->Files[0].Name), name, strlen(name))) return ERR_INVALIDDATA;
 						/* Create file name from parts */
 						OBEXGEN_CreateFileName(
 							Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,
@@ -1210,15 +1205,13 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolea
 				name = strstr(Line2,"file name=\"");
 				if (name != NULL) {
 					name += 11;
-					j = 0;
-					while(1) {
-						if (name[j] == '"') break;
-						j++;
-					}
-					name[j] = 0;
+					quote = (unsigned char *)strchr((char *)name, '"');
+					if (quote == NULL) return ERR_INVALIDDATA;
+					*quote = 0;
 					smprintf(s, "copying file %s to %i\n",name,Priv->FilesLocationsCurrent+pos2);
 					/* Convert filename from UTF-8 */
-					DecodeXMLUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
+					if (!DecodeXMLUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name,
+							sizeof(Priv->Files[0].Name), name, strlen(name))) return ERR_INVALIDDATA;
 					/* Create file name from parts */
 					OBEXGEN_CreateFileName(
 						Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,
