@@ -4,10 +4,10 @@ $dependency = Get-Content "$PSScriptRoot/mariadb.json" -Raw | ConvertFrom-Json
 $version = $dependency.version
 if ($version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid Connector/C version' }
 $filename = "mariadb-connector-c-$version-win64.msi"
-# The download service uses numeric IDs. Discover the exact versioned file
-# from the official listing instead of pinning an ID independently of version.
+# Discover the exact versioned file from the official listing. Download URLs
+# can include a numeric ID before the product path.
 $listing = Invoke-WebRequest "https://dlm.mariadb.com/browse/c_connector/$version/"
-$pattern = 'https://dlm\.mariadb\.com/\d+/Connectors/c/connector-c-' + [regex]::Escape($version) + '/' + [regex]::Escape($filename) + '(?=")'
+$pattern = 'https://dlm\.mariadb\.com/(?:\d+/)?Connectors/c/connector-c-' + [regex]::Escape($version) + '/' + [regex]::Escape($filename) + '(?=")'
 $urls = @([regex]::Matches($listing.Content, $pattern).Value | Select-Object -Unique)
 if ($urls.Count -ne 1) { throw "Expected one official download for $filename" }
 $archive = Join-Path ([IO.Path]::GetTempPath()) $filename
