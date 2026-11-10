@@ -8,7 +8,7 @@ if ($Server -eq 'mysql') {
 } else {
     $version = '11.4.8'
     $listing = Invoke-WebRequest "https://dlm.mariadb.com/browse/mariadb_server/$version/?flat=1"
-    $pattern = 'https://dlm\.mariadb\.com/\d+/[^"<> ]*/mariadb-' + [regex]::Escape($version) + '-winx64\.zip(?=")'
+    $pattern = 'https://dlm\.mariadb\.com/(?:\d+/)?MariaDB/mariadb-' + [regex]::Escape($version) + '/winx64-packages/mariadb-' + [regex]::Escape($version) + '-winx64\.zip(?=")'
     $urls = @([regex]::Matches($listing.Content, $pattern).Value | Select-Object -Unique)
     if ($urls.Count -ne 1) { throw 'Expected one MariaDB server ZIP' }
     $url = $urls[0]
