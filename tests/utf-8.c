@@ -39,6 +39,7 @@ static gboolean SetUTF8Locale(void)
 int main(int argc UNUSED, char **argv UNUSED)
 {
     unsigned char out[200], out2[200];
+    char long_xml_name[100];
     gammu_char_t dest;
     size_t i;
     const char input[] = "005400680061006E006B00200079006F0075002E002000570065002000770069006C006C00200063006F006E007400610063007400200079006F007500200073006F006F006E00200078006F0078006F00200078006F0078006F00200061006E0064002000490020D83DDE18D83DDE18D83DDE18D83DDE18D83DDE18D83DDE18D83DDE18D83D";
@@ -104,6 +105,22 @@ int main(int argc UNUSED, char **argv UNUSED)
     test_string(expected_utf8_prefix, out, sizeof(expected_utf8_prefix));
     test_result(!DecodeUTF8Checked(out, invalid_continuation,
                                    sizeof(invalid_continuation)));
+
+    /* XML entity decoding must respect the UTF-16 destination size. */
+    test_result(DecodeXMLUTF8(out, sizeof(out), "A&amp;&#x1f44d;&unknown;",
+                               strlen("A&amp;&#x1f44d;&unknown;")));
+    test_string("\x00\x41\x00\x26\xd8\x3d\xdc\x4d\x00\x26\x00\x75", out, 12);
+    memset(out, 0x5a, sizeof(out));
+    test_result(!DecodeXMLUTF8(out, 6, "abcd", 4));
+    test_result(out[0] == 0 && out[1] == 0 && out[6] == 0x5a);
+    memset(long_xml_name, 'a', sizeof(long_xml_name));
+    test_result(DecodeXMLUTF8(out, sizeof(out), long_xml_name, 99));
+    test_result(out[198] == 0 && out[199] == 0);
+    test_result(!DecodeXMLUTF8(out, sizeof(out), long_xml_name, 100));
+    test_result(out[0] == 0 && out[1] == 0);
+    test_result(!DecodeXMLUTF8(out, sizeof(out), invalid_utf8,
+                               sizeof(invalid_utf8)));
+    test_result(out[0] == 0 && out[1] == 0);
 
     /* Decode hex encoded unicode */
     test_result(DecodeHexUnicode(out, input, strlen(input)));

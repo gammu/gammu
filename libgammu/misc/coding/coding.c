@@ -2208,89 +2208,75 @@ void DecodeUTF8(unsigned char *dest, const char *src, size_t len)
 	DecodeUTF8Checked(dest, src, len);
 }
 
-void DecodeXMLUTF8(unsigned char *dest, const char *src, size_t len)
+gboolean DecodeXMLUTF8(unsigned char *dest, size_t dest_len, const char *src, size_t len)
 {
 	char *tmp;
-	char *pos, *pos_end;
-	const char *lastpos;
-	char *entity;
-	unsigned long long int c;
-	int tmplen;
+	size_t i = 0, j = 0, out = 0, used;
+	gammu_char_t decoded;
 
-	/* Allocate buffer */
-	tmp = (char *)calloc(2 * len, sizeof(char));
-	if (tmp == NULL) {
-		/* We have no memory for XML decoding */
-		DecodeUTF8(dest, src, len);
-		return;
-	}
-	if (src == NULL) {
-		*dest = 0;
-		free(tmp);
-		return;
-	}
+	if (dest_len < 2 || src == NULL || len == (size_t)-1) return FALSE;
+	dest[0] = dest[1] = 0;
+	tmp = malloc(len + 1);
+	if (tmp == NULL) return FALSE;
 
-	/* Find ampersand and decode the */
-	lastpos = src;
-	while ((*lastpos != 0) && ((pos = strchr(lastpos, '&')) != NULL)) {
-		/* Store current string */
-		strncat(tmp, lastpos, pos - lastpos);
-		lastpos = pos;
-		/* Skip ampersand */
-		pos++;
-		/* Detect end of string */
-		if (*pos == 0) break;
-		/* Find entity length */
-		pos_end = strchr(pos, ';');
-		if (pos_end - pos > 6 || pos_end == NULL) {
-			if (pos_end == NULL) {
-				dbgprintf(NULL, "No entity end found, ignoring!\n");
-			} else {
-				dbgprintf(NULL, "Too long html entity, ignoring!\n");
+	while (i < len) {
+		if (src[i] == '&') {
+			const char *end = memchr(src + i + 1, ';', len - i - 1);
+			if (end != NULL && end - (src + i + 1) <= 8) {
+				size_t entity_len = end - (src + i + 1);
+				const char *replacement = NULL;
+				char entity[9];
+				unsigned char encoded[4];
+				size_t replacement_len = 0;
+
+				memcpy(entity, src + i + 1, entity_len);
+				entity[entity_len] = 0;
+				if (strcmp(entity, "amp") == 0) replacement = "&";
+				else if (strcmp(entity, "apos") == 0) replacement = "'";
+				else if (strcmp(entity, "gt") == 0) replacement = ">";
+				else if (strcmp(entity, "lt") == 0) replacement = "<";
+				else if (strcmp(entity, "quot") == 0) replacement = "\"";
+				if (replacement != NULL) replacement_len = 1;
+				else if (entity[0] == '#') {
+					char *parse_end;
+					int base = 10;
+					const char *digits = entity + 1;
+					unsigned long long value;
+					if (*digits == 'x' || *digits == 'X') {
+						base = 16;
+						digits++;
+					}
+					value = strtoull(digits, &parse_end, base);
+					if (digits != parse_end && *parse_end == 0 && value != 0 &&
+						value <= 0x10ffff && (value < 0xd800 || value > 0xdfff)) {
+						replacement_len = EncodeWithUTF8Alphabet(value, encoded);
+						replacement = (const char *)encoded;
+					}
+				}
+				if (replacement != NULL) {
+					memcpy(tmp + j, replacement, replacement_len);
+					j += replacement_len;
+					i = end - src + 1;
+					continue;
+				}
 			}
-			strncat(tmp, lastpos, 1);
-			lastpos++;
-			continue;
 		}
-		/* Create entity */
-		/* strndup would be better, but not portable */
-		entity = strdup(pos);
-		if (entity == NULL) break;
-		entity[pos_end - pos] = 0;
-		dbgprintf(NULL, "Found XML entity: %s\n", entity);
-		if (entity[0] == '#') {
-			if (entity[1] == 'x' || entity[1] == 'X') {
-				c = strtoull(entity + 2, NULL, 16);
-			} else {
-				c = strtoull(entity + 1, NULL, 10);
-			}
-			dbgprintf(NULL, "Unicode char 0x%04llx\n", c);
-			tmplen = strlen(tmp);
-			tmplen += EncodeWithUTF8Alphabet(c, tmp + tmplen);
-			tmp[tmplen] = 0;
-		} else if (strcmp(entity, "amp") == 0) {
-			strcat(tmp, "&");
-		} else if (strcmp(entity, "apos") == 0) {
-			strcat(tmp, "'");
-		} else if (strcmp(entity, "gt") == 0) {
-			strcat(tmp, ">");
-		} else if (strcmp(entity, "lt") == 0) {
-			strcat(tmp, "<");
-		} else if (strcmp(entity, "quot") == 0) {
-			strcat(tmp, "\"");
-		} else {
-			dbgprintf(NULL, "Could not decode XML entity!\n");
-			strncat(tmp, lastpos, pos_end - pos + 1);
-		}
-		free(entity);
-		entity=NULL;
-		lastpos = pos_end + 1;
+		tmp[j++] = src[i++];
 	}
-	/* Copy rest of string */
-	strcat(tmp, lastpos);
-	DecodeUTF8(dest, tmp, strlen(tmp));
+	tmp[j] = 0;
+
+	for (i = 0; i < j; i += used) {
+		used = DecodeWithUTF8Alphabet((const unsigned char *)tmp + i, &decoded, j - i);
+		if (used == 0 || dest_len - out < (decoded > 0xffff ? 6 : 4)) {
+			dest[0] = dest[1] = 0;
+			free(tmp);
+			return FALSE;
+		}
+		out += StoreUTF16(dest + out, decoded) ? 4 : 2;
+	}
+	dest[out] = dest[out + 1] = 0;
 	free(tmp);
-	tmp=NULL;
+	return TRUE;
 }
 
 void DecodeUTF7(unsigned char *dest, const unsigned char *src, size_t len)

@@ -332,9 +332,7 @@ static const char *SMSDSQL_LimitClause(GSM_SMSDConfig * Config, const char *coun
 	} else if (strcasecmp(driver_name, "mssql") == 0 || strcasecmp(driver_name, "access") == 0 || strcasecmp(driver_name, "freetds") == 0) {
 		return limit_clause_access;
 	} else {
-		strcpy(result, limit_clause_fallback);
-		strcat(result, " ");
-		strcat(result, count);
+		snprintf(result, sizeof(result), "%s %s", limit_clause_fallback, count);
 		return result;
 	}
 }

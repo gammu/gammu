@@ -57,9 +57,10 @@ void		DecodeISO88591			(unsigned char *dest, const char *src, size_t len);
 void		DecodeISO88591QuotedPrintable	(unsigned char *dest, const unsigned char *src, size_t len);
 
 /**
- * Decodes UTF-8 text with XML entities to Unicode.
+ * Decodes UTF-8 text with XML entities to Unicode. Returns FALSE if the
+ * decoded text is invalid or does not fit in dest_len bytes, including NUL.
  */
-void DecodeXMLUTF8(unsigned char *dest, const char *src, size_t len);
+gboolean DecodeXMLUTF8(unsigned char *dest, size_t dest_len, const char *src, size_t len);
 
 /* ------------------------------- BASE64 ---------------------------------- */
 void 		EncodeBASE64			(const unsigned char *Input, char *Output, const size_t Length);
