@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include <ctype.h>
 
 #include "gammu.h" //include added bacause of MS VC 2005
 #include "wmx-util.h"
@@ -78,7 +79,7 @@ struct wmx_tracestruct *wmx_tracestruct_load(char *listfile)
 	char 			data[256];
 	FILE 			*f;
 	struct wmx_tracestruct 	*tl;
-	int 			tpe;
+	unsigned int 		tpe;
 
 	f = fopen(listfile, "r");
 
@@ -97,10 +98,16 @@ struct wmx_tracestruct *wmx_tracestruct_load(char *listfile)
 			/* Empty/invalid line */
 			continue;
 		if(data[2] == 'X' && data[3] == 'X') {
-			sscanf(data, "%02X", &tpe);
+			if (!isxdigit((unsigned char)data[0]) ||
+			    !isxdigit((unsigned char)data[1]) ||
+			    sscanf(data, "%02X", &tpe) != 1) continue;
 			wmx_tracelist_add(&tl->majors, tpe, &data[5]);
 		} else {
-			sscanf(data, "%04X", &tpe);
+			if (!isxdigit((unsigned char)data[0]) ||
+			    !isxdigit((unsigned char)data[1]) ||
+			    !isxdigit((unsigned char)data[2]) ||
+			    !isxdigit((unsigned char)data[3]) ||
+			    sscanf(data, "%04X", &tpe) != 1) continue;
 			wmx_tracelist_add(&tl->minors, tpe, &data[5]);
 		}
 	}
