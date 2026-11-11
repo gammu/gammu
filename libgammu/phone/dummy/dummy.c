@@ -1925,8 +1925,6 @@ GSM_Error DUMMY_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 GSM_Error DUMMY_PreAPICall(GSM_StateMachine *s)
 {
 	char *path;
-	struct stat sb;
-	GSM_Error error = ERR_NONE;
 	GSM_Call 		call;
 
 	/* Check for incoming call trigger */
@@ -1935,7 +1933,8 @@ GSM_Error DUMMY_PreAPICall(GSM_StateMachine *s)
 		if (path == NULL) {
 			return ERR_MOREMEMORY;
 		}
-		if (stat(path, &sb) == 0) {
+		/* Claim the trigger before invoking the callback. */
+		if (unlink(path) == 0) {
 			smprintf(s, "Incoming call!\n");
 
 			memset(&call, 0, sizeof(call));
@@ -1948,12 +1947,10 @@ GSM_Error DUMMY_PreAPICall(GSM_StateMachine *s)
 			EncodeUnicode(call.PhoneNumber, "+800123456", 11);
 
 			s->User.IncomingCall(s, &call, s->User.IncomingCallUserData);
-
-			unlink(path);
 		}
 		free(path);
 	}
-	return error;
+	return ERR_NONE;
 }
 
 /*@}*/
