@@ -479,25 +479,36 @@ static GSM_Error SMSDSQL_Query(GSM_SMSDConfig * Config, const char *query, SQL_r
 void SMSDSQL_Time2String(GSM_SMSDConfig * Config, time_t timestamp, char *static_buff, size_t size)
 {
 	const char *driver_name = SMSDSQL_SQLName(Config);
-	struct tm *tm = localtime(&timestamp);
+	struct tm tm;
 
-  if(timestamp == -2) {
-    strcpy(static_buff, "0000-00-00 00:00:00");
+  if (size == 0) return;
+  if (timestamp == -2) {
+    snprintf(static_buff, size, "0000-00-00 00:00:00");
+    return;
   }
-  else if (strcasecmp(driver_name, "oracle") == 0) {
-    strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", tm);
+#ifdef WIN32
+  if (localtime_s(&tm, &timestamp) != 0) {
+#else
+  if (localtime_r(&timestamp, &tm) == NULL) {
+#endif
+    static_buff[0] = 0;
+    return;
+  }
+
+  if (strcasecmp(driver_name, "oracle") == 0) {
+    strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", &tm);
   }
   else if (strcasecmp(driver_name, "mssql") == 0) {
-    strftime(static_buff, size, "%Y-%m-%dT%H:%M:%S", tm);
+    strftime(static_buff, size, "%Y-%m-%dT%H:%M:%S", &tm);
   }
   else if (strcasecmp(driver_name, "odbc") == 0) {
-    strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", tm);
+    strftime(static_buff, size, "{ ts '%Y-%m-%d %H:%M:%S' }", &tm);
   }
   else if (strcasecmp(driver_name, "access") == 0) {
-    strftime(static_buff, size, "'%Y-%m-%d %H:%M:%S'", tm);
+    strftime(static_buff, size, "'%Y-%m-%d %H:%M:%S'", &tm);
   }
   else {
-    strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", tm);
+    strftime(static_buff, size, "%Y-%m-%d %H:%M:%S", &tm);
   }
 }
 
