@@ -55,10 +55,12 @@ int main(void)
 {
 	GSM_MultiSMSMessage sms;
 	GSM_SMSDConfig config;
+	GSM_SMSDStatus status;
 	GSM_StringArray sent_ids;
 
 	memset(&sms, 0, sizeof(sms));
 	memset(&config, 0, sizeof(config));
+	memset(&status, 0, sizeof(status));
 	GSM_StringArray_New(&sent_ids);
 
 	config.PhoneID = "modem-a";
@@ -92,6 +94,10 @@ int main(void)
 	SMSD_RunOnEnvironment(&sms, &config, &sent_ids, TRUE);
 
 	check_environment("PHONE_ID", "modem-a");
+	/* No status yet */
+	check_environment("PHONE_IMEI", "");
+	check_environment("SIM_IMSI", "");
+	check_environment("SIM_ICCID", "");
 	check_environment("SMS_MESSAGES", "2");
 	check_environment("SMS_1_SENT_ID", "123");
 	check_environment("SMS_2_SENT_ID", "");
@@ -114,8 +120,15 @@ int main(void)
 	set_test_environment("DECODED_1_TEXT", "stale");
 	set_test_environment("DECODED_1_MMS_SENDER", "stale");
 	config.PhoneID = "modem-b";
+	strcpy(status.IMEI, "490154203237518");
+	strcpy(status.IMSI, "001010123456789");
+	strcpy(status.ICCID, "8900101234567890123");
+	config.Status = &status;
 	SMSD_RunOnEnvironment(NULL, &config, NULL, FALSE);
 	check_environment("PHONE_ID", "modem-b");
+	check_environment("PHONE_IMEI", "490154203237518");
+	check_environment("SIM_IMSI", "001010123456789");
+	check_environment("SIM_ICCID", "8900101234567890123");
 	check_environment("SMS_MESSAGES", "0");
 	check_environment("DECODED_PARTS", "0");
 	check_environment("SMS_1_CLASS", "");
