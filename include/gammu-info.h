@@ -927,6 +927,21 @@ GSM_Error GSM_GetPPM(GSM_StateMachine * s, char *value);
 GSM_Error GSM_GetSIMIMSI(GSM_StateMachine * s, char *IMSI);
 
 /**
+ * Gets SIM ICCID (Integrated Circuit Card Identifier, the serial number
+ * printed on the SIM card) from phone.
+ *
+ * Trailing padding (F) is removed, so the result contains only digits.
+ *
+ * \param s State machine pointer.
+ * \param ICCID Buffer of at least \ref GSM_MAX_INFO_LENGTH bytes.
+ *
+ * \return Error code
+ *
+ * \ingroup Info
+ */
+GSM_Error GSM_GetSIMICCID(GSM_StateMachine * s, char *ICCID);
+
+/**
  * Gets information about batery charge and phone charging state.
  *
  * \ingroup Info

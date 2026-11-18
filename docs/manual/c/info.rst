@@ -18,6 +18,7 @@ Info
 .. doxygenfunction:: GSM_GetHardware
 .. doxygenfunction:: GSM_GetPPM
 .. doxygenfunction:: GSM_GetSIMIMSI
+.. doxygenfunction:: GSM_GetSIMICCID
 .. doxygenfunction:: GSM_GetBatteryCharge
 .. doxygenfunction:: GSM_GetSignalQuality
 .. doxygenfunction:: GSM_GetNetworkInfo
