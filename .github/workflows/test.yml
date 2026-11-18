@@ -133,7 +133,7 @@ jobs:
       ORACLE_PASSWORD: GammuOracle2026
     services:
       oracle:
-        image: container-registry.oracle.com/database/free:latest-lite@sha256:cf540c3fa190d7cffad08c491652ac07fc70314e510f6b87890449517d565e94
+        image: container-registry.oracle.com/database/free:latest-lite@sha256:0d714311690f0481b49819ff6f35f756441ca165ad3d757c90a8e351fbf567da
         env:
           ORACLE_PWD: GammuOracle2026
         options: >-
