@@ -1660,6 +1660,7 @@ GSM_Phone_Functions N7110Phone = {
 	DCT3_GetHardware,
 	DCT3_GetPPM,
 	NOTSUPPORTED,			/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	GetSIMICCID		*/
 	N71_92_GetDateTime,
 	N71_92_SetDateTime,
 	N7110_GetAlarm,

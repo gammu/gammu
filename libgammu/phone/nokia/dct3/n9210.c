@@ -285,6 +285,7 @@ GSM_Phone_Functions N9210Phone = {
 	DCT3_GetHardware,
 	DCT3_GetPPM,
 	NOTSUPPORTED,			/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	GetSIMICCID		*/
 	N71_92_GetDateTime,
 	N71_92_SetDateTime,
 	NOTIMPLEMENTED,			/*	GetAlarm		*/

@@ -2813,6 +2813,7 @@ GSM_Phone_Functions N6110Phone = {
         DCT3_GetHardware,
         DCT3_GetPPM,
         NOTSUPPORTED,                   /*      GetSIMIMSI              */
+        NOTSUPPORTED,                   /*      GetSIMICCID             */
         N6110_GetDateTime,
         N6110_SetDateTime,
         N6110_GetAlarm,

@@ -195,7 +195,7 @@ static void print_status(GSM_SMSDConfig *config, const GSM_SMSDStatus *status,
 			 gboolean use_log)
 {
 	if (compact) {
-		printf("%s;%s;%s;%s;%d;%d;%d;%d;%d\n",
+		printf("%s;%s;%s;%s;%d;%d;%d;%d;%d;%s\n",
 		       status->Client,
 		       status->PhoneID,
 		       status->IMEI,
@@ -204,15 +204,17 @@ static void print_status(GSM_SMSDConfig *config, const GSM_SMSDStatus *status,
 		       status->Received,
 		       status->Failed,
 		       status->Charge.BatteryPercent,
-		       status->Network.SignalPercent);
+		       status->Network.SignalPercent,
+		       status->ICCID);
 		fflush(stdout);
 	} else if (use_log) {
 		SMSD_Log(DEBUG_INFO, config,
-			 "Status: Client=\"%s\", PhoneID=\"%s\", IMEI=\"%s\", IMSI=\"%s\", Sent=%d, Received=%d, Failed=%d, BatteryPercent=%d, NetworkSignal=%d",
+			 "Status: Client=\"%s\", PhoneID=\"%s\", IMEI=\"%s\", IMSI=\"%s\", ICCID=\"%s\", Sent=%d, Received=%d, Failed=%d, BatteryPercent=%d, NetworkSignal=%d",
 			 status->Client,
 			 status->PhoneID,
 			 status->IMEI,
 			 status->IMSI,
+			 status->ICCID,
 			 status->Sent,
 			 status->Received,
 			 status->Failed,
@@ -223,6 +225,7 @@ static void print_status(GSM_SMSDConfig *config, const GSM_SMSDStatus *status,
 		printf("PhoneID: %s\n", status->PhoneID);
 		printf("IMEI: %s\n", status->IMEI);
 		printf("IMSI: %s\n", status->IMSI);
+		printf("ICCID: %s\n", status->ICCID);
 		printf("Sent: %d\n", status->Sent);
 		printf("Received: %d\n", status->Received);
 		printf("Failed: %d\n", status->Failed);

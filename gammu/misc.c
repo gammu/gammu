@@ -315,6 +315,21 @@ void Identify(int argc, char *argv[])
 			Print_Error(error);
 	}
 
+	error=GSM_GetSIMICCID(gsm, buffer);
+	switch (error) {
+		case ERR_SECURITYERROR:
+		case ERR_NOTSUPPORTED:
+		case ERR_NOTIMPLEMENTED:
+		case ERR_UNKNOWNRESPONSE:
+		case ERR_NOSIM:
+			break;
+		case ERR_NONE:
+			printf(LISTFORMAT "%s\n", _("SIM ICCID"),buffer);
+			break;
+		default:
+			Print_Error(error);
+	}
+
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	DCT3Info();
 #endif

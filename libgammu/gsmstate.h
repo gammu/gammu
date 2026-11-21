@@ -877,6 +877,10 @@ typedef struct {
 	 */
 	GSM_Error (*GetSIMIMSI)	 	(GSM_StateMachine *s, char *IMSI);
 	/**
+	 * Gets SIM ICCID from phone.
+	 */
+	GSM_Error (*GetSIMICCID)	(GSM_StateMachine *s, char *ICCID);
+	/**
 	 * Reads date and time from phone.
 	 */
 	GSM_Error (*GetDateTime)	(GSM_StateMachine *s, GSM_DateTime *date_time);

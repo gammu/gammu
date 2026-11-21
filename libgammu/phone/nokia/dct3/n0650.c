@@ -34,6 +34,7 @@ GSM_Phone_Functions N650Phone = {
 	NOTSUPPORTED,			/*	GetHardware		*/
 	NOTSUPPORTED,			/*	GetPPM			*/
 	NOTSUPPORTED,			/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	GetSIMICCID		*/
 	NOTSUPPORTED,			/*	GetDateTime		*/
 	NOTSUPPORTED,			/*	SetDateTime		*/
 	NOTSUPPORTED,			/*	GetAlarm		*/

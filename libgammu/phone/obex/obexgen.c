@@ -3804,6 +3804,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTIMPLEMENTED,			/*	GetHardware		*/
 	NOTIMPLEMENTED,			/*	GetPPM			*/
 	NOTIMPLEMENTED,			/*	GetSIMIMSI		*/
+	NOTIMPLEMENTED,			/*	GetSIMICCID		*/
 	NOTIMPLEMENTED,			/*	GetDateTime		*/
 	NOTIMPLEMENTED,			/*	SetDateTime		*/
 	NOTIMPLEMENTED,			/*	GetAlarm		*/

@@ -148,6 +148,7 @@ typedef enum {
 	ID_SetAutoNetworkLogin,
 	ID_SetConnectSet,
 	ID_GetSIMIMSI,
+	ID_GetSIMICCID,
 	ID_GetFileInfo,
 	ID_FileSystemStatus,
 	ID_GetFile,

@@ -1524,6 +1524,9 @@ void SMSD_RunOnEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, con
 	memset(&empty_datetime, 0, sizeof(empty_datetime));
 	SMSD_ClearRunOnEnvironment();
 	setenv("PHONE_ID", Config->PhoneID == NULL ? "" : Config->PhoneID, 1);
+	setenv("PHONE_IMEI", Config->Status == NULL ? "" : Config->Status->IMEI, 1);
+	setenv("SIM_IMSI", Config->Status == NULL ? "" : Config->Status->IMSI, 1);
+	setenv("SIM_ICCID", Config->Status == NULL ? "" : Config->Status->ICCID, 1);
 
 	if (sms == NULL) {
 		setenv("SMS_MESSAGES", "0", 1);
@@ -2558,6 +2561,7 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 		Config->Status->Sent = 0;
 		Config->Status->IMEI[0] = 0;
 		Config->Status->IMSI[0] = 0;
+		Config->Status->ICCID[0] = 0;
 	}
 	return ERR_NONE;
 }
@@ -2879,6 +2883,12 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 						errors++;
 					} else {
 						errors = 0;
+						/* Optional, many phones do not report it */
+						error = GSM_GetSIMICCID(Config->gsm, Config->Status->ICCID);
+						if (error != ERR_NONE) {
+							SMSD_LogError(DEBUG_INFO, Config, "Can not read SIM ICCID", error);
+							Config->Status->ICCID[0] = 0;
+						}
 						error = Config->Service->InitAfterConnect(Config);
 						if (error!=ERR_NONE) {
 							if (Config->RunOnFailure != NULL) {

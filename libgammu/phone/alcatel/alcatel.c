@@ -2487,6 +2487,14 @@ static GSM_Error ALCATEL_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 	return ATGEN_GetSIMIMSI(s, IMSI);
 }
 
+static GSM_Error ALCATEL_GetSIMICCID(GSM_StateMachine *s, char *ICCID)
+{
+	GSM_Error error;
+
+	if ((error = ALCATEL_SetATMode(s))!= ERR_NONE) return error;
+	return ATGEN_GetSIMICCID(s, ICCID);
+}
+
 static GSM_Error ALCATEL_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *status)
 {
 	GSM_Error		error;
@@ -4093,6 +4101,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* 	GetHardware		*/
 	NOTSUPPORTED,			/* 	GetPPM			*/
 	ALCATEL_GetSIMIMSI,
+	ALCATEL_GetSIMICCID,
 	ALCATEL_GetDateTime,
 	ALCATEL_SetDateTime,
 	ALCATEL_GetAlarm,

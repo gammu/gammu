@@ -323,6 +323,7 @@ GSM_Phone_Functions N3650Phone = {
 	DCT4_GetHardware,
 	NOTSUPPORTED,			/*	GetPPM			*/
 	NOTSUPPORTED,			/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	GetSIMICCID		*/
 	NOTSUPPORTED,			/*	GetDateTime		*/
 	NOTSUPPORTED,			/*	SetDateTime		*/
 	NOTSUPPORTED,			/*	GetAlarm		*/

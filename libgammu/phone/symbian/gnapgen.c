@@ -1891,6 +1891,7 @@ GSM_Phone_Functions GNAPGENPhone = {
 	GNAPGEN_GetHW,
 	NOTSUPPORTED,			/*	GetPPM			*/
 	NOTSUPPORTED,			/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	GetSIMICCID		*/
 	GNAPGEN_GetDateTime,
 	NOTSUPPORTED,			/*	SetDateTime		*/
 	GNAPGEN_GetAlarm,

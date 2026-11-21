@@ -224,6 +224,19 @@ GSM_Error GSM_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 	return err;
 }
 /**
+ * Gets SIM ICCID from phone.
+ */
+GSM_Error GSM_GetSIMICCID(GSM_StateMachine *s, char *ICCID)
+{
+	GSM_Error err;
+
+	CHECK_PHONE_CONNECTION();
+
+	err = s->Phone.Functions->GetSIMICCID(s, ICCID);
+	PRINT_LOG_ERROR(err);
+	return err;
+}
+/**
  * Reads date and time from phone.
  */
 GSM_Error GSM_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
