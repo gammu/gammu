@@ -5251,19 +5251,33 @@ GSM_Error ATGEN_ReplyGetSIMIMSI(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Phone_Data *Data = &s->Phone.Data;
+	char *imsi = Data->PhoneString;
+	size_t prefix = 0;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
-		CopyLineString(Data->PhoneString, msg->Buffer, &Priv->Lines, 2);
-
-		/* Remove various prefies some phones add */
-		if (strncmp(s->Phone.Data.IMEI, "<IMSI>: ", 7) == 0) { /* Alcatel */
-			memmove(s->Phone.Data.IMEI, s->Phone.Data.IMEI + 7, strlen(s->Phone.Data.IMEI + 7) + 1);
-		} else if (strncmp(s->Phone.Data.IMEI, "+CIMI: ", 7) == 0) { /* Motorola */
-			memmove(s->Phone.Data.IMEI, s->Phone.Data.IMEI + 7, strlen(s->Phone.Data.IMEI + 7) + 1);
+		/* Callers pass a buffer of GSM_MAX_INFO_LENGTH bytes */
+		if (GetLineLength(msg->Buffer, &Priv->Lines, 2) >= GSM_MAX_INFO_LENGTH) {
+			smprintf(s, "IMSI too long!\n");
+			return ERR_MOREMEMORY;
 		}
 
-		smprintf(s, "Received IMSI %s\n",Data->PhoneString);
+		CopyLineString(imsi, msg->Buffer, &Priv->Lines, 2);
+
+		/* Remove various prefixes some phones add */
+		if (strncmp(imsi, "<IMSI>:", 7) == 0) { /* Alcatel */
+			prefix = 7;
+		} else if (strncmp(imsi, "+CIMI:", 6) == 0) { /* Motorola */
+			prefix = 6;
+		}
+		while (imsi[prefix] == ' ') {
+			prefix++;
+		}
+		if (prefix > 0) {
+			memmove(imsi, imsi + prefix, strlen(imsi + prefix) + 1);
+		}
+
+		smprintf(s, "Received IMSI %s\n", imsi);
 		return ERR_NONE;
 	case AT_Reply_Error:
 		smprintf(s, "No access to SIM card or not supported by device\n");
