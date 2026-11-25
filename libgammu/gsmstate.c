@@ -45,6 +45,7 @@
 #define _WIN32_IE 0x0501
 #endif
 #include <shlobj.h>
+#include <stdlib.h>
 
 #define FALLBACK_GAMMURC "gammurc"
 #define GAMMURC_NAME "\\gammurc"
@@ -735,6 +736,23 @@ GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Func
 
 		s->Speed			  = 0;
 		s->ReplyNum			  = ReplyNum;
+	/*
+	 * GAMMU_RETRY_NUM environment variable overrides the retry count.
+	 * Default is the value passed by the caller (usually 4).
+	 * Set GAMMU_RETRY_NUM=1 to disable retries, which reduces the
+	 * maximum wait on a hung modem from (retries x timeout) to
+	 * just one timeout period.
+	 */
+	{
+		const char *reply_env = getenv("GAMMU_RETRY_NUM");
+		if (reply_env != NULL) {
+			int val = atoi(reply_env);
+			if (val > 0) {
+				s->ReplyNum = val;
+				smprintf(s, "GAMMU_RETRY_NUM=%d: retry count overridden\n", val);
+			}
+		}
+	}
 		s->Phone.Data.ModelInfo		  = GetModelData(s, "unknown", NULL, NULL);
 		s->Phone.Data.Manufacturer[0]	  = 0;
 		s->Phone.Data.Model[0]		  = 0;
