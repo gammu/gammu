@@ -1237,6 +1237,16 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	if (!strcmp(line,"OK")) {
 		Priv->ReplyState = AT_Reply_OK;
 	}
+	/*
+	 * ZTE/D-Link modems send +ZEND instead of OK when
+	 * AT+CMGL is called on an empty SMS memory.  Without
+	 * this, gammu waits for OK until the timeout expires.
+	 * Treating +ZEND as OK lets the list parser see 0 SMS
+	 * and proceed to the next memory or return ERR_EMPTY.
+	 */
+	if (!strncmp(line, "+ZEND", 5)) {
+		Priv->ReplyState = AT_Reply_OK;
+	}
 	if (!strncmp(line,"+CPIN:", 6) && s->Protocol.Data.AT.CPINNoOK) {
 		Priv->ReplyState = AT_Reply_OK;
 	}
@@ -6110,7 +6120,6 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReplyIgnore, 	"+ZUSIMR:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+SPNWNAME:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+PSBEARER:"	,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_GenericReplyIgnore, 	"+ZEND"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"+ZPAS:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore,	"+ECIND:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyQuectelSMSDone,	"+QIND: SMS DONE"	,0x00,0x00,ID_IncomingFrame	 },

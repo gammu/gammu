@@ -132,7 +132,6 @@ GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"+MBAN:"	,1, ID_All},
 
 		/* HSPA CORPORATION */
-		{"+ZEND"	,1, ID_All},
 
 		/* Huawei */
 		{"^RSSI:"	,1, ID_All}, /* ^RSSI:18 */

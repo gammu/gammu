@@ -24,10 +24,55 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdarg.h>
+#include <stdlib.h>
 #include <assert.h>
 
 #include "../../gsmcomon.h"
 #include "../../gsmphones.h"
+
+/*
+ * Environment-driven timeout helpers for CPMS commands.
+ * These allow tuning timeouts without rebuilding, which is useful
+ * for modems with firmware quirks that cause occasional slow
+ * responses.
+ *
+ * GAMMU_CPMS_STATUS_TIMEOUT  (default 30 s, was hardcoded 200 s)
+ * GAMMU_CPMS_SET_TIMEOUT     (default 10 s, was hardcoded 20 s)
+ */
+static int atgen_cpms_status_timeout(GSM_StateMachine *s UNUSED)
+{
+	static int cached = -1;
+	if (cached < 0) {
+		const char *env;
+		cached = 30;
+		env = getenv("GAMMU_CPMS_STATUS_TIMEOUT");
+		if (env != NULL) {
+			int v = atoi(env);
+			if (v > 0) {
+				cached = v;
+			}
+		}
+	}
+	return cached;
+}
+
+static int atgen_cpms_set_timeout(GSM_StateMachine *s UNUSED)
+{
+	static int cached = -1;
+	if (cached < 0) {
+		const char *env;
+		cached = 10;
+		env = getenv("GAMMU_CPMS_SET_TIMEOUT");
+		if (env != NULL) {
+			int v = atoi(env);
+			if (v > 0) {
+				cached = v;
+			}
+		}
+	}
+	return cached;
+}
+
 #include "../../misc/coding/coding.h"
 #include "../../service/gsmpbk.h"
 #include "../pfunc.h"
@@ -237,6 +282,35 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 		Priv->SIMSaveSMS = AT_NOTAVAILABLE;
 	}
 
+	/*
+	 * Environment variable GAMMU_SMS_MEMORY allows selecting which SMS
+	 * storage to use without a gammurc file or phone feature flags.
+	 *
+	 * GAMMU_SMS_MEMORY=ME  -> disable SIM (SM), use phone memory only
+	 * GAMMU_SMS_MEMORY=SM  -> disable phone (ME), use SIM only
+	 * Unset                -> default behavior (both memories)
+	 *
+	 * This is useful for modems (e.g. D-Link/ZTE) that store incoming
+	 * SMS in phone memory (ME, 100 slots) but where gammu defaults to
+	 * reading from SIM (SM, 15 slots).  Reading from an empty SIM
+	 * while SMS exist in ME can trigger modem firmware bugs (e.g.
+	 * the +ZEND response from ZTE-based modems).
+	 */
+	{
+		const char *sms_mem = getenv("GAMMU_SMS_MEMORY");
+		if (sms_mem != NULL) {
+			if (strcmp(sms_mem, "ME") == 0) {
+				smprintf(s, "GAMMU_SMS_MEMORY=ME: disabling SIM storage\n");
+				Priv->SIMSMSMemory = AT_NOTAVAILABLE;
+				Priv->SIMSaveSMS = AT_NOTAVAILABLE;
+			} else if (strcmp(sms_mem, "SM") == 0) {
+				smprintf(s, "GAMMU_SMS_MEMORY=SM: disabling phone storage\n");
+				Priv->PhoneSMSMemory = AT_NOTAVAILABLE;
+				Priv->PhoneSaveSMS = AT_NOTAVAILABLE;
+			}
+		}
+	}
+
 	// count standard folders
 	Priv->NumFolders = 0;
 	if(ATGEN_IsMemoryAvailable(Priv, MEM_SM))
@@ -337,7 +411,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 		if (cpmsCmdReqLength == 0) {
 			return ERR_UNKNOWN;
 		}
-		error = ATGEN_WaitFor(s, cpmsCmdReq, cpmsCmdReqLength, 0x00, 20, ID_SetMemoryType);
+		error = ATGEN_WaitFor(s, cpmsCmdReq, cpmsCmdReqLength, 0x00, atgen_cpms_set_timeout(s), ID_SetMemoryType);
 
 		if (Priv->SIMSMSMemory == 0 && error != ERR_NONE) {
 			Priv->SIMSMSMemory = AT_AVAILABLE;
@@ -384,7 +458,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 		}
 
 		smprintf(s, "Setting SMS memory type to ME\n");
-		error = ATGEN_WaitFor(s, cpmsCmdReq, cpmsCmdReqLength, 0x00, 200, ID_SetMemoryType);
+		error = ATGEN_WaitFor(s, cpmsCmdReq, cpmsCmdReqLength, 0x00, atgen_cpms_status_timeout(s), ID_SetMemoryType);
 
 		if (Priv->PhoneSMSMemory == 0 && error == ERR_NONE) {
 			Priv->PhoneSMSMemory = AT_AVAILABLE;
@@ -1395,13 +1469,62 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 	}
 	smprintf(s, "Getting SMS locations\n");
 
-	if (Priv->SMSMode == SMS_AT_TXT) {
-		error = ATGEN_WaitForAutoLen(s, "AT+CMGL=\"ALL\"\r", 0x00, 500, ID_GetSMSMessage);
-	} else {
-		error = ATGEN_WaitForAutoLen(s, "AT+CMGL=4\r", 0x00, 500, ID_GetSMSMessage);
-	}
-	if (error == ERR_NOTSUPPORTED) {
-		error = ATGEN_WaitForAutoLen(s, "AT+CMGL\r", 0x00, 500, ID_GetSMSMessage);
+	/*
+	 * SMS listing timeout is configurable via GAMMU_CMGL_TIMEOUT
+	 * (default 30 seconds).  The original hardcoded value of 500s
+	 * caused 8+ minute hangs on modems that send unexpected
+	 * responses (e.g. +ZEND from ZTE/D-Link firmware).
+	 *
+	 * Similarly, CPMS query/set timeouts are configurable via
+	 * GAMMU_CPMS_STATUS_TIMEOUT (default 30s, was 200s) and
+	 * GAMMU_CPMS_SET_TIMEOUT (default 10s, was 20s).
+	 */
+	{
+		static int cmgl_timeout = -1;
+		static int cpms_status_timeout = -1;
+		static int cpms_set_timeout = -1;
+		const char *env;
+
+		if (cmgl_timeout < 0) {
+			cmgl_timeout = 30;
+			env = getenv("GAMMU_CMGL_TIMEOUT");
+			if (env != NULL) {
+				int v = atoi(env);
+				if (v > 0) {
+					cmgl_timeout = v;
+				}
+			}
+			smprintf(s, "CMGL timeout: %d s\n", cmgl_timeout);
+		}
+		if (cpms_status_timeout < 0) {
+			cpms_status_timeout = 30;
+			env = getenv("GAMMU_CPMS_STATUS_TIMEOUT");
+			if (env != NULL) {
+				int v = atoi(env);
+				if (v > 0) {
+					cpms_status_timeout = v;
+				}
+			}
+		}
+		if (cpms_set_timeout < 0) {
+			cpms_set_timeout = 10;
+			env = getenv("GAMMU_CPMS_SET_TIMEOUT");
+			if (env != NULL) {
+				int v = atoi(env);
+				if (v > 0) {
+					cpms_set_timeout = v;
+				}
+			}
+		}
+
+		if (Priv->SMSMode == SMS_AT_TXT) {
+			error = ATGEN_WaitForAutoLen(s, "AT+CMGL=\"ALL\"\r", 0x00, cmgl_timeout, ID_GetSMSMessage);
+		} else {
+			error = ATGEN_WaitForAutoLen(s, "AT+CMGL=4\r", 0x00, cmgl_timeout, ID_GetSMSMessage);
+		}
+		if (error == ERR_NOTSUPPORTED) {
+			error = ATGEN_WaitForAutoLen(s, "AT+CMGL\r", 0x00, cmgl_timeout, ID_GetSMSMessage);
+		}
 	}
 	/*
 	 * We did not read anything, but it is correct, indicate that
@@ -1966,7 +2089,7 @@ static GSM_Error ATGEN_QuerySMSMemoryStatus(GSM_StateMachine *s, GSM_MemoryType 
 		return error;
 	}
 
-	return ATGEN_WaitForAutoLen(s, "AT+CPMS?\r", 0x00, 200, ID_GetSMSStatus);
+	return ATGEN_WaitForAutoLen(s, "AT+CPMS?\r", 0x00, atgen_cpms_status_timeout(s), ID_GetSMSStatus);
 }
 
 GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
@@ -2014,7 +2137,7 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 			if (command_len == 0) {
 				return ERR_UNKNOWN;
 			}
-			error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
+			error = ATGEN_WaitFor(s, command, command_len, 0x00, atgen_cpms_status_timeout(s), ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = writeable;
 		}
 
@@ -2053,14 +2176,14 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 				}
 				Priv->SMSMemoryWrite = TRUE;
 			}
-			error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
+			error = ATGEN_WaitFor(s, command, command_len, 0x00, atgen_cpms_status_timeout(s), ID_GetSMSStatus);
 		} else {
 			command_len = ATGEN_BuildCPMSCommand(s, "ME", FALSE, command, sizeof(command));
 			if (command_len == 0) {
 				return ERR_UNKNOWN;
 			}
 			Priv->SMSMemoryWrite = FALSE;
-			error = ATGEN_WaitFor(s, command, command_len, 0x00, 200, ID_GetSMSStatus);
+			error = ATGEN_WaitFor(s, command, command_len, 0x00, atgen_cpms_status_timeout(s), ID_GetSMSStatus);
 		}
 		if (error != ERR_NONE) {
 			return error;
