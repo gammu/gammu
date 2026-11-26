@@ -41,6 +41,7 @@ extern GSM_Error ATGEN_GetSecurityStatus	(GSM_StateMachine *s, GSM_SecurityCodeT
 extern GSM_Error ATGEN_ResetPhoneSettings	(GSM_StateMachine *s, GSM_ResetSettingsType Type);
 extern GSM_Error ATGEN_SendDTMF			(GSM_StateMachine *s, char *sequence);
 extern GSM_Error ATGEN_GetSIMIMSI		(GSM_StateMachine *s, char *IMSI);
+extern GSM_Error ATGEN_GetSIMICCID		(GSM_StateMachine *s, char *ICCID);
 extern GSM_Error ATGEN_GetNetworkInfo		(GSM_StateMachine *s, GSM_NetworkInfo *netinfo);
 extern GSM_Error ATGEN_Reset			(GSM_StateMachine *s, gboolean hard);
 extern GSM_Error ATGEN_PressKey			(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press);

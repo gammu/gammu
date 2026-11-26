@@ -84,6 +84,13 @@ typedef struct {
 	 * Network information.
 	 */
 	GSM_NetworkInfo NetInfo;
+	/**
+	 * SIM ICCID, empty if the phone can not report it.
+	 *
+	 * Kept last so that the layout of the fields above, which other
+	 * processes read from shared memory, does not change.
+	 */
+	char ICCID[GSM_MAX_INFO_LENGTH + 1];
 } GSM_SMSDStatus;
 
 /**

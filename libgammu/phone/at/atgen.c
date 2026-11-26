@@ -5247,6 +5247,182 @@ GSM_Error ATGEN_IncomingNetworkLevel(GSM_Protocol_Message *msg, GSM_StateMachine
 	return ERR_NONE;
 }
 
+/**
+ * Maximal number of ICCID digits, EF_ICCID is 10 bytes of BCD
+ * (3GPP TS 31.102, ITU-T E.118).
+ */
+#define ATGEN_MAX_ICCID_DIGITS 20
+
+/**
+ * Normalizes ICCID in place: removes the response prefix some phones
+ * add ("+CCID: ", "+ICCID: ", "+QCCID: ", "^ICCID: ", ...), quotes,
+ * spaces and the F padding of 19 digit ICCIDs.
+ */
+static GSM_Error ATGEN_NormalizeICCID(GSM_StateMachine *s, char *iccid)
+{
+	char *start = iccid;
+	char *colon;
+	size_t len, i;
+
+	if (*start == '+' || *start == '^' || *start == '$' || *start == '#') {
+		colon = strchr(start, ':');
+		if (colon != NULL) {
+			start = colon + 1;
+		}
+	}
+	while (*start == ' ' || *start == '"') {
+		start++;
+	}
+	len = strlen(start);
+	while (len > 0 && (start[len - 1] == ' ' || start[len - 1] == '"')) {
+		len--;
+	}
+	while (len > 0 && (start[len - 1] == 'F' || start[len - 1] == 'f')) {
+		len--;
+	}
+
+	if (len == 0 || len > ATGEN_MAX_ICCID_DIGITS) {
+		smprintf(s, "Invalid ICCID length: %ld\n", (long)len);
+		iccid[0] = 0;
+		return ERR_UNKNOWNRESPONSE;
+	}
+	for (i = 0; i < len; i++) {
+		if (!isdigit((int)(unsigned char)start[i])) {
+			smprintf(s, "Invalid character in ICCID: 0x%02x\n", (unsigned char)start[i]);
+			iccid[0] = 0;
+			return ERR_UNKNOWNRESPONSE;
+		}
+	}
+
+	memmove(iccid, start, len);
+	iccid[len] = 0;
+	return ERR_NONE;
+}
+
+/**
+ * Handles non OK replies to ICCID queries.
+ */
+static GSM_Error ATGEN_ReplyGetSIMICCIDError(GSM_StateMachine *s)
+{
+	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	case AT_Reply_Error:
+		smprintf(s, "No access to SIM card or not supported by device\n");
+		return ERR_NOTSUPPORTED;
+	case AT_Reply_CMSError:
+		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+}
+
+/**
+ * Reply to AT+CCID, the de facto standard (non 3GPP) command
+ * implemented by most modules (SIMCom, Quectel, u-blox, ...).
+ */
+static GSM_Error ATGEN_ReplyGetSIMICCID(GSM_Protocol_Message *msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	char *iccid = s->Phone.Data.PhoneString;
+	GSM_Error error;
+
+	if (Priv->ReplyState != AT_Reply_OK) {
+		return ATGEN_ReplyGetSIMICCIDError(s);
+	}
+
+	/* Callers pass a buffer of GSM_MAX_INFO_LENGTH bytes */
+	if (GetLineLength(msg->Buffer, &Priv->Lines, 2) >= GSM_MAX_INFO_LENGTH) {
+		smprintf(s, "ICCID too long!\n");
+		return ERR_MOREMEMORY;
+	}
+
+	CopyLineString(iccid, msg->Buffer, &Priv->Lines, 2);
+	error = ATGEN_NormalizeICCID(s, iccid);
+	if (error == ERR_NONE) {
+		smprintf(s, "Received ICCID %s\n", iccid);
+	}
+	return error;
+}
+
+/**
+ * Reply to AT+CRSM=176,12258,0,0,10 (3GPP TS 27.007 restricted SIM
+ * access, READ BINARY of EF_ICCID 0x2FE2), which is used when the
+ * phone does not implement AT+CCID.
+ */
+static GSM_Error ATGEN_ReplyGetSIMICCIDFromEF(GSM_Protocol_Message *msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	char *iccid = s->Phone.Data.PhoneString;
+	char data[2 * ATGEN_MAX_ICCID_DIGITS + 1];
+	GSM_Error error;
+	int sw1 = 0, sw2 = 0;
+	size_t len, i;
+
+	if (Priv->ReplyState != AT_Reply_OK) {
+		return ATGEN_ReplyGetSIMICCIDError(s);
+	}
+
+	error = ATGEN_ParseReply(s, GetLineString(msg->Buffer, &Priv->Lines, 2),
+			"+CRSM: @i, @i@0", &sw1, &sw2);
+	if (error != ERR_NONE) {
+		return error;
+	}
+	/* 0x90 0x00 = normal ending, 0x91 0xXX = normal ending with proactive command pending */
+	if (sw1 != 0x90 && sw1 != 0x91) {
+		smprintf(s, "Reading EF_ICCID failed, SW1=0x%02x SW2=0x%02x\n", sw1, sw2);
+		return ERR_NOTSUPPORTED;
+	}
+
+	error = ATGEN_ParseReply(s, GetLineString(msg->Buffer, &Priv->Lines, 2),
+			"+CRSM: @i, @i, @r", &sw1, &sw2, data, sizeof(data) - 1);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	len = strlen(data);
+	if (len == 0 || len % 2 != 0) {
+		smprintf(s, "Invalid EF_ICCID length: %ld\n", (long)len);
+		return ERR_UNKNOWNRESPONSE;
+	}
+	/* BCD with swapped nibbles: "98" means digits "89" */
+	for (i = 0; i < len; i += 2) {
+		iccid[i] = data[i + 1];
+		iccid[i + 1] = data[i];
+	}
+	iccid[len] = 0;
+
+	error = ATGEN_NormalizeICCID(s, iccid);
+	if (error == ERR_NONE) {
+		smprintf(s, "Received ICCID %s\n", iccid);
+	}
+	return error;
+}
+
+GSM_Error ATGEN_GetSIMICCID(GSM_StateMachine *s, char *ICCID)
+{
+	GSM_Error error;
+
+	ICCID[0] = 0;
+	s->Phone.Data.PhoneString = ICCID;
+	smprintf(s, "Getting SIM ICCID\n");
+	error = ATGEN_WaitForAutoLen(s, "AT+CCID\r", 0x00, 40, ID_GetSIMICCID);
+
+	switch (error) {
+	case ERR_NOTSUPPORTED:
+	case ERR_UNKNOWN:
+	case ERR_UNKNOWNRESPONSE:
+		/* AT+CCID is not standardized, read the SIM file directly */
+		smprintf(s, "Getting SIM ICCID from EF_ICCID\n");
+		ICCID[0] = 0;
+		error = ATGEN_WaitForAutoLen(s, "AT+CRSM=176,12258,0,0,10\r", 0x00, 40, ID_GetSIMICCID);
+		break;
+	default:
+		break;
+	}
+	return error;
+}
+
 GSM_Error ATGEN_ReplyGetSIMIMSI(GSM_Protocol_Message *msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
@@ -5930,6 +6106,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CMEE=" 		,0x00,0x00,ID_EnableErrorInfo	 },
 {ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
+{ATGEN_ReplyGetSIMICCID,	"AT+CCID"		,0x00,0x00,ID_GetSIMICCID	 },
+{ATGEN_ReplyGetSIMICCIDFromEF,"AT+CRSM=176,12258"	,0x00,0x00,ID_GetSIMICCID	 },
 {ATGEN_ReplyCheckProt,		"AT+CPROT=?" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_ReplyCheckSyncML,	"AT+SYNCML=?" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_ReplyCheckTSSPCSW,	"AT$TSSPCSW=?" 	 	,0x00,0x00,ID_SetOBEX		 },
@@ -6188,6 +6366,7 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/*	GetHardware		*/
 	NOTSUPPORTED,			/*	GetPPM			*/
 	ATGEN_GetSIMIMSI,
+	ATGEN_GetSIMICCID,
 	ATGEN_GetDateTime,
 	ATGEN_SetDateTime,
 	ATGEN_GetAlarm,

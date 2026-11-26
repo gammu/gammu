@@ -536,6 +536,14 @@ GSM_Error ATOBEX_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 	return ATGEN_GetSIMIMSI(s, IMSI);
 }
 
+GSM_Error ATOBEX_GetSIMICCID(GSM_StateMachine *s, char *ICCID)
+{
+	GSM_Error error;
+
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
+	return ATGEN_GetSIMICCID(s, ICCID);
+}
+
 GSM_Error ATOBEX_SetIncomingCall (GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
@@ -1554,6 +1562,7 @@ GSM_Phone_Functions ATOBEXPhone = {
 	NOTSUPPORTED,			/* 	GetHardware		*/
 	NOTSUPPORTED,			/* 	GetPPM			*/
 	ATOBEX_GetSIMIMSI,
+	ATOBEX_GetSIMICCID,
 	ATOBEX_GetDateTime,
 	ATOBEX_SetDateTime,
 	ATOBEX_GetAlarm,

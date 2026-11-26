@@ -53,6 +53,7 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTSUPPORTED,			/*	GetHardware		*/
 	NOTSUPPORTED,			/*	GetPPM			*/
 	NOTSUPPORTED,			/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	GetSIMICCID		*/
 	NOTSUPPORTED,			/*	GetDateTime		*/
 	NOTSUPPORTED,			/*	SetDateTime		*/
 	NOTSUPPORTED,			/*	GetAlarm		*/

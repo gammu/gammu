@@ -4527,6 +4527,7 @@ GSM_Phone_Functions N6510Phone = {
 	DCT4_GetHardware,
 	N6510_GetPPM,
 	NOTSUPPORTED,			/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	GetSIMICCID		*/
 	N6510_GetDateTime,
 	N6510_SetDateTime,
 	N6510_GetAlarm,

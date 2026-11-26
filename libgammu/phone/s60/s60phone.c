@@ -2068,6 +2068,7 @@ GSM_Phone_Functions S60Phone = {
 	NOTIMPLEMENTED,			/*	GetHardware		*/
 	NOTIMPLEMENTED,			/*	GetPPM			*/
 	NOTIMPLEMENTED,			/*	GetSIMIMSI		*/
+	NOTIMPLEMENTED,			/*	GetSIMICCID		*/
 	NOTIMPLEMENTED,			/*	GetDateTime		*/
 	NOTIMPLEMENTED,			/*	SetDateTime		*/
 	NOTIMPLEMENTED,			/*	GetAlarm		*/

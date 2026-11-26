@@ -866,6 +866,12 @@ GSM_Error DUMMY_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 	return ERR_NONE;
 }
 
+GSM_Error DUMMY_GetSIMICCID(GSM_StateMachine *s, char *ICCID)
+{
+	strcpy(ICCID, "8999429942994299429");
+	return ERR_NONE;
+}
+
 GSM_Error DUMMY_GetCallDivert(GSM_StateMachine *s, GSM_CallDivert *request, GSM_MultiCallDivert *response)
 {
 	int i;
@@ -1977,6 +1983,7 @@ GSM_Phone_Functions DUMMYPhone = {
         DUMMY_GetHardware,
         DUMMY_GetPPM,
 	DUMMY_GetSIMIMSI,
+	DUMMY_GetSIMICCID,
 	DUMMY_GetDateTime,
 	DUMMY_SetDateTime,
 	DUMMY_GetAlarm,

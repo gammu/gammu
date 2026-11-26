@@ -159,6 +159,7 @@ GSM_Phone_Functions N3320Phone = {
 	NOTSUPPORTED,			/*	GetHardware		*/
 	NOTSUPPORTED,			/*	GetPPM			*/
 	NOTSUPPORTED,			/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	GetSIMICCID		*/
 	N3320_GetDateTime,
 	NOTSUPPORTED,			/*	SetDateTime		*/
 	NOTSUPPORTED,			/*	GetAlarm		*/

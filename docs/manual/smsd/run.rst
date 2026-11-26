@@ -62,6 +62,29 @@ Global variables
     (see :ref:`smsd-multi`). This variable is available to all ``RunOn``
     directives, including calls which do not provide message details.
 
+.. envvar:: PHONE_IMEI
+
+    .. versionadded:: 1.46.0
+
+    IMEI of the phone (modem), as read when SMSD connected to it. Empty
+    when the hook runs before that, for example on an initialization
+    failure. Available to all ``RunOn`` directives.
+
+.. envvar:: SIM_IMSI
+
+    .. versionadded:: 1.46.0
+
+    IMSI of the SIM card, as read when SMSD connected to the phone.
+    Available to all ``RunOn`` directives.
+
+.. envvar:: SIM_ICCID
+
+    .. versionadded:: 1.46.0
+
+    ICCID (the serial number printed on the SIM card), as read when SMSD
+    connected to the phone. Empty when the phone does not support
+    reading it. Available to all ``RunOn`` directives.
+
 Per message variables
 +++++++++++++++++++++
 

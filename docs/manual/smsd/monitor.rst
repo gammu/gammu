@@ -51,7 +51,10 @@ accepted on some platforms):
 
     .. code-block:: text
 
-        client;phone ID;IMEI;IMSI;sent;received;failed;battery;signal
+        client;phone ID;IMEI;IMSI;sent;received;failed;battery;signal;ICCID
+
+    .. versionchanged:: 1.46.0
+        The SIM ICCID column was added at the end.
 
     CSV status records are always written to standard output and are not given
     logging prefixes, including when :option:`--use-log` is specified.
